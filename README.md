@@ -1,6 +1,7 @@
-# Summit Book
+# Xaver's Mountain Collection
 
-A website of your ski tours and summits, built from your Strava activities.
+A website of your ski tours, mountaineering and summits, built from your Strava activities
+(the program is called `summitbook`).
 
 - **Ski tours** always appear, even without a summit (a couloir, a powder run).
 - **Hikes, trail runs, snowshoe tours and climbs** only appear when you reached a summit.
@@ -11,6 +12,10 @@ A website of your ski tours and summits, built from your Strava activities.
 - Every tour has a **3D map** with your route, your **Strava photos**, and a link back to Strava.
 - **Tours that aren't on Strava** (e.g. from Suunto) can be added as GPX or FIT files.
 - **Plans:** your notes for future tours, written in `plans.md`, show up as post-its on the Plans page.
+- **Gear:** your packing lists (`gear.md`) for ski tours, mountaineering, climbing, multi-day ski tours
+  and ski mountaineering, with tick boxes.
+- **About:** a page about you (`about.md`).
+- Every tour page has an **elevation profile**; pointing at it shows the spot on the 3D map.
 
 ## One-time setup
 
@@ -117,6 +122,18 @@ Write your ideas into **`plans.md`**: start each plan with `## ` and its name, t
 below it (lines starting with `- ` become a list). Run `uv run summitbook publish` and they
 appear as post-it notes on the Plans page. Note: like the rest of the site, they're public.
 
+## Gear lists and About me
+
+**`gear.md`** holds your packing lists, one per kind of trip (`## Ski tour`, `## Mountaineering`,
+`## Climbing`, `## Multi-day ski tour`, `## Ski mountaineering`). Write one item per line starting
+with `- `; `### ` makes a small heading (e.g. `### Safety`). On the Gear page you pick the kind of
+trip and can tick things off while packing (ticks are remembered in that browser).
+
+**`about.md`** is your About page. `## ` makes a heading; to show a photo, put it into the `site/`
+folder (e.g. `site/me.jpg`) and write `![Me on the Habicht](me.jpg)`.
+
+Both work like `plans.md` and `notes.md`: run `uv run summitbook publish`, or edit them on github.com.
+
 ## The look
 
 The style is in `site/style.css` (colors, fonts, paper). The background photo is
@@ -160,7 +177,7 @@ uv run summitbook build    # rebuild the website without downloading anything
 | Path | What it is |
 |---|---|
 | `summitbook.toml` | your settings |
-| `notes.md`, `plans.md` | your words about tours, and your plans |
+| `notes.md`, `plans.md`, `gear.md`, `about.md` | your words about tours, plans, gear lists, About page |
 | `private.toml` | your homes (never uploaded) |
 | `site/` | the website (`index.html`, `style.css`, `app.js`) |
 | `site/data/` | the data the website shows (made by `update`/`build`) |

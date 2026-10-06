@@ -198,12 +198,3 @@ def _town_near(point) -> str | None:
     return _nearest([point], towns_in, 8000)
 
 
-def place_name(point, bike: bool = False) -> str | None:
-    """A name for where you slept: the hut there, else the town (None if unknown)."""
-    try:
-        if not bike and (hut := _nearest([point], huts_in, 400)):
-            return hut
-        return _nearest([point], towns_in, 8000 if bike else 5000)
-    except PeakLookupError:
-        return None
-

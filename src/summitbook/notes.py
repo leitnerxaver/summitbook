@@ -8,7 +8,7 @@ trip, any of its dates works."""
 
 import re
 
-from . import plans
+from . import pages
 from .config import ROOT
 
 NOTES_FILE = ROOT / "notes.md"
@@ -21,7 +21,7 @@ def attach(entries: list[dict]) -> None:
     text = re.sub(r"<!--.*?-->", "", NOTES_FILE.read_text(), flags=re.S)  # comments are for you only
     for block in re.split(r"^## ", text, flags=re.M)[1:]:
         head, _, body = block.partition("\n")
-        html = plans.to_html(body)
+        html = pages.to_html(body)
         if not head.strip() or not html:
             continue
         key = _key(head.split()[0])

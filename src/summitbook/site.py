@@ -7,7 +7,7 @@ import shutil
 import time
 from datetime import UTC, date, datetime
 
-from . import geo, notes, peaks, plans, trips
+from . import geo, notes, pages, peaks, trips
 from .config import DATA_DIR, SITE_DIR, Config
 from .peaks import short_name
 from .sync import TRACKS_DIR, load_track, trip_days
@@ -95,7 +95,8 @@ def build(cfg: Config, store: dict) -> list[dict]:
     routes = {e["id"]: [_preview(load_track(d["id"])) for d in e["days"] if d["track"]] for e in entries}
     (out / "routes.json").write_text(json.dumps(routes, separators=(",", ":")))
     (out / "adventures.json").unlink(missing_ok=True)  # (older versions)
-    (out / "plans.json").write_text(json.dumps(plans.read(), ensure_ascii=False, separators=(",", ":")))
+    for name, content in (("plans", pages.plans()), ("gear", pages.gear()), ("about", pages.about())):
+        (out / f"{name}.json").write_text(json.dumps(content, ensure_ascii=False, separators=(",", ":")))
     return entries
 
 
@@ -146,7 +147,6 @@ def _entry(days: list[dict], cfg: Config, multi: bool) -> dict:
     for d in days:
         d["day"] = (date.fromisoformat(d["date"]) - first).days + 1  # day 1, 2, … (rest days count)
     return {
-        "nights": _nights(days, kind in cfg.multi_day_only) if multi else [],
         "id": days[0]["id"],
         "title": cfg.titles.get(days[0]["id"], name),
         "multi": multi,
@@ -165,24 +165,6 @@ def _entry(days: list[dict], cfg: Config, multi: bool) -> dict:
         "photos": [p for d in days for p in d["photos"]],
         "days": [{k: v for k, v in d.items() if k not in ("time", "start", "end")} for d in days],
     }
-
-
-def _nights(days: list[dict], bike: bool) -> list[dict]:
-    """Where you slept on a multi-day trip: the end of each day that another day follows."""
-    last_of_day = {}
-    for d in days:  # (in time order: the last activity of each day wins)
-        last_of_day[d["day"]] = d
-    numbers = sorted(last_of_day)
-    nights = []
-    for day, next_day in zip(numbers, numbers[1:]):
-        spot = last_of_day[day]["end"] or next((d["start"] for d in days if d["day"] == next_day), None)
-        if spot:
-            nights.append({
-                "after_day": day, "count": next_day - day,  # (more than 1 with a rest day)
-                "lat": round(spot[0], 5), "lon": round(spot[1], 5),
-                "name": trips.place_name(spot, bike),  # shown when you point at the pin
-            })
-    return nights
 
 
 def _extra_summits(cfg: Config) -> list[dict]:

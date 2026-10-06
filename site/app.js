@@ -54,9 +54,9 @@ function route() {
     history.replaceState(null, '', '#/');
   }
   const wasTour = state.view === 'tour';
-  const view = { '#/peaks': 'peaks', '#/plans': 'plans' }[location.hash] || 'log';
+  const view = { '#/peaks': 'peaks', '#/plans': 'plans', '#/gear': 'gear', '#/about': 'about' }[location.hash] || 'log';
   state.view = view;
-  view === 'plans' ? renderPlans() : renderHome(view);
+  ({ plans: renderPlans, gear: renderGear, about: renderAbout }[view] || renderHome)(view);
   scrollTo(0, wasTour ? state.scroll[view] || 0 : 0);
 }
 
@@ -67,7 +67,7 @@ function inCategory(category) {
 
 function tabsHtml(view) {
   const tab = (hash, name, label) => `<a href="${hash}" ${view === name ? 'aria-current="page"' : ''}>${label}</a>`;
-  return `<nav class="tabs" aria-label="View">${tab('#/', 'log', 'Logbook')}${tab('#/peaks', 'peaks', 'Peaks')}${tab('#/plans', 'plans', 'Plans')}</nav>`;
+  return `<nav class="tabs" aria-label="View">${tab('#/', 'log', 'Logbook')}${tab('#/peaks', 'peaks', 'Peaks')}${tab('#/plans', 'plans', 'Plans')}${tab('#/gear', 'gear', 'Gear')}${tab('#/about', 'about', 'About')}</nav>`;
 }
 
 // ---------- Home: stats, overview map, logbook / peaks ----------
@@ -269,6 +269,209 @@ async function renderPlans() {
         then run <code>uv run summitbook publish</code>.</p></div>`;
 }
 
+// ---------- Gear: your packing lists (from gear.md), with tick boxes ----------
+
+async function renderGear() {
+  document.title = `Gear · ${state.data.title}`;
+  app.innerHTML = `<div class="toolbar">${tabsHtml('gear')}<div class="chips" id="gear-chips" role="group" aria-label="Kind of trip"></div></div>
+    <section class="gear" id="gear"></section>`;
+  let lists = [];
+  try {
+    lists = await (await fetch('data/gear.json', { cache: 'no-cache' })).json();
+  } catch { /* no gear lists yet */ }
+  const chips = document.getElementById('gear-chips');
+  if (!chips) return; // already on another page
+  if (!lists.some((l) => l.title === state.gear)) state.gear = lists[0]?.title;
+
+  const show = () => {
+    chips.innerHTML = lists.map((l) =>
+      `<button class="chip" type="button" data-list="${esc(l.title)}" aria-pressed="${state.gear === l.title}">${esc(l.title)}</button>`).join('');
+    const list = lists.find((l) => l.title === state.gear);
+    const el = document.getElementById('gear');
+    if (!list?.html) {
+      el.innerHTML = `<div class="empty"><h2>Nothing on this list yet</h2>
+        <p>Write your ${esc((list?.title || 'gear').toLowerCase())} list into <code>gear.md</code>${list ? `, under <code>## ${esc(list.title)}</code>` : ''},
+        then run <code>uv run summitbook publish</code>.</p></div>`;
+      return;
+    }
+    el.innerHTML = `<article class="checklist">${list.html}</article>
+      <button class="btn untick" type="button">Untick all</button>`; // (list.html is made safe by summitbook)
+    // Tick boxes, remembered in this browser (for packing).
+    const key = `gear:${list.title}`;
+    const ticked = new Set(remember(key) || []);
+    el.querySelectorAll('.checklist li').forEach((li, i) => {
+      li.innerHTML = `<label><input type="checkbox" ${ticked.has(i) ? 'checked' : ''}><span>${li.innerHTML}</span></label>`;
+      li.querySelector('input').addEventListener('change', (ev) => {
+        ev.target.checked ? ticked.add(i) : ticked.delete(i);
+        remember(key, [...ticked]);
+      });
+    });
+    el.querySelector('.untick').addEventListener('click', () => {
+      remember(key, []);
+      show();
+    });
+  };
+  chips.addEventListener('click', (ev) => {
+    const btn = ev.target.closest('[data-list]');
+    if (!btn) return;
+    state.gear = btn.dataset.list;
+    show();
+  });
+  show();
+}
+
+// Small things this browser remembers (gear ticks). Never essential: it may not be allowed.
+function remember(key, value) {
+  try {
+    if (value === undefined) return JSON.parse(localStorage.getItem(key) || 'null');
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch { /* private window, blocked storage: just don't remember */ }
+  return null;
+}
+
+// ---------- About me (from about.md) ----------
+
+async function renderAbout() {
+  document.title = `About · ${state.data.title}`;
+  app.innerHTML = `<div class="toolbar">${tabsHtml('about')}</div><article class="about" id="about"></article>`;
+  let html = '';
+  try {
+    html = await (await fetch('data/about.json', { cache: 'no-cache' })).json();
+  } catch { /* nothing written yet */ }
+  const el = document.getElementById('about');
+  if (!el) return;
+  el.innerHTML = html // (made safe by summitbook)
+    || `<div class="empty"><h2>Nothing here yet</h2><p>Write about yourself in <code>about.md</code>,
+        then run <code>uv run summitbook publish</code>.</p></div>`;
+}
+
+// ---------- Elevation profile (tour page) ----------
+
+async function elevationProfile(el, e, tracksPromise, map) {
+  const tracks = await tracksPromise;
+  if (!el.isConnected) return;
+  const points = [];
+  let km = 0;
+  tracks.forEach((track, n) => {
+    let previous = null;
+    (track || []).forEach(([lat, lon, ele]) => {
+      const here = new maplibregl.LngLat(lon, lat);
+      if (previous) km += previous.distanceTo(here) / 1000;
+      previous = here;
+      if (ele != null) points.push({ km, ele, lat, lon, n });
+    });
+  });
+  if (points.length < 2) {
+    el.closest('section').remove(); // no heights recorded
+    return;
+  }
+  const draw = () => drawProfile(el, e, points, map);
+  draw();
+  const redraw = () => (el.isConnected ? draw() : removeEventListener('resize', redraw));
+  addEventListener('resize', redraw);
+}
+
+function drawProfile(el, e, points, map) {
+  const width = Math.max(el.clientWidth, 280);
+  const height = width < 520 ? 170 : 220;
+  const pad = { left: 54, right: 12, top: 26, bottom: 26 };
+  const total = points.at(-1).km || 1;
+  const heights = points.map((p) => p.ele);
+  const low = Math.min(...heights);
+  const high = Math.max(...heights);
+  const step = niceStep((high - low || 100) / 4);
+  const bottom = Math.floor(low / step) * step;
+  const top = Math.ceil(high / step) * step;
+  const x = (km) => pad.left + (km / total) * (width - pad.left - pad.right);
+  const y = (ele) => pad.top + (1 - (ele - bottom) / (top - bottom || 1)) * (height - pad.top - pad.bottom);
+  const color = (p) => dayColor(e, e.days[p.n].day);
+
+  // One line (and soft area) per day, each in its day's color.
+  const days = [];
+  points.forEach((p) => (days.at(-1)?.[0].n === p.n ? days.at(-1).push(p) : days.push([p])));
+  const shapes = days.map((day) => {
+    const line = day.map((p, i) => `${i ? 'L' : 'M'}${x(p.km).toFixed(1)} ${y(p.ele).toFixed(1)}`).join('');
+    const area = `${line}L${x(day.at(-1).km).toFixed(1)} ${y(bottom)}L${x(day[0].km).toFixed(1)} ${y(bottom)}Z`;
+    return `<path class="area" d="${area}" fill="${color(day[0])}"/><path class="line" d="${line}" stroke="${color(day[0])}"/>`;
+  }).join('');
+  const dayLabels = e.multi ? days.map((day) => {
+    const n = e.days[day[0].n].day;
+    const labelled = e.days_total <= DAY_COLORS || n === 1 || n % 5 === 0;
+    return labelled ? `<text class="day-label" x="${x(day[0].km) + 3}" y="${pad.top - 9}">Day ${n}</text>` : '';
+  }).join('') : '';
+
+  // Summits: a small triangle where the route reached them. Names (if there are only a few)
+  // go to the highest first; a name that would overlap one already written is left out.
+  const named = [];
+  const marks = [...e.summits].sort((a, b) => (b.ele ?? 0) - (a.ele ?? 0)).map((s) => {
+    const p = points.reduce((best, q) => ((q.lat - s.lat) ** 2 + (q.lon - s.lon) ** 2 < (best.lat - s.lat) ** 2 + (best.lon - s.lon) ** 2 ? q : best));
+    const [px, py] = [x(p.km), y(p.ele)];
+    const half = s.name.length * 3.6 + 6;
+    const fits = e.summits.length <= 4 && named.every(([nx, nh]) => Math.abs(px - nx) > half + nh);
+    if (fits) named.push([px, half]);
+    const label = fits ? `<text class="summit-name" x="${px}" y="${py - 12}" text-anchor="middle">${esc(s.name)}</text>` : '';
+    return `<path class="summit" d="M${px - 5} ${py - 2}L${px} ${py - 9}L${px + 5} ${py - 2}Z"><title>${esc(s.name)}</title></path>${label}`;
+  }).join('');
+
+  const ticks = [];
+  for (let ele = bottom; ele <= top + 0.1; ele += step) {
+    ticks.push(`<line class="grid" x1="${pad.left}" x2="${width - pad.right}" y1="${y(ele)}" y2="${y(ele)}"/>
+      <text class="axis" x="${pad.left - 8}" y="${y(ele) + 4}" text-anchor="end">${fmtM(ele)}</text>`);
+  }
+  const kmStep = niceStep(total / (width < 520 ? 4 : 7));
+  for (let k = 0; k <= total + 0.001; k += kmStep) {
+    ticks.push(`<text class="axis" x="${x(k)}" y="${height - 6}" text-anchor="middle">${fmtInt(+k.toFixed(1))} km</text>`);
+  }
+
+  el.innerHTML = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img"
+      aria-label="Elevation profile: from ${fmtM(low)} to ${fmtM(high)} over ${fmtKm(total * 1000)}">
+      ${ticks.join('')}${shapes}${dayLabels}${marks}
+      <line class="cross" y1="${pad.top}" y2="${y(bottom)}" visibility="hidden"/>
+      <circle class="dot" r="5" visibility="hidden"/>
+      <rect class="hit" x="${pad.left}" y="0" width="${width - pad.left - pad.right}" height="${height}"/>
+    </svg><div class="profile-tip" hidden></div>`;
+
+  // Pointing along the profile: the height there, and the same spot on the 3D map.
+  const svg = el.querySelector('svg');
+  const [cross, dot, tip] = [svg.querySelector('.cross'), svg.querySelector('.dot'), el.querySelector('.profile-tip')];
+  const hide = () => {
+    cross.setAttribute('visibility', 'hidden');
+    dot.setAttribute('visibility', 'hidden');
+    tip.hidden = true;
+    map?.hidePoint();
+  };
+  svg.querySelector('.hit').addEventListener('pointermove', (ev) => {
+    const km = ((ev.offsetX - pad.left) / (width - pad.left - pad.right)) * total;
+    let lo = 0;
+    let hi = points.length - 1;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      points[mid].km < km ? (lo = mid + 1) : (hi = mid);
+    }
+    const p = points[lo];
+    const [px, py] = [x(p.km), y(p.ele)];
+    cross.setAttribute('x1', px);
+    cross.setAttribute('x2', px);
+    cross.setAttribute('visibility', 'visible');
+    dot.setAttribute('cx', px);
+    dot.setAttribute('cy', py);
+    dot.setAttribute('fill', color(p));
+    dot.setAttribute('visibility', 'visible');
+    tip.hidden = false;
+    tip.textContent = `${fmtM(p.ele)} · ${fmtKm(p.km * 1000)}${e.multi ? ` · day ${e.days[p.n].day}` : ''}`;
+    tip.style.left = `${Math.min(Math.max(px, 70), width - 70)}px`;
+    tip.style.top = `${py - 14}px`;
+    map?.showPoint([p.lon, p.lat]);
+  });
+  svg.querySelector('.hit').addEventListener('pointerleave', hide);
+}
+
+// A round step for axis ticks: 1, 2, 2.5 or 5 times a power of ten.
+function niceStep(raw) {
+  const power = 10 ** Math.floor(Math.log10(raw || 1));
+  return [1, 2, 2.5, 5, 10].map((m) => m * power).find((s) => s >= raw);
+}
+
 // ---------- Tour page: 3D map, days, summits, photos ----------
 
 function renderTour(id) {
@@ -313,6 +516,10 @@ function renderTour(id) {
           </div>
           <button class="btn" type="button" id="spin" aria-pressed="false">Fly around</button>
         </div>
+      </section>
+      <section class="profile-wrap" aria-label="Elevation profile">
+        <h2 class="section-title">Elevation profile</h2>
+        <div id="profile" class="profile"></div>
       </section>` : ''}
     ${e.multi ? `
       <h2 class="section-title">Days</h2>
@@ -337,7 +544,11 @@ function renderTour(id) {
 
   app.querySelectorAll('[data-photo]').forEach((btn) =>
     btn.addEventListener('click', () => openLightbox(e.photos, Number(btn.dataset.photo))));
-  if (hasMap) tourMap(document.getElementById('tour-map'), e);
+  if (hasMap) {
+    const tracks = loadTracks(e);
+    const map = tourMap(document.getElementById('tour-map'), e, { tracks });
+    elevationProfile(document.getElementById('profile'), e, tracks, map);
+  }
 }
 
 function dayCard(e, d, n) {
@@ -365,7 +576,7 @@ function renderPreview(id) {
   if (e) tourMap(document.getElementById('tour-map'), e, { preview: true });
 }
 
-function tourMap(container, e, { preview = false } = {}) {
+function tourMap(container, e, { preview = false, tracks = loadTracks(e) } = {}) {
   const style = baseStyle('satellite');
   style.sources.dem = { type: 'raster-dem', url: TERRAIN_TILEJSON, tileSize: 512, encoding: 'terrarium' };
   style.terrain = { source: 'dem', exaggeration: 1 };
@@ -382,8 +593,6 @@ function tourMap(container, e, { preview = false } = {}) {
     map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'top-right');
     map.addControl(new maplibregl.FullscreenControl(), 'top-right');
   }
-  const tracks = Promise.all(e.days.map((d) =>
-    d.track ? fetch(`data/tracks/${d.id}.json`).then((r) => r.json()).catch(() => null) : null));
   const dayBounds = [];
 
   const marker = (lngLat, html, color, onClick) => {
@@ -439,16 +648,8 @@ function tourMap(container, e, { preview = false } = {}) {
     const view = camera(bounds);
     if (view) reduceMotion ? map.jumpTo(view) : map.flyTo({ ...view, duration: 2000 });
   };
-  // Where the selected day ended (if another day followed): a pin.
-  let nightMarkers = [];
-  const showNights = (day) => {
-    nightMarkers.forEach((m) => m.remove());
-    nightMarkers = e.nights.filter((n) => n.after_day === day).map((n) => endPin(n).addTo(map));
-  };
   const selectDay = (n) => {
-    if (!dayBounds[n]) return;
-    fit(dayBounds[n]);
-    showNights(e.days[n].day);
+    if (dayBounds[n]) fit(dayBounds[n]);
   };
   const flyTo = (s) => {
     stopSpin();
@@ -548,7 +749,15 @@ function tourMap(container, e, { preview = false } = {}) {
       app.querySelectorAll('[data-base]').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
     }));
 
-  if (preview) return;
+  // A point on the map that follows your finger/mouse on the elevation profile.
+  const pointEl = document.createElement('div');
+  pointEl.className = 'profile-point';
+  const point = new maplibregl.Marker({ element: pointEl });
+  const api = {
+    showPoint(lngLat) { point.setLngLat(lngLat).addTo(map); },
+    hidePoint() { point.remove(); },
+  };
+  if (preview) return api;
 
   // "Fly around": slowly circle the camera around the tour.
   const spinBtn = document.getElementById('spin');
@@ -568,6 +777,12 @@ function tourMap(container, e, { preview = false } = {}) {
     spin();
   });
   ['mousedown', 'touchstart', 'wheel'].forEach((ev) => container.addEventListener(ev, () => spinning && stopSpin(), { passive: true }));
+  return api;
+}
+
+function loadTracks(e) {
+  return Promise.all(e.days.map((d) =>
+    d.track ? fetch(`data/tracks/${d.id}.json`).then((r) => r.json()).catch(() => null) : null));
 }
 
 // ---------- Overview map ----------
@@ -633,7 +848,6 @@ function overviewMap(container) {
       return;
     }
     popup.remove();
-    clearNights();
     const peaks = mode === 'peaks';
     map.setLayoutProperty('places', 'visibility', peaks ? 'visible' : 'none');
     ['tracks-casing', 'tracks', 'tracks-hit'].forEach((id) => map.setLayoutProperty(id, 'visibility', peaks ? 'none' : 'visible'));
@@ -651,18 +865,12 @@ function overviewMap(container) {
       .addTo(map);
   };
 
-  let nightMarkers = [];
-  const clearNights = () => { nightMarkers.forEach((m) => m.remove()); nightMarkers = []; };
-  popup.on('close', clearNights);
-
   const openTrack = (i, lngLat) => {
     const e = tracks[i];
-    const nights = e.nights?.length ? `<p>${e.nights.reduce((k, n) => k + n.count, 0)} nights · the pins show where each day ended</p>` : '';
     popup.setLngLat(lngLat)
       .setHTML(`<strong>${esc(titleText(e))}</strong><p>${fmtRange(e.date, e.end_date)} · ${esc(e.category === 'adventure' ? state.data.adventures_title : typeOf(e.type).label)}</p>
-        <p>${statsLine(e)}</p>${nights}<ul><li><a href="#/tour/${e.id}">Open the tour →</a></li></ul>`)
-      .addTo(map); // (closes an open post-it first, which removes its moons)
-    nightMarkers = (e.nights || []).map((n) => endPin(n).addTo(map));
+        <p>${statsLine(e)}</p><ul><li><a href="#/tour/${e.id}">Open the tour →</a></li></ul>`)
+      .addTo(map);
   };
 
   map.on('load', () => {
@@ -745,18 +953,6 @@ function homeRegion(points) {
   const middle = new maplibregl.LngLat(median(points.map((p) => p[0])), median(points.map((p) => p[1])));
   const near = points.filter((p) => middle.distanceTo(new maplibregl.LngLat(...p)) < 800_000);
   return near.length >= points.length / 2 ? near : points;
-}
-
-// A push pin where a day of a multi-day trip ended (where you slept). Pointing at it (or
-// tapping it) shows the hut or town.
-function endPin(night) {
-  const el = document.createElement('div');
-  el.className = 'end-pin';
-  el.tabIndex = 0;
-  const day = `End of day ${night.after_day}`;
-  el.setAttribute('aria-label', night.name ? `${night.name}, ${day.toLowerCase()}` : day);
-  el.innerHTML = `<span class="pin-label">${night.name ? `${esc(night.name)}<small>${day}</small>` : day}</span>`;
-  return new maplibregl.Marker({ element: el, anchor: 'bottom' }).setLngLat([night.lon, night.lat]);
 }
 
 function baseStyle(base) {

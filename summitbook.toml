@@ -2,8 +2,8 @@
 # After changing something here, run:  uv run summitbook build
 
 [site]
-title = "Summit Book"
-subtitle = "Ski tours and summits"
+title = "Xaver's Mountain Collection"
+subtitle = "Ski tours, mountaineering and summits"
 adventures_title = "Bike adventures"
 
 [activities]
