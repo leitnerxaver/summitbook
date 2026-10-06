@@ -1,11 +1,13 @@
 """Writing the data the website shows (site/data/)."""
 
 import json
+import os
 import re
 import shutil
+import time
 from datetime import UTC, date, datetime
 
-from . import geo, notes, plans, trips
+from . import geo, notes, peaks, plans, trips
 from .config import DATA_DIR, SITE_DIR, Config
 from .peaks import short_name
 from .sync import TRACKS_DIR, load_track, trip_days
@@ -37,6 +39,10 @@ COLOR_GROUPS = [
 
 
 def build(cfg: Config, store: dict) -> list[dict]:
+    # Names (huts, towns) need the slow map server: look them up for a few minutes at most,
+    # so the website is still published; the rest are found on later runs.
+    minutes = float(os.environ.get("SUMMITBOOK_NAME_MINUTES", 3))
+    peaks.deadline = min(peaks.deadline, time.time() + 60 * minutes)
     records = {k: rec for k, rec in store["activities"].items() if k not in cfg.hide}
     entries = []
     for group in trip_days(cfg, records):
