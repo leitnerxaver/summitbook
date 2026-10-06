@@ -747,13 +747,15 @@ function homeRegion(points) {
   return near.length >= points.length / 2 ? near : points;
 }
 
-// A push pin where a day of a multi-day trip ended (where you slept).
+// A push pin where a day of a multi-day trip ended (where you slept). Pointing at it (or
+// tapping it) shows the hut or town.
 function endPin(night) {
   const el = document.createElement('div');
   el.className = 'end-pin';
-  el.title = `End of day ${night.after_day}`;
-  el.setAttribute('role', 'img');
-  el.setAttribute('aria-label', el.title);
+  el.tabIndex = 0;
+  const day = `End of day ${night.after_day}`;
+  el.setAttribute('aria-label', night.name ? `${night.name}, ${day.toLowerCase()}` : day);
+  el.innerHTML = `<span class="pin-label">${night.name ? `${esc(night.name)}<small>${day}</small>` : day}</span>`;
   return new maplibregl.Marker({ element: el, anchor: 'bottom' }).setLngLat([night.lon, night.lat]);
 }
 

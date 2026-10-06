@@ -187,6 +187,15 @@ strong, b { font-weight: 700; }
   content: ""; position: absolute; bottom: 0; left: 9px; width: 2px; height: 15px; border-radius: 1px;
   background: linear-gradient(90deg, #9a9a9a, #f2f2f2, #8a8a8a);
 }
+.end-pin { cursor: pointer; outline: none; }
+.end-pin:hover, .end-pin:focus { z-index: 5; }
+.end-pin .pin-label {
+  display: none; position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%) rotate(-1.5deg);
+  padding: 4px 10px; white-space: nowrap; text-align: center; border-radius: 2px;
+  background: var(--postit-1); color: var(--ink); font: 700 18px/1.1 var(--hand); box-shadow: 1px 4px 10px rgba(0, 0, 0, 0.3);
+}
+.end-pin .pin-label small { display: block; font: 400 11px/1.3 var(--text); color: var(--ink-2); }
+.end-pin:hover .pin-label, .end-pin:focus .pin-label { display: block; }
 
 /* Logbook: one journal entry per tour */
 .year { display: flex; align-items: baseline; gap: 12px; margin: 34px 0 6px; font: 700 2.8rem/1 var(--hand); }

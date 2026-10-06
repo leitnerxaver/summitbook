@@ -140,7 +140,7 @@ def _entry(days: list[dict], cfg: Config, multi: bool) -> dict:
     for d in days:
         d["day"] = (date.fromisoformat(d["date"]) - first).days + 1  # day 1, 2, … (rest days count)
     return {
-        "nights": _nights(days) if multi else [],
+        "nights": _nights(days, kind in cfg.multi_day_only) if multi else [],
         "id": days[0]["id"],
         "title": cfg.titles.get(days[0]["id"], name),
         "multi": multi,
@@ -161,7 +161,7 @@ def _entry(days: list[dict], cfg: Config, multi: bool) -> dict:
     }
 
 
-def _nights(days: list[dict]) -> list[dict]:
+def _nights(days: list[dict], bike: bool) -> list[dict]:
     """Where you slept on a multi-day trip: the end of each day that another day follows."""
     last_of_day = {}
     for d in days:  # (in time order: the last activity of each day wins)
@@ -174,6 +174,7 @@ def _nights(days: list[dict]) -> list[dict]:
             nights.append({
                 "after_day": day, "count": next_day - day,  # (more than 1 with a rest day)
                 "lat": round(spot[0], 5), "lon": round(spot[1], 5),
+                "name": trips.place_name(spot, bike),  # shown when you point at the pin
             })
     return nights
 
