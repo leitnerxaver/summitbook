@@ -16,3 +16,5 @@
   Or edit this file on github.com (open it, tap the pencil, write, "Commit changes").
   (Text inside these arrows is never shown.)
 -->
+## 2026-10-01 Großglockner
+wonderful day out on Austria's highest peak with Max
