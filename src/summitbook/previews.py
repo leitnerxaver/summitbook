@@ -13,6 +13,7 @@ from .config import DATA_DIR, SITE_DIR
 
 PREVIEWS_DIR = DATA_DIR / "previews"
 SIZE = {"width": 640, "height": 480}
+MIN_BYTES = 25_000  # smaller pictures are mostly empty: the map didn't load
 
 
 def needs_preview(entry: dict) -> bool:
@@ -52,8 +53,13 @@ def make_previews(entries: list[dict], limit: int | None = None) -> int:
                 page = browser.new_page(viewport=SIZE)
                 try:
                     page.goto(f"http://127.0.0.1:{server.server_port}/#/preview/{entry['id']}")
-                    page.wait_for_function("window.summitbookPreviewReady === true", timeout=90_000)
-                    page.screenshot(path=PREVIEWS_DIR / f"{entry['id']}.jpg", type="jpeg", quality=78)
+                    page.wait_for_function("window.summitbookPreviewReady || window.summitbookPreviewFailed", timeout=90_000)
+                    if page.evaluate("window.summitbookPreviewFailed === true"):
+                        raise RuntimeError("the map didn't load completely, trying again next time")
+                    picture = page.screenshot(type="jpeg", quality=78)
+                    if len(picture) < MIN_BYTES:
+                        raise RuntimeError("the picture came out empty, trying again next time")
+                    (PREVIEWS_DIR / f"{entry['id']}.jpg").write_bytes(picture)
                     made += 1
                 except Exception as err:  # one difficult tour shouldn't stop the others
                     print(f"  No picture for {entry['date']} {entry['title']}: {err}")

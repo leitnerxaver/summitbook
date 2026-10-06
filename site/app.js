@@ -511,6 +511,8 @@ function tourMap(container, e, { preview = false } = {}) {
       aim(start, [...peaks].sort((a, b) => (b.ele ?? 0) - (a.ele ?? 0))[0]);
     }
     if (preview) {
+      let failed = false;
+      map.on('error', () => { failed = true; }); // e.g. a map piece that didn't download
       // Summit tours: close up on the highest summit. Others (couloirs, bike trips): the whole route.
       const top = [...e.summits].sort((a, b) => (b.ele ?? 0) - (a.ele ?? 0))[0];
       const view = top && e.category === 'summits'
@@ -523,7 +525,8 @@ function tourMap(container, e, { preview = false } = {}) {
         map.jumpTo(view);
         await settled();
       }
-      window.summitbookPreviewReady = true;
+      if (failed || !map.areTilesLoaded()) window.summitbookPreviewFailed = true;
+      else window.summitbookPreviewReady = true;
       return;
     }
     if (total) intro(total);
