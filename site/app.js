@@ -439,6 +439,19 @@ function tourMap(container, e, { preview = false } = {}) {
     const view = camera(bounds);
     if (view) reduceMotion ? map.jumpTo(view) : map.flyTo({ ...view, duration: 2000 });
   };
+  // Where you slept: shown for the selected day only (the night before and the night after it).
+  let nightMarkers = [];
+  const showNights = (day) => {
+    nightMarkers.forEach((m) => m.remove());
+    const before = [...e.nights].reverse().find((n) => n.after_day < day);
+    const after = e.nights.find((n) => n.after_day === day);
+    nightMarkers = [before, after].filter(Boolean).map((n) => nightMarker(n, true).addTo(map));
+  };
+  const selectDay = (n) => {
+    if (!dayBounds[n]) return;
+    fit(dayBounds[n]);
+    showNights(e.days[n].day);
+  };
   const flyTo = (s) => {
     stopSpin();
     map.flyTo({ center: [s.lon, s.lat], zoom: 14.6, pitch: 65, bearing, duration: reduceMotion ? 0 : 2500 });
@@ -463,6 +476,12 @@ function tourMap(container, e, { preview = false } = {}) {
       map.addSource(`day-${n}`, { type: 'geojson', data: { type: 'Feature', geometry: { type: 'LineString', coordinates: coords } } });
       map.addLayer({ id: `day-${n}-casing`, type: 'line', source: `day-${n}`, layout: { 'line-join': 'round', 'line-cap': 'round' }, paint: { 'line-color': '#ffffff', 'line-width': 7, 'line-opacity': 0.85 } });
       map.addLayer({ id: `day-${n}`, type: 'line', source: `day-${n}`, layout: { 'line-join': 'round', 'line-cap': 'round' }, paint: { 'line-color': color, 'line-width': 4 } });
+      if (e.multi && !preview) {
+        map.addLayer({ id: `day-${n}-hit`, type: 'line', source: `day-${n}`, paint: { 'line-color': '#000', 'line-opacity': 0, 'line-width': 16 } });
+        map.on('click', `day-${n}-hit`, () => selectDay(n));
+        map.on('mouseenter', `day-${n}-hit`, () => { map.getCanvas().style.cursor = 'pointer'; });
+        map.on('mouseleave', `day-${n}-hit`, () => { map.getCanvas().style.cursor = ''; });
+      }
       const b = coords.reduce((acc, c) => acc.extend(c), new maplibregl.LngLatBounds(coords[0], coords[0]));
       dayBounds[n] = b;
       total = total ? total.extend(b) : new maplibregl.LngLatBounds(b.getSouthWest(), b.getNorthEast());
@@ -470,7 +489,7 @@ function tourMap(container, e, { preview = false } = {}) {
         // Label each day a quarter of the way along its route, so days from the same hut don't overlap.
         // Long trips only get every 5th day labelled, plus the first and last.
         const labelled = e.days_total <= DAY_COLORS || day === 1 || day % 5 === 0 || day === e.days_total;
-        if (labelled && !badged.has(day)) dayBadge(coords[Math.floor(coords.length / 4)], day, color, () => fit(b));
+        if (labelled && !badged.has(day)) dayBadge(coords[Math.floor(coords.length / 4)], day, color, () => selectDay(n));
         badged.add(day);
       } else {
         map.addSource('start', { type: 'geojson', data: { type: 'Feature', geometry: { type: 'Point', coordinates: coords[0] } } });
@@ -521,10 +540,8 @@ function tourMap(container, e, { preview = false } = {}) {
     }));
   app.querySelectorAll('[data-day]').forEach((btn) =>
     btn.addEventListener('click', () => {
-      const b = dayBounds[Number(btn.dataset.day)];
-      if (!b) return;
       container.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
-      fit(b);
+      selectDay(Number(btn.dataset.day));
     }));
   app.querySelectorAll('[data-base]').forEach((btn) =>
     btn.addEventListener('click', () => {
@@ -618,6 +635,7 @@ function overviewMap(container) {
       return;
     }
     popup.remove();
+    clearNights();
     const peaks = mode === 'peaks';
     map.setLayoutProperty('places', 'visibility', peaks ? 'visible' : 'none');
     ['tracks-casing', 'tracks', 'tracks-hit'].forEach((id) => map.setLayoutProperty(id, 'visibility', peaks ? 'none' : 'visible'));
@@ -635,12 +653,18 @@ function overviewMap(container) {
       .addTo(map);
   };
 
+  let nightMarkers = [];
+  const clearNights = () => { nightMarkers.forEach((m) => m.remove()); nightMarkers = []; };
+  popup.on('close', clearNights);
+
   const openTrack = (i, lngLat) => {
     const e = tracks[i];
+    const nights = e.nights?.length ? `<p>🌙 ${e.nights.reduce((k, n) => k + n.count, 0)} nights · moons on the map</p>` : '';
     popup.setLngLat(lngLat)
       .setHTML(`<strong>${esc(titleText(e))}</strong><p>${fmtRange(e.date, e.end_date)} · ${esc(e.category === 'adventure' ? state.data.adventures_title : typeOf(e.type).label)}</p>
-        <p>${statsLine(e)}</p><ul><li><a href="#/tour/${e.id}">Open the tour →</a></li></ul>`)
-      .addTo(map);
+        <p>${statsLine(e)}</p>${nights}<ul><li><a href="#/tour/${e.id}">Open the tour →</a></li></ul>`)
+      .addTo(map); // (closes an open post-it first, which removes its moons)
+    nightMarkers = (e.nights || []).map((n) => nightMarker(n, false).addTo(map));
   };
 
   map.on('load', () => {
@@ -723,6 +747,17 @@ function homeRegion(points) {
   const middle = new maplibregl.LngLat(median(points.map((p) => p[0])), median(points.map((p) => p[1])));
   const near = points.filter((p) => middle.distanceTo(new maplibregl.LngLat(...p)) < 800_000);
   return near.length >= points.length / 2 ? near : points;
+}
+
+// A moon where you slept. With a label (on the tour page): which night, and the hut or town.
+function nightMarker(night, labelled) {
+  const el = document.createElement('div');
+  el.className = 'night-marker';
+  const what = `${night.count > 1 ? `${night.count} nights` : 'Night'} after day ${night.after_day}`;
+  el.title = night.name ? `${what}: ${night.name}` : what;
+  el.innerHTML = `${labelled ? `<span class="label">${esc(night.name || what)}${night.name ? `<small>${esc(what)}</small>` : ''}</span>` : ''}
+    <span class="moon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></span>`;
+  return new maplibregl.Marker({ element: el, anchor: 'bottom' }).setLngLat([night.lon, night.lat]);
 }
 
 function baseStyle(base) {

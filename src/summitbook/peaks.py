@@ -92,6 +92,9 @@ def _overpass(query: str) -> dict:
             problem = f"HTTP {err.code}"
         except (OSError, ValueError) as err:
             problem = str(err)
+            if isinstance(getattr(err, "reason", err), ConnectionRefusedError):
+                _failures_in_a_row = 3  # the server refuses us: no point in waiting and trying again
+                break
         time.sleep(min(5 * (attempt + 1), 45))
     _failures_in_a_row += 1
     raise PeakLookupError(f"Could not reach OpenStreetMap ({problem})")
