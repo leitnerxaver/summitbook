@@ -19,7 +19,6 @@ SECRETS_FILE = ROOT / ".strava.json"  # your Strava login, never published
 CACHE_DIR = ROOT / ".cache"  # OpenStreetMap peaks, safe to delete
 DATA_DIR = ROOT / "data"  # everything downloaded from Strava
 SITE_DIR = ROOT / "site"  # the website itself
-IMPORTS_DIR = ROOT / "imports"  # GPX/FIT files, e.g. from Suunto (stay on this computer)
 
 
 @dataclass
@@ -42,6 +41,10 @@ class Config:
     link_radius_m: float = 500
     homes: list[list[float]] = field(default_factory=lambda: [[47.2655, 11.3925]])
     home_radius_km: float = 7
+    # Places that count as summits although they aren't peaks: name -> [lat, lon, height]
+    extra_summits: dict[str, list[float]] = field(default_factory=dict)
+    # Folders with GPX/FIT files, e.g. from Suunto (they stay on this computer)
+    import_folders: list[Path] = field(default_factory=lambda: [ROOT / "imports"])
 
     def near_home(self, point) -> bool:
         from .trips import distance_m  # (avoids a circular import)
@@ -57,7 +60,9 @@ def load_config() -> Config:
     if not CONFIG_FILE.exists():
         return Config()
     raw = tomllib.loads(CONFIG_FILE.read_text())
-    site, acts, summits, multi, fixes = (raw.get(k, {}) for k in ("site", "activities", "summits", "multi_day", "fixes"))
+    site, acts, summits, multi, fixes, imports = (
+        raw.get(k, {}) for k in ("site", "activities", "summits", "multi_day", "fixes", "imports")
+    )
     default = Config()
     return Config(
         title=site.get("title", default.title),
@@ -75,4 +80,6 @@ def load_config() -> Config:
         link_radius_m=multi.get("link_radius_m", default.link_radius_m),
         homes=multi.get("homes", [multi["home"]] if "home" in multi else default.homes),
         home_radius_km=multi.get("home_radius_km", default.home_radius_km),
+        extra_summits=summits.get("extra", {}),
+        import_folders=[ROOT / Path(f).expanduser() for f in imports.get("folders", ["imports"])],
     )

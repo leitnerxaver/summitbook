@@ -7,6 +7,7 @@ from datetime import UTC, date, datetime
 
 from . import geo, trips
 from .config import SITE_DIR, Config
+from .peaks import short_name
 from .sync import TRACKS_DIR, load_track, trip_days
 
 TYPE_LABELS = {
@@ -38,7 +39,7 @@ def build(cfg: Config, store: dict) -> list[dict]:
     records = {k: rec for k, rec in store["activities"].items() if k not in cfg.hide}
     entries = []
     for group in trip_days(cfg, records):
-        group = [_day(d["id"], records[d["id"]], d["start"], d["end"]) for d in group]
+        group = [_day(d["id"], records[d["id"]], d["start"], d["end"], cfg) for d in group]
         if len({d["date"] for d in group}) > 1:
             entries.append(_entry(group, cfg, multi=True))  # multi-day trips are always shown
         else:
@@ -81,8 +82,12 @@ def _preview(track: list[list]) -> list[list]:
     return [[round(lon, 4), round(lat, 4)] for lat, lon, _ in geo.simplify(flat, tolerance_m=60)]
 
 
-def _day(activity_id: str, rec: dict, start, end) -> dict:
+def _day(activity_id: str, rec: dict, start, end, cfg: Config) -> dict:
     has_track = bool(rec.get("has_track")) and (TRACKS_DIR / f"{activity_id}.json").exists()
+    summits = rec.get("summits") or []
+    if has_track and cfg.extra_summits:
+        summits = geo.find_summits(load_track(activity_id), summits + _extra_summits(cfg), cfg.radius_m, cfg.altitude_tolerance_m)
+    summits = [{**s, "name": short_name(s["name"])} for s in summits]
     return {
         "id": activity_id,
         "source": rec.get("source", "strava"),
@@ -94,7 +99,7 @@ def _day(activity_id: str, rec: dict, start, end) -> dict:
         "gain": round(rec.get("total_elevation_gain") or 0),
         "moving_time": rec.get("moving_time") or 0,
         "elev_high": rec.get("elev_high"),
-        "summits": rec.get("summits") or [],
+        "summits": summits,
         "high_point": rec.get("high_point"),
         "photos": rec.get("photos") or [],
         "track": has_track,
@@ -135,6 +140,15 @@ def _entry(days: list[dict], cfg: Config, multi: bool) -> dict:
         "photos": [p for d in days for p in d["photos"]],
         "days": [{k: v for k, v in d.items() if k not in ("time", "start", "end")} for d in days],
     }
+
+
+def _extra_summits(cfg: Config) -> list[dict]:
+    """Your own summits from summitbook.toml, e.g. a hut: name = [lat, lon, height]."""
+    return [
+        {"id": "x-" + re.sub(r"\W+", "-", name.lower()).strip("-"), "name": name,
+         "lat": spot[0], "lon": spot[1], "ele": spot[2] if len(spot) > 2 else None}
+        for name, spot in cfg.extra_summits.items()
+    ]
 
 
 def _color_slot(sport_type: str) -> int:

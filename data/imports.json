@@ -1,0 +1,1790 @@
+{
+ "fd1f8f1776752": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-04-30T09:02:01Z",
+  "start_date_local": "2020-04-30T11:02:01Z",
+  "distance": 11690.0,
+  "total_elevation_gain": 1229,
+  "moving_time": 12287,
+  "elev_high": 1765.1999999999998,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.776451194658875,
+   13.384773591533303
+  ],
+  "end_latlng": [
+   47.77633275836706,
+   13.384576784446836
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5eac0e8400ca6879e895811f.fit",
+  "name": "Hike"
+ },
+ "f98e69d34a366": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-05-03T12:51:47Z",
+  "start_date_local": "2020-05-03T14:51:47Z",
+  "distance": 9095.0,
+  "total_elevation_gain": 904,
+  "moving_time": 10445,
+  "elev_high": 1574.6,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.846630439162254,
+   13.586897570639849
+  ],
+  "end_latlng": [
+   47.84764163196087,
+   13.586446372792125
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5eaf0cab96f1c16fd76476f1.fit",
+  "name": "Hike"
+ },
+ "f78832dc36169": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-05-17T13:30:17Z",
+  "start_date_local": "2020-05-17T15:30:17Z",
+  "distance": 4487.0,
+  "total_elevation_gain": 520,
+  "moving_time": 6940,
+  "elev_high": 1068.6,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.81650235876441,
+   13.357915207743645
+  ],
+  "end_latlng": [
+   47.817059168592095,
+   13.36110720410943
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5ec4460617dea503db3bdb45.fit",
+  "name": "Hike"
+ },
+ "f4da6bf1e386e": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-06-01T06:50:17Z",
+  "start_date_local": "2020-06-01T08:50:17Z",
+  "distance": 9372.0,
+  "total_elevation_gain": 935,
+  "moving_time": 9626,
+  "elev_high": 1573.8000000000002,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.84845761023462,
+   13.59124643728137
+  ],
+  "end_latlng": [
+   47.84831997938454,
+   13.591822441667318
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5ed4da7cf409674aa9a712a9.fit",
+  "name": "Hike"
+ },
+ "f8d072f82d3a3": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-06-02T04:02:37Z",
+  "start_date_local": "2020-06-02T06:02:37Z",
+  "distance": 15311.0,
+  "total_elevation_gain": 1272,
+  "moving_time": 16908,
+  "elev_high": 1772.1999999999998,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.80210241675377,
+   13.473433591425419
+  ],
+  "end_latlng": [
+   47.80218883417547,
+   13.473590416833758
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5ed80253af05ab49d12a898e.fit",
+  "name": "Hike"
+ },
+ "fdd07ea7dce2b": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-06-12T06:26:50Z",
+  "start_date_local": "2020-06-12T08:26:50Z",
+  "distance": 5717.0,
+  "total_elevation_gain": 7,
+  "moving_time": 5938,
+  "elev_high": 1689.1999999999998,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.87314558401704,
+   13.83969116024673
+  ],
+  "end_latlng": [
+   47.85526723600924,
+   13.822716800495982
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5eeb49cf0060d44674c2a738.fit",
+  "name": "Hike"
+ },
+ "ffc69a7c57a19": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-06-17T15:24:30Z",
+  "start_date_local": "2020-06-17T17:24:30Z",
+  "distance": 7508.0,
+  "total_elevation_gain": 262,
+  "moving_time": 7587,
+  "elev_high": 1249.2,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.80568643473089,
+   13.553793579339981
+  ],
+  "end_latlng": [
+   47.800089586526155,
+   13.541479976847768
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5eeb49ecaa6df479b910381d.fit",
+  "name": "Hike"
+ },
+ "f4ed7b516fa1b": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-06-22T16:00:21Z",
+  "start_date_local": "2020-06-22T18:00:21Z",
+  "distance": 8023.0,
+  "total_elevation_gain": 1036,
+  "moving_time": 10761,
+  "elev_high": 1603.0,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.79884479008615,
+   13.542108787223697
+  ],
+  "end_latlng": [
+   47.813951997086406,
+   13.580156760290265
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5ef254f6a5e4c6542a0c22ef.fit",
+  "name": "Hike"
+ },
+ "fe34b2e3f3c85": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-06-23T05:03:34Z",
+  "start_date_local": "2020-06-23T07:03:34Z",
+  "distance": 19938.0,
+  "total_elevation_gain": 1250.8000000000002,
+  "moving_time": 23343,
+  "elev_high": 1821.6,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.81402240507305,
+   13.57996640726924
+  ],
+  "end_latlng": [
+   47.81338881701231,
+   13.774144006893039
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5ef25525cf1d44385345a7ed.fit",
+  "name": "Hike"
+ },
+ "f151469e65de2": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-06-25T06:36:19Z",
+  "start_date_local": "2020-06-25T08:36:19Z",
+  "distance": 4890.0,
+  "total_elevation_gain": 63,
+  "moving_time": 5593,
+  "elev_high": 1692.0,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.82750721089542,
+   13.629804784432054
+  ],
+  "end_latlng": [
+   47.84363843500614,
+   13.629332799464464
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5ef462c81f5ed303b691ad42.fit",
+  "name": "Hike"
+ },
+ "fb11997dbb128": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-06-24T16:47:21Z",
+  "start_date_local": "2020-06-24T18:47:21Z",
+  "distance": 3481.0,
+  "total_elevation_gain": 963,
+  "moving_time": 6754,
+  "elev_high": 1698.4,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.84319679252803,
+   13.629148816689849
+  ],
+  "end_latlng": [
+   47.82767040655017,
+   13.62993118353188
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5ef462fb2b0f56226db42d6e.fit",
+  "name": "Hike"
+ },
+ "fa30abbf14a5f": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-06-27T02:20:21Z",
+  "start_date_local": "2020-06-27T04:20:21Z",
+  "distance": 22405.0,
+  "total_elevation_gain": 2115,
+  "moving_time": 25087,
+  "elev_high": 2515.6,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.68287998624146,
+   14.120347201824188
+  ],
+  "end_latlng": [
+   47.682480001822114,
+   14.120611231774092
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5ef76aa0bd181e4e7a2194ab.fit",
+  "name": "Hike"
+ },
+ "f9ca5c9daff0d": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-06-28T05:27:31Z",
+  "start_date_local": "2020-06-28T07:27:31Z",
+  "distance": 5011.0,
+  "total_elevation_gain": 662,
+  "moving_time": 13763,
+  "elev_high": 1077.4,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.818790366873145,
+   13.354969639331102
+  ],
+  "end_latlng": [
+   47.818217631429434,
+   13.356902422383428
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5ef867185ede424ba9df6082.fit",
+  "name": "Hike"
+ },
+ "f4daee21c3246": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-06-30T11:10:07Z",
+  "start_date_local": "2020-06-30T13:10:07Z",
+  "distance": 8200.0,
+  "total_elevation_gain": 842,
+  "moving_time": 10683,
+  "elev_high": 1714.0,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.84326401539147,
+   13.62954561598599
+  ],
+  "end_latlng": [
+   47.84284483641386,
+   13.628891240805387
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5efb5c696968576795e62b44.fit",
+  "name": "Hike"
+ },
+ "f225b43e8fd5a": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-07-13T03:37:33Z",
+  "start_date_local": "2020-07-13T05:37:33Z",
+  "distance": 16223.0,
+  "total_elevation_gain": 1212,
+  "moving_time": 20435,
+  "elev_high": 2997.6,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.45080319233239,
+   13.618200039491057
+  ],
+  "end_latlng": [
+   47.45086723007262,
+   13.618180761113763
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5f0c497b29457b78380a44a7.fit",
+  "name": "Hike"
+ },
+ "f7e0afe4ebca5": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-07-14T16:14:55Z",
+  "start_date_local": "2020-07-14T18:14:55Z",
+  "distance": 7595.0,
+  "total_elevation_gain": 1151,
+  "moving_time": 6980,
+  "elev_high": 1079.2,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.76354876346886,
+   13.810353577136993
+  ],
+  "end_latlng": [
+   47.768691228702664,
+   13.813023967668414
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5f0e024b019f0e4dc414b453.fit",
+  "name": "Hike"
+ },
+ "f37683fab6b91": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-07-20T05:59:44Z",
+  "start_date_local": "2020-07-20T07:59:44Z",
+  "distance": 8833.0,
+  "total_elevation_gain": 259,
+  "moving_time": 11996,
+  "elev_high": 3798.0,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.06989757716656,
+   12.701495178043842
+  ],
+  "end_latlng": [
+   47.02447042800486,
+   12.690177597105503
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5f15a1e919dd39202da57508.fit",
+  "name": "Hike"
+ },
+ "fd87dd23a2764": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-07-20T02:28:46Z",
+  "start_date_local": "2020-07-20T04:28:46Z",
+  "distance": 7698.0,
+  "total_elevation_gain": 1484,
+  "moving_time": 9896,
+  "elev_high": 3435.4,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.02349443919957,
+   12.690145578235388
+  ],
+  "end_latlng": [
+   47.069820798933506,
+   12.70138319581747
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5f15a1f6c8dc4a391ad3e627.fit",
+  "name": "Hike"
+ },
+ "f9f86f3a77451": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-09-05T06:52:49Z",
+  "start_date_local": "2020-09-05T08:52:49Z",
+  "distance": 24512.0,
+  "total_elevation_gain": 2132,
+  "moving_time": 25598,
+  "elev_high": 1818.1999999999998,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.790697580203414,
+   13.551668766885996
+  ],
+  "end_latlng": [
+   47.80770563520491,
+   13.732259217649698
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5f54a9fa9a8e85163d7a0a5c.fit",
+  "name": "Hike"
+ },
+ "f84f300152dbc": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-08-28T05:51:44Z",
+  "start_date_local": "2020-08-28T07:51:44Z",
+  "distance": 11516.0,
+  "total_elevation_gain": 1113,
+  "moving_time": 13919,
+  "elev_high": 1559.0,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.81261441297829,
+   13.546689581125975
+  ],
+  "end_latlng": [
+   47.81384319998324,
+   13.546441560611129
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5f54aa0d047864196a999462.fit",
+  "name": "Hike"
+ },
+ "ff82c3bd22024": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-08-20T05:13:21Z",
+  "start_date_local": "2020-08-20T07:13:21Z",
+  "distance": 11373.0,
+  "total_elevation_gain": 964,
+  "moving_time": 18391,
+  "elev_high": 3187.2,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   46.94185922853649,
+   12.728675175458193
+  ],
+  "end_latlng": [
+   46.91512003540993,
+   12.776350434869528
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5f54aa2cbee5aa704ee88000.fit",
+  "name": "Hike"
+ },
+ "fea8c5716dddc": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-08-26T06:14:17Z",
+  "start_date_local": "2020-08-26T08:14:17Z",
+  "distance": 9913.0,
+  "total_elevation_gain": 867,
+  "moving_time": 12143,
+  "elev_high": 1688.1999999999998,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.860511960461736,
+   13.819464035332203
+  ],
+  "end_latlng": [
+   47.8587231785059,
+   13.815387161448598
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5f54aa4410c65a376dd6cfe5.fit",
+  "name": "Hike"
+ },
+ "f431d80a555fd": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-09-04T04:06:18Z",
+  "start_date_local": "2020-09-04T06:06:18Z",
+  "distance": 24415.0,
+  "total_elevation_gain": 1999,
+  "moving_time": 30253,
+  "elev_high": 3349.2,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.16922237537801,
+   12.81115117482841
+  ],
+  "end_latlng": [
+   47.16974398121238,
+   12.813641605898738
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5f54aa7192f5455fbcc2b19b.fit",
+  "name": "Hike"
+ },
+ "f77e763d703b8": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-08-08T04:56:17Z",
+  "start_date_local": "2020-08-08T06:56:17Z",
+  "distance": 12789.0,
+  "total_elevation_gain": 1651,
+  "moving_time": 17048,
+  "elev_high": 3563.6,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.16877763159573,
+   12.722763167694211
+  ],
+  "end_latlng": [
+   47.16772796586156,
+   12.726824786514044
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5f54aa8c9d00e02c27b734a0.fit",
+  "name": "Hike"
+ },
+ "fe07b8b7c6d5d": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-08-10T06:17:48Z",
+  "start_date_local": "2020-08-10T08:17:48Z",
+  "distance": 23893.0,
+  "total_elevation_gain": 2083,
+  "moving_time": 26945,
+  "elev_high": 2713.2,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.6031104195863,
+   12.92292796075344
+  ],
+  "end_latlng": [
+   47.602233588695526,
+   12.92425598949194
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5f54aab792f5455fbcc2b3af.fit",
+  "name": "Hike"
+ },
+ "fe55b9255c3b1": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-09-08T08:17:59Z",
+  "start_date_local": "2020-09-08T10:17:59Z",
+  "distance": 9587.0,
+  "total_elevation_gain": 1073,
+  "moving_time": 12149,
+  "elev_high": 1572.8000000000002,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.809142377227545,
+   13.79072961397469
+  ],
+  "end_latlng": [
+   47.80744956806302,
+   13.790987189859152
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5f57798cd8da3008f7dc2125.fit",
+  "name": "Hike"
+ },
+ "fb796e344accb": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-09-10T08:25:24Z",
+  "start_date_local": "2020-09-10T10:25:24Z",
+  "distance": 6005.0,
+  "total_elevation_gain": 682,
+  "moving_time": 8319,
+  "elev_high": 1255.8,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.81283519230783,
+   13.546724785119295
+  ],
+  "end_latlng": [
+   47.798076840117574,
+   13.541219215840101
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5f5ba63c3bf1171bc62294df.fit",
+  "name": "Hike"
+ },
+ "fa43b6598b531": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-09-13T05:36:05Z",
+  "start_date_local": "2020-09-13T07:36:05Z",
+  "distance": 22204.0,
+  "total_elevation_gain": 1711,
+  "moving_time": 26807,
+  "elev_high": 2098.6,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.74276482872665,
+   13.952364809811115
+  ],
+  "end_latlng": [
+   47.74211196228862,
+   13.95267041400075
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5f637d978e79422a4bbdfb19.fit",
+  "name": "Hike"
+ },
+ "f215884d57548": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-11-08T06:15:25Z",
+  "start_date_local": "2020-11-08T07:15:25Z",
+  "distance": 14454.0,
+  "total_elevation_gain": 1744,
+  "moving_time": 20005,
+  "elev_high": 2582.6,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.27215684019029,
+   11.347791999578476
+  ],
+  "end_latlng": [
+   47.27383363991976,
+   11.347740031778812
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5fa85321d8977b713e39984c.fit",
+  "name": "Hike"
+ },
+ "fa58590d81e3b": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-11-14T09:40:29Z",
+  "start_date_local": "2020-11-14T10:40:29Z",
+  "distance": 14063.0,
+  "total_elevation_gain": 978,
+  "moving_time": 12797,
+  "elev_high": 1702.8000000000002,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.83929602243006,
+   13.628044836223125
+  ],
+  "end_latlng": [
+   47.84348797984421,
+   13.628681609407067
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5fb16f47b93df75d0459e876.fit",
+  "name": "Hike"
+ },
+ "f571ba6b32830": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-11-15T09:19:20Z",
+  "start_date_local": "2020-11-15T10:19:20Z",
+  "distance": 16000.0,
+  "total_elevation_gain": 1398,
+  "moving_time": 16155,
+  "elev_high": 1771.8000000000002,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.80235202983022,
+   13.473361590877175
+  ],
+  "end_latlng": [
+   47.80220157466829,
+   13.473455971106887
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5fb16f63ab8d087e03ad735a.fit",
+  "name": "Hike"
+ },
+ "f508946111a4d": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "BackcountrySki",
+  "sport_type": "BackcountrySki",
+  "start_date": "2020-11-27T05:55:56Z",
+  "start_date_local": "2020-11-27T06:55:56Z",
+  "distance": 23690.0,
+  "total_elevation_gain": 2277,
+  "moving_time": 26702,
+  "elev_high": 3202.2,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.238009637221694,
+   12.730188025161624
+  ],
+  "end_latlng": [
+   47.238547168672085,
+   12.718812776729465
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5fc1146b2d36676398438187.fit",
+  "name": "Ski tour"
+ },
+ "f5786c0433d3a": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "BackcountrySki",
+  "sport_type": "BackcountrySki",
+  "start_date": "2020-12-12T08:58:03Z",
+  "start_date_local": "2020-12-12T09:58:03Z",
+  "distance": 4556.0,
+  "total_elevation_gain": 570,
+  "moving_time": 7448,
+  "elev_high": 2320.8,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.24664643406868,
+   13.561444832012057
+  ],
+  "end_latlng": [
+   47.23925116471946,
+   13.570087999105453
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5fef707a6917f071c8befebf.fit",
+  "name": "Ski tour"
+ },
+ "f71f1c5e31dd7": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-12-08T07:35:27Z",
+  "start_date_local": "2020-12-08T08:35:27Z",
+  "distance": 7336.0,
+  "total_elevation_gain": 1083,
+  "moving_time": 8751,
+  "elev_high": 1559.4,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.81241601333022,
+   13.549092840403318
+  ],
+  "end_latlng": [
+   47.799267238005996,
+   13.541105641052127
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5fef7081a807632278808508.fit",
+  "name": "Hike"
+ },
+ "f63eaafa55439": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2020-11-29T10:54:24Z",
+  "start_date_local": "2020-11-29T11:54:24Z",
+  "distance": 9181.0,
+  "total_elevation_gain": 1099,
+  "moving_time": 8835,
+  "elev_high": 1555.6,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.81232322566211,
+   13.547142371535301
+  ],
+  "end_latlng": [
+   47.803056025877595,
+   13.54529919102788
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5fef70887ddd0318d2bd20d7.fit",
+  "name": "Hike"
+ },
+ "fffd5b53dd6d0": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "BackcountrySki",
+  "sport_type": "BackcountrySki",
+  "start_date": "2020-12-21T06:59:18Z",
+  "start_date_local": "2020-12-21T07:59:18Z",
+  "distance": 14060.0,
+  "total_elevation_gain": 1344,
+  "moving_time": 15556,
+  "elev_high": 2714.0,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.18240316957235,
+   13.433872014284134
+  ],
+  "end_latlng": [
+   47.182409623637795,
+   13.435515202581882
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "5fef7092960fb927f5787e52.fit",
+  "name": "Ski tour"
+ },
+ "fc7a3fbbfb452": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2021-03-30T09:29:37Z",
+  "start_date_local": "2021-03-30T11:29:37Z",
+  "distance": 8625.0,
+  "total_elevation_gain": 705,
+  "moving_time": 10649,
+  "elev_high": 1759.1999999999998,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.77310723438859,
+   13.410947173833847
+  ],
+  "end_latlng": [
+   47.777040023356676,
+   13.391064796596766
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "6070930984121659d185341a.fit",
+  "name": "Hike"
+ },
+ "f057b54be12ab": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2021-09-09T07:41:12Z",
+  "start_date_local": "2021-09-09T09:41:12Z",
+  "distance": 26381.0,
+  "total_elevation_gain": 2034,
+  "moving_time": 25409,
+  "elev_high": 1800.6,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.79206718318164,
+   13.54972961358726
+  ],
+  "end_latlng": [
+   47.81219523400068,
+   13.76249760389328
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "614f22e36f875460e935588e.fit",
+  "name": "Hike"
+ },
+ "f28601f4cb832": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2021-09-28T06:47:37Z",
+  "start_date_local": "2021-09-28T08:47:37Z",
+  "distance": 18449.0,
+  "total_elevation_gain": 1964,
+  "moving_time": 26533,
+  "elev_high": 2517.6,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.14734401553869,
+   11.813761610537767
+  ],
+  "end_latlng": [
+   47.067756839096546,
+   11.70201038941741
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "6155cd3ec4612156e2bf5905.fit",
+  "name": "Hike"
+ },
+ "ff4d1ed8e72c2": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2021-09-29T06:18:10Z",
+  "start_date_local": "2021-09-29T08:18:10Z",
+  "distance": 12498.0,
+  "total_elevation_gain": 669,
+  "moving_time": 17990,
+  "elev_high": 2628.0,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.06790084019303,
+   11.70219118706882
+  ],
+  "end_latlng": [
+   47.00081921182573,
+   11.747213574126363
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "6155cdd719dc89228b85b226.fit",
+  "name": "Hike"
+ },
+ "f38223b39420f": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2021-09-30T08:20:44Z",
+  "start_date_local": "2021-09-30T10:20:44Z",
+  "distance": 7621.0,
+  "total_elevation_gain": 881,
+  "moving_time": 15568,
+  "elev_high": 3136.4,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.00100797228515,
+   11.747414404526353
+  ],
+  "end_latlng": [
+   47.023785626515746,
+   11.813240004703403
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "6155ce5970427c2e858cdf6c.fit",
+  "name": "Hike"
+ },
+ "f9b53992d87d4": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2021-10-01T06:19:57Z",
+  "start_date_local": "2021-10-01T08:19:57Z",
+  "distance": 10057.0,
+  "total_elevation_gain": 1157,
+  "moving_time": 14896,
+  "elev_high": 2871.2,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.02419516630471,
+   11.812619995325804
+  ],
+  "end_latlng": [
+   47.043535988777876,
+   11.885642381384969
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "61580b0661cb1b6d733d1a15.fit",
+  "name": "Hike"
+ },
+ "f9e947a7bdbdd": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2021-10-02T06:21:44Z",
+  "start_date_local": "2021-10-02T08:21:44Z",
+  "distance": 7205.0,
+  "total_elevation_gain": 479,
+  "moving_time": 11884,
+  "elev_high": 2708.2,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.043529618531466,
+   11.88577682711184
+  ],
+  "end_latlng": [
+   47.06976321525872,
+   11.920591229572892
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "61583f4222af7167af74bb31.fit",
+  "name": "Hike"
+ },
+ "f9df8bee2b5f6": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2021-10-09T05:17:26Z",
+  "start_date_local": "2021-10-09T07:17:26Z",
+  "distance": 12254.0,
+  "total_elevation_gain": 1566,
+  "moving_time": 18992,
+  "elev_high": 2447.0,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.438332764431834,
+   12.906035240739584
+  ],
+  "end_latlng": [
+   47.43837123736739,
+   12.90602476336062
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "61629acb570a6e7bd35ed412.fit",
+  "name": "Hike"
+ },
+ "f44905f446143": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Ride",
+  "sport_type": "Ride",
+  "start_date": "2021-10-20T08:14:58Z",
+  "start_date_local": "2021-10-20T10:14:58Z",
+  "distance": 278256.0,
+  "total_elevation_gain": 523,
+  "moving_time": 45684,
+  "elev_high": 523.6,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   48.03634878247976,
+   13.557049613445997
+  ],
+  "end_latlng": [
+   48.180924793705344,
+   16.394921634346247
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "6170b70580e0bc1292a8d48c.fit",
+  "name": "Ride",
+  "summits": [],
+  "high_point": [
+   48.033984,
+   13.5598,
+   499.0
+  ]
+ },
+ "fe6f6d58278b9": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2021-10-25T14:50:27Z",
+  "start_date_local": "2021-10-25T16:50:27Z",
+  "distance": 8237.0,
+  "total_elevation_gain": 933,
+  "moving_time": 12033,
+  "elev_high": 1710.8000000000002,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.83986557275057,
+   13.628403162583709
+  ],
+  "end_latlng": [
+   47.84329276531935,
+   13.629681570455432
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "61cb5d65458af2382474cbde.fit",
+  "name": "Hike"
+ },
+ "ff8f3f5b9dbed": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2021-11-27T10:32:55Z",
+  "start_date_local": "2021-11-27T11:32:55Z",
+  "distance": 8575.0,
+  "total_elevation_gain": 685,
+  "moving_time": 13894,
+  "elev_high": 1685.8000000000002,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.83784964121878,
+   13.624179186299443
+  ],
+  "end_latlng": [
+   47.84303678199649,
+   13.629116797819734
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "61cb5f1889f82b00766cb202.fit",
+  "name": "Hike"
+ },
+ "f4cd4d5bb7ac4": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "BackcountrySki",
+  "sport_type": "BackcountrySki",
+  "start_date": "2022-01-23T09:33:08Z",
+  "start_date_local": "2022-01-23T10:33:08Z",
+  "distance": 9754.0,
+  "total_elevation_gain": 866,
+  "moving_time": 19137,
+  "elev_high": 1812.1999999999998,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.34841916710138,
+   13.494684817269444
+  ],
+  "end_latlng": [
+   47.348326379433274,
+   13.495716797187924
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "623dee13e95778795bb4f987.fit",
+  "name": "Ski tour"
+ },
+ "f8db17f25437e": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "BackcountrySki",
+  "sport_type": "BackcountrySki",
+  "start_date": "2022-03-26T06:49:53Z",
+  "start_date_local": "2022-03-26T07:49:53Z",
+  "distance": 13058.0,
+  "total_elevation_gain": 1375,
+  "moving_time": 18728,
+  "elev_high": 1717.0,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.68312959931791,
+   13.315491965040565
+  ],
+  "end_latlng": [
+   47.673539193347096,
+   13.321249578148127
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "623f11edf9f64d5dcffb0324.fit",
+  "name": "Ski tour"
+ },
+ "fd9e47c557990": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2022-05-10T08:27:38Z",
+  "start_date_local": "2022-05-10T10:27:38Z",
+  "distance": 8591.0,
+  "total_elevation_gain": 766,
+  "moving_time": 8381,
+  "elev_high": 1262.4,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.812272012233734,
+   13.54763682000339
+  ],
+  "end_latlng": [
+   47.81174076721072,
+   13.550089616328478
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "627a5cc39e4a1d485385435d.fit",
+  "name": "Hike"
+ },
+ "ff18d223b91b8": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2022-07-05T08:39:42Z",
+  "start_date_local": "2022-07-05T10:39:42Z",
+  "distance": 12842.0,
+  "total_elevation_gain": 1243,
+  "moving_time": 14529,
+  "elev_high": 1706.8000000000002,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.84210882149637,
+   13.628444820642471
+  ],
+  "end_latlng": [
+   47.84328958019614,
+   13.629247974604368
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "62cffea54800740030135769.fit",
+  "name": "Hike"
+ },
+ "fa65a265eaf85": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2022-07-29T05:54:19Z",
+  "start_date_local": "2022-07-29T07:54:19Z",
+  "distance": 6414.0,
+  "total_elevation_gain": 390,
+  "moving_time": 8627,
+  "elev_high": 1249.0,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.805411173030734,
+   13.55323358438909
+  ],
+  "end_latlng": [
+   47.81158084049821,
+   13.547119991853833
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "630387e83f36b356e98aa76f.fit",
+  "name": "Hike"
+ },
+ "f61d82e203700": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2022-08-01T05:46:27Z",
+  "start_date_local": "2022-08-01T07:46:27Z",
+  "distance": 6568.0,
+  "total_elevation_gain": 450,
+  "moving_time": 8424,
+  "elev_high": 1249.0,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.81232959590852,
+   13.547697588801384
+  ],
+  "end_latlng": [
+   47.799372766166925,
+   13.54116640985012
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "63038833a92b231b3c15272e.fit",
+  "name": "Hike"
+ },
+ "fe2d8157d0126": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2022-10-23T06:09:34Z",
+  "start_date_local": "2022-10-23T08:09:34Z",
+  "distance": 9520.0,
+  "total_elevation_gain": 905,
+  "moving_time": 9839,
+  "elev_high": 2721.8,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.128691179677844,
+   11.400449629873037
+  ],
+  "end_latlng": [
+   47.13071038015187,
+   11.404885584488511
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "635506efd1e41414d5f3b8de.fit",
+  "name": "Hike"
+ },
+ "f68879f7262b4": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "Hike",
+  "sport_type": "Hike",
+  "start_date": "2022-11-11T08:19:42Z",
+  "start_date_local": "2022-11-11T09:19:42Z",
+  "distance": 17151.0,
+  "total_elevation_gain": 2015,
+  "moving_time": 25556,
+  "elev_high": 2585.6,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.27236479520798,
+   11.347719999030232
+  ],
+  "end_latlng": [
+   47.27071037515998,
+   11.385643165558577
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "636ec1e083d787547e3c8492.fit",
+  "name": "Hike"
+ },
+ "f1bee61b5e0e1": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "BackcountrySki",
+  "sport_type": "BackcountrySki",
+  "start_date": "2022-11-27T07:47:40Z",
+  "start_date_local": "2022-11-27T08:47:40Z",
+  "distance": 14209.0,
+  "total_elevation_gain": 837,
+  "moving_time": 30121,
+  "elev_high": 3494.2,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   46.86412797309458,
+   10.713468762114644
+  ],
+  "end_latlng": [
+   46.82512639090419,
+   10.833921572193503
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "6384d7f53e6d33113efe8575.fit",
+  "name": "Ski tour"
+ },
+ "f415a8df71cd5": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "BackcountrySki",
+  "sport_type": "BackcountrySki",
+  "start_date": "2023-01-18T09:05:38Z",
+  "start_date_local": "2023-01-18T10:05:38Z",
+  "distance": 7942.0,
+  "total_elevation_gain": 714,
+  "moving_time": 9178,
+  "elev_high": 2602.6,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.22371203824878,
+   11.056021638214588
+  ],
+  "end_latlng": [
+   47.22238400951028,
+   11.062361625954509
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "63ced94810699b242e2a53b6.fit",
+  "name": "Ski tour"
+ },
+ "f122d32d259cb": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "BackcountrySki",
+  "sport_type": "BackcountrySki",
+  "start_date": "2023-01-22T08:11:50Z",
+  "start_date_local": "2023-01-22T09:11:50Z",
+  "distance": 9483.0,
+  "total_elevation_gain": 654,
+  "moving_time": 12779,
+  "elev_high": 2072.4,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.24284482188523,
+   13.467991976067424
+  ],
+  "end_latlng": [
+   47.26797443814576,
+   13.49652481265366
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "63ceda035cfe9c3e75ff2e02.fit",
+  "name": "Ski tour"
+ },
+ "f88f41233e9ff": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "BackcountrySki",
+  "sport_type": "BackcountrySki",
+  "start_date": "2023-02-14T08:10:06Z",
+  "start_date_local": "2023-02-14T09:10:06Z",
+  "distance": 7119.0,
+  "total_elevation_gain": 1368,
+  "moving_time": 13655,
+  "elev_high": 2865.0,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.14946882799268,
+   11.133105559274554
+  ],
+  "end_latlng": [
+   47.15461120940745,
+   11.072326367720962
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "63ed3014f000dc6dcedb15e2.fit",
+  "name": "Ski tour"
+ },
+ "fd3472912c0cb": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "BackcountrySki",
+  "sport_type": "BackcountrySki",
+  "start_date": "2023-02-20T08:04:33Z",
+  "start_date_local": "2023-02-20T09:04:33Z",
+  "distance": 8205.0,
+  "total_elevation_gain": 1147,
+  "moving_time": 21072,
+  "elev_high": 2871.4,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.14979840442538,
+   11.133145624771714
+  ],
+  "end_latlng": [
+   47.15472319163382,
+   11.072518397122622
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "63f9cdeab5652d6825f852b9.fit",
+  "name": "Ski tour"
+ },
+ "f47b38d771f35": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "BackcountrySki",
+  "sport_type": "BackcountrySki",
+  "start_date": "2023-02-26T06:01:01Z",
+  "start_date_local": "2023-02-26T07:01:01Z",
+  "distance": 2117.0,
+  "total_elevation_gain": 394,
+  "moving_time": 8843,
+  "elev_high": 1897.4,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.67244476824999,
+   14.21551357023418
+  ],
+  "end_latlng": [
+   47.66548477113247,
+   14.205879997462034
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "6402eeec07fb7624f8c43875.fit",
+  "name": "Ski tour"
+ },
+ "f0554cd68fcee": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "BackcountrySki",
+  "sport_type": "BackcountrySki",
+  "start_date": "2023-03-01T08:39:03Z",
+  "start_date_local": "2023-03-01T09:39:03Z",
+  "distance": 13411.0,
+  "total_elevation_gain": 1124.1999999999998,
+  "moving_time": 24560,
+  "elev_high": 2565.0,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.149718441069126,
+   11.394856804981828
+  ],
+  "end_latlng": [
+   47.1240895986557,
+   11.377987219020724
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "6402ef518fc40c2fed7ce877.fit",
+  "name": "Ski tour"
+ },
+ "f3a00036cdea7": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "BackcountrySki",
+  "sport_type": "BackcountrySki",
+  "start_date": "2023-03-02T08:33:00Z",
+  "start_date_local": "2023-03-02T09:33:00Z",
+  "distance": 11404.0,
+  "total_elevation_gain": 1047,
+  "moving_time": 21007,
+  "elev_high": 3130.0,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   46.85557440854609,
+   10.890595223754644
+  ],
+  "end_latlng": [
+   46.82512957602739,
+   10.833916794508696
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "6402efd6f68d35137438e789.fit",
+  "name": "Ski tour"
+ },
+ "f00b1ede5a96d": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "BackcountrySki",
+  "sport_type": "BackcountrySki",
+  "start_date": "2023-03-03T04:58:10Z",
+  "start_date_local": "2023-03-03T05:58:10Z",
+  "distance": 28942.0,
+  "total_elevation_gain": 1458,
+  "moving_time": 34386,
+  "elev_high": 3734.2,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   46.82499839924276,
+   10.83368243649602
+  ],
+  "end_latlng": [
+   46.855542389675975,
+   10.890105636790395
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "6402f337f68d351374390c71.fit",
+  "name": "Ski tour"
+ },
+ "fcb03b0aee1f7": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "BackcountrySki",
+  "sport_type": "BackcountrySki",
+  "start_date": "2023-03-04T07:54:03Z",
+  "start_date_local": "2023-03-04T08:54:03Z",
+  "distance": 6153.0,
+  "total_elevation_gain": 1024,
+  "moving_time": 9788,
+  "elev_high": 2385.2,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.217974374070764,
+   11.29484879784286
+  ],
+  "end_latlng": [
+   47.19209600239992,
+   11.324731959030032
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "640500e0335b331b39ed4ea6.fit",
+  "name": "Ski tour"
+ },
+ "fe3a9f662f904": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "BackcountrySki",
+  "sport_type": "BackcountrySki",
+  "start_date": "2023-04-22T06:19:11Z",
+  "start_date_local": "2023-04-22T08:19:11Z",
+  "distance": 7313.0,
+  "total_elevation_gain": 535,
+  "moving_time": 9848,
+  "elev_high": 2508.6,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   46.85615678317845,
+   10.911384774371982
+  ],
+  "end_latlng": [
+   46.80099841207266,
+   10.887075159698725
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "645363b37e9264389b8c82f0.fit",
+  "name": "Ski tour"
+ }
+}

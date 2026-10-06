@@ -6,7 +6,7 @@ import time
 
 from . import geo, peaks, trips
 from .config import DATA_DIR, Config
-from .peaks import PeakLookupError, peaks_in
+from .peaks import PeakLookupError, needs_translation, peaks_in
 from .strava import RateLimited, Strava
 
 STORE_FILE = DATA_DIR / "activities.json"  # from Strava
@@ -144,6 +144,12 @@ def detect_summits(cfg: Config, store: dict) -> None:
         for rec in store["activities"].values():
             rec.pop("summits", None)  # settings changed: check every track again
         store["detection"] = settings
+
+    for rec in store["activities"].values():
+        # Summit names in another script (from older versions): look them up once more.
+        if not rec.get("renamed") and any(needs_translation(s["name"]) for s in rec.get("summits") or []):
+            rec.pop("summits")
+            rec["renamed"] = True
 
     todo = [(k, r) for k, r in store["activities"].items() if r.get("has_track") and "summits" not in r]
     for activity_id, rec in todo:

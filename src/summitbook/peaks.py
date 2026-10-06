@@ -49,7 +49,9 @@ def _tile(ty: int, tx: int, kind: str) -> dict:
     cached = CACHE_DIR / "osm" / f"{ty}_{tx}.json"
     if cached.exists():
         tile = json.loads(cached.read_text())
-        if kind in tile:  # tiles saved by older versions may lack towns: download those again
+        # Tiles saved by older versions may lack towns, or have names in another script: download again.
+        foreign = any(x.get("name") and needs_translation(x["name"]) for group in ("peaks", "huts", "towns") for x in tile.get(group, []))
+        if kind in tile and (tile.get("version") == 2 or not foreign):
             return tile
     s, w = ty * TILE_DEG, tx * TILE_DEG
     box = f"({s:.4f},{w:.4f},{s + TILE_DEG:.4f},{w + TILE_DEG:.4f})"
@@ -59,7 +61,7 @@ def _tile(ty: int, tx: int, kind: str) -> dict:
         f'node["place"~"^(city|town|village)$"]{box};);'
         "out center;"
     )
-    tile = {"peaks": [], "huts": [], "towns": []}
+    tile = {"version": 2, "peaks": [], "huts": [], "towns": []}
     for el in _overpass(query)["elements"]:
         tags = el.get("tags", {})
         lat, lon = (el["lat"], el["lon"]) if "lat" in el else (el["center"]["lat"], el["center"]["lon"])
@@ -101,7 +103,12 @@ def readable_name(tags: dict) -> str | None:
     name = tags.get("name")
     if name and not needs_translation(name):
         return name
-    return tags.get("name:de") or tags.get("name:en") or name
+    return tags.get("name:de") or tags.get("name:en") or short_name(name)
+
+
+def short_name(name: str | None) -> str | None:
+    """The first language of a two-language name: "Mont Blanc / Monte Bianco" -> "Mont Blanc"."""
+    return re.split(r" / | - ", name)[0].strip() if name else name
 
 
 def needs_translation(name: str) -> bool:

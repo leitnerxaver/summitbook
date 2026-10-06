@@ -9,7 +9,7 @@ const DAY_COLORS = 8; // --day-1 … --day-8 in style.css
 
 const app = document.getElementById('app');
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const state = { data: null, types: new Map(), filter: 'all', maps: [], view: null, scroll: {} };
+const state = { data: null, types: new Map(), filter: 'all', peakOrder: 'visits', maps: [], view: null, scroll: {} };
 
 init();
 
@@ -93,6 +93,12 @@ function renderHome(view) {
     map.show(entries, animate);
   };
   document.getElementById('list').addEventListener('click', (ev) => {
+    const sort = ev.target.closest('[data-order]');
+    if (sort) {
+      state.peakOrder = sort.dataset.order;
+      update(false);
+      return;
+    }
     const btn = ev.target.closest('[data-peak]');
     if (!btn) return;
     document.getElementById('overview-map').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
@@ -110,6 +116,7 @@ function renderStats(entries) {
   const peaks = collectPeaks(entries);
   const visits = entries.reduce((n, e) => n + e.days.reduce((m, d) => m + d.summits.length, 0), 0);
   const highest = [...peaks.values()].filter((p) => p.ele).sort((a, b) => b.ele - a.ele)[0];
+  const favorite = [...peaks.values()].sort((a, b) => b.visits.length - a.visits.length)[0];
   const gain = entries.reduce((n, e) => n + e.gain, 0);
   const tile = (label, value, note = '') =>
     `<div class="stat"><span class="stat-label">${label}</span><span class="stat-value">${value}</span>${note ? `<span class="stat-note" title="${esc(note)}">${esc(note)}</span>` : ''}</div>`;
@@ -118,6 +125,7 @@ function renderStats(entries) {
     tile('Summits', fmtInt(visits)),
     tile('Different peaks', fmtInt(peaks.size)),
     tile('Highest summit', highest ? fmtM(highest.ele) : '–', highest?.name),
+    tile('Most visited', favorite ? `${favorite.visits.length}×` : '–', favorite?.name),
     tile('Elevation gain', fmtM(gain)),
   ].join('');
 }
@@ -149,6 +157,7 @@ function renderLegend(entries) {
   if (entries.some((e) => !e.summits.length && e.high_point)) {
     items.push('<span><span class="dot hollow" style="--c:var(--ink-2)"></span>No summit (highest point of the tour)</span>');
   }
+  items.push('<span>Bigger dot = visited more often</span>');
   document.getElementById('legend').innerHTML = items.join('');
 }
 
@@ -181,16 +190,19 @@ function entryCard(e) {
 }
 
 function peaksHtml(entries) {
-  const peaks = [...collectPeaks(entries).values()]
-    .sort((a, b) => (b.ele ?? -1) - (a.ele ?? -1) || a.name.localeCompare(b.name));
+  const byHeight = (a, b) => (b.ele ?? -1) - (a.ele ?? -1) || a.name.localeCompare(b.name);
+  const byVisits = (a, b) => b.visits.length - a.visits.length || byHeight(a, b);
+  const peaks = [...collectPeaks(entries).values()].sort(state.peakOrder === 'visits' ? byVisits : byHeight);
   if (!peaks.length) return '<p class="empty">No summits yet.</p>';
+  const order = (key, label) => `<button type="button" data-order="${key}" aria-pressed="${state.peakOrder === key}">${label}</button>`;
   const rows = peaks.map((p) => `<tr>
       <td><button class="peak-link" type="button" data-peak="${p.id}">${esc(p.name)}</button></td>
       <td class="num">${p.ele ? fmtM(p.ele) : '–'}</td>
       <td class="num">${p.visits.length}×</td>
       <td class="dates">${p.visits.map((v) => `<a href="#/tour/${v.entry.id}">${fmtDate(v.date)}</a>`).join(', ')}</td>
     </tr>`).join('');
-  return `<div class="table-wrap"><table class="peaks">
+  return `<div class="seg peak-order" role="group" aria-label="Sort peaks">${order('visits', 'Most visited')}${order('height', 'Highest')}</div>
+    <div class="table-wrap"><table class="peaks">
     <thead><tr><th scope="col">Peak</th><th scope="col" class="num">Height</th><th scope="col" class="num">Visits</th><th scope="col">Dates</th></tr></thead>
     <tbody>${rows}</tbody></table></div>`;
 }
@@ -555,12 +567,14 @@ function overviewMap(container) {
     const features = [...places].map(([key, p]) => ({
       type: 'Feature',
       geometry: { type: 'Point', coordinates: [p.lon, p.lat] },
-      properties: { key, summit: p.summit, color: cssVar(colorVar(p.type, true)) },
+      properties: { key, summit: p.summit, visits: p.visits.length, color: cssVar(colorVar(p.type, true)) },
     }));
     map.getSource('places').setData({ type: 'FeatureCollection', features });
     popup.remove();
-    if (features.length) {
-      const bounds = features.reduce((b, f) => b.extend(f.geometry.coordinates), new maplibregl.LngLatBounds(features[0].geometry.coordinates, features[0].geometry.coordinates));
+    // Start on the area with most of the summits; far-away ones (other continents) are a zoom-out away.
+    const home = homeRegion(features.map((f) => f.geometry.coordinates));
+    if (home.length) {
+      const bounds = home.reduce((b, c) => b.extend(c), new maplibregl.LngLatBounds(home[0], home[0]));
       map.fitBounds(bounds, { padding: 60, maxZoom: 12, duration: animate && !reduceMotion ? 1200 : 0 });
     }
   };
@@ -579,8 +593,9 @@ function overviewMap(container) {
     map.addSource('places', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
     map.addLayer({
       id: 'places', type: 'circle', source: 'places',
+      layout: { 'circle-sort-key': ['-', 0, ['get', 'visits']] }, // big dots below small ones
       paint: {
-        'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 5, 12, 8],
+        'circle-radius': ['+', 3, ['*', 2.2, ['sqrt', ['get', 'visits']]]], // bigger = visited more often
         'circle-color': ['case', ['get', 'summit'], ['get', 'color'], '#ffffff'],
         'circle-stroke-color': ['case', ['get', 'summit'], '#ffffff', ['get', 'color']],
         'circle-stroke-width': ['case', ['get', 'summit'], 2, 3],
@@ -632,6 +647,15 @@ function overviewStyle() {
       { id: 'labels', type: 'raster', source: 'labels' },
     ],
   };
+}
+
+// The points within 800 km of the middle of all points (if that's most of them).
+function homeRegion(points) {
+  if (points.length < 3) return points;
+  const median = (values) => values.sort((a, b) => a - b)[Math.floor(values.length / 2)];
+  const middle = new maplibregl.LngLat(median(points.map((p) => p[0])), median(points.map((p) => p[1])));
+  const near = points.filter((p) => middle.distanceTo(new maplibregl.LngLat(...p)) < 800_000);
+  return near.length >= points.length / 2 ? near : points;
 }
 
 function baseStyle(base) {

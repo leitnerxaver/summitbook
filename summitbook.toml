@@ -23,6 +23,17 @@ radius_m = 80
 # Near the peak, your track has to get at least this close (in meters) to the peak's height.
 altitude_tolerance_m = 50
 
+[summits.extra]
+# Places that count as summits although they aren't peaks: name = [latitude, longitude, height]
+"Hochleckenhaus" = [47.82898, 13.60547, 1572]
+
+[imports]
+# Folders with GPX/FIT files (e.g. exported from the Suunto app). The files stay on this computer.
+folders = [
+  "imports",
+  "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+]
+
 [multi_day]
 # Activities on back-to-back days (a rest day in between is fine) that start within this many
 # meters of where another day of the trip started or ended (e.g. the same hut or hotel) become

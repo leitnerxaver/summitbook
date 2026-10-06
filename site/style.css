@@ -175,6 +175,7 @@ button { font: inherit; color: inherit; }
 }
 
 /* Peaks table */
+.peak-order { margin-top: 16px; }
 .table-wrap { overflow-x: auto; margin-top: 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
 .peaks { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
 .peaks th { text-align: left; font-weight: 500; font-size: 0.85rem; color: var(--ink-2); padding: 12px 14px 8px; border-bottom: 1px solid var(--line); }

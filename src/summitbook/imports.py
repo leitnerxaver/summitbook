@@ -1,19 +1,22 @@
-"""Tours from GPX and FIT files (e.g. exported from the Suunto app), put into the imports/ folder.
+"""Tours from GPX and FIT files (e.g. exported from the Suunto app), from the import folders
+in summitbook.toml (by default imports/).
 
-Put each file into a folder named after the kind of tour, e.g. imports/ski-tour/Habicht.gpx.
-The file name becomes the tour's name, unless it looks automatic (e.g. contains a date).
-The files themselves stay on your computer; the tours are saved in data/imports.json."""
+FIT files know their sport. GPX files often don't: put them into a folder named after the kind
+of tour, e.g. imports/ski-tour/Habicht.gpx. The file name becomes the tour's name, unless it
+looks automatic (e.g. a date or a code). The files themselves stay on your computer; the tours
+are saved in data/imports.json."""
 
 import hashlib
 import json
 import re
 import xml.etree.ElementTree as ET
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
 
 import fitdecode
 
 from . import geo, trips
-from .config import IMPORTS_DIR, ROOT, Config
+from .config import Config
 from .sync import TRACKS_DIR
 
 FOLDER_TYPES = {
@@ -43,14 +46,25 @@ SEMICIRCLES = 180 / 2**31  # FIT stores positions in "semicircles"
 
 
 def import_files(cfg: Config, store: dict) -> None:
-    if not IMPORTS_DIR.exists():
+    folders = [f for f in cfg.import_folders if f.is_dir()]
+    if not folders:
         return  # e.g. on GitHub: imported tours are already saved in data/
     records = store["activities"]
     strava_starts = [_time(r["start_date"]) for r in records.values() if r.get("source") != "file" and r.get("start_date")]
-    seen, added, problems = set(), 0, []
+    seen, added, problems, in_cloud = set(), 0, [], 0
 
-    for path in sorted(p for p in IMPORTS_DIR.rglob("*") if p.suffix.lower() in (".gpx", ".fit")):
-        where = path.relative_to(ROOT).as_posix()
+    files = [(f, p) for f in folders for p in sorted(f.rglob("*")) if p.is_file()]
+    for folder, path in files:
+        where = path.relative_to(folder).as_posix()
+        # iCloud keeps some files only online ("Optimize Mac Storage"): keep their tours.
+        if path.name.startswith(".") and path.name.endswith(".icloud"):
+            original = path.with_name(path.name[1:-len(".icloud")]).relative_to(folder).as_posix()
+            if original.lower().endswith((".gpx", ".fit")):
+                seen.update(k for k, r in records.items() if r.get("folder") == _key(folder) and r.get("file") == original)
+                in_cloud += 1
+            continue
+        if path.suffix.lower() not in (".gpx", ".fit"):
+            continue
         activity_id = "f" + hashlib.sha1(path.read_bytes()).hexdigest()[:12]
         folder_type = FOLDER_TYPES.get(path.parent.name.lower())
         rec = records.get(activity_id)
@@ -85,21 +99,30 @@ def import_files(cfg: Config, store: dict) -> None:
         if kind not in cfg.types:
             problems.append(f"{where}: a {kind} isn't part of the summit book")
             continue  # (its tour is removed below)
-        rec["file"] = where
+        rec["folder"], rec["file"] = _key(folder), where
         rec["sport_type"] = kind
         rec["name"] = _name(path.stem, rec.get("name_in_file"), rec["sport_type"])
         seen.add(activity_id)
 
-    for gone in [k for k, r in records.items() if r.get("source") == "file" and k not in seen]:
-        del records[gone]  # the file was deleted
+    # Tours whose file was deleted (only for folders that are here: iCloud may be off).
+    present = {_key(f) for f in folders}
+    for gone in [k for k, r in records.items() if r.get("source") == "file" and r.get("folder") in present and k not in seen]:
+        del records[gone]
         (TRACKS_DIR / f"{gone}.json").unlink(missing_ok=True)
 
     if added:
-        print(f"Imported {added} new {'tour' if added == 1 else 'tours'} from the imports folder.")
+        print(f"Imported {added} new {'tour' if added == 1 else 'tours'} from the import folders.")
+    if in_cloud:
+        print(f"{in_cloud} files are only in iCloud right now. Open the folder in Finder to download them.")
     for problem in problems[:10]:
         print(f"  Not imported: {problem}")
     if len(problems) > 10:
         print(f"  … and {len(problems) - 10} more files not imported.")
+
+
+def _key(folder: Path) -> str:
+    """How a folder is remembered: "~/…" instead of your user folder's full path."""
+    return f"~/{folder.relative_to(Path.home()).as_posix()}" if folder.is_relative_to(Path.home()) else folder.as_posix()
 
 
 def _record(activity_id: str, tour: dict, kind: str, cfg: Config) -> dict | None:
@@ -228,7 +251,8 @@ def _type_from_text(text: str) -> str | None:
 
 def _name(stem: str, name_in_file: str | None, kind: str) -> str:
     for candidate in (stem.replace("_", " ").strip(), name_in_file):
-        if candidate and not re.search(r"\d{4}|\d{1,2}[-.:]\d{2}|suunto|^\W*$", candidate, re.IGNORECASE):
+        # Skip automatic names: dates, Suunto's codes (5eac0e8400ca6879e895811f), …
+        if candidate and not re.search(r"\d{4}|\d{1,2}[-.:]\d{2}|suunto|^[0-9a-f]{12,}$|^\W*$", candidate, re.IGNORECASE):
             return candidate
     return DEFAULT_NAMES.get(kind, "Tour")
 

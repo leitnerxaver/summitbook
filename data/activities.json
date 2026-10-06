@@ -1428,15 +1428,7 @@
     4809.8
    ],
    "start_date": "2026-05-26T01:41:34Z",
-   "summits": [
-    {
-     "id": 281399025,
-     "name": "Mont Blanc / Monte Bianco",
-     "ele": 4807.3,
-     "lat": 45.8327056,
-     "lon": 6.8651706
-    }
-   ]
+   "renamed": true
   },
   "18647943799": {
    "name": "starten vergessen ups",

@@ -5,7 +5,7 @@ import re
 from collections import Counter
 from datetime import date
 
-from .peaks import PeakLookupError, huts_in, towns_in
+from .peaks import PeakLookupError, huts_in, short_name, towns_in
 
 BIKE_TYPES = {"Ride", "MountainBikeRide", "GravelRide", "EBikeRide", "EMountainBikeRide"}
 TRIP_WORDS = {
@@ -181,7 +181,7 @@ def _nearest(points: list, lookup, radius_m: float) -> str | None:
         ((min(distance_m(p, (x["lat"], x["lon"])) for p in points), x["name"]) for x in places if x.get("name")),
         default=None,
     )
-    return best[1] if best and best[0] <= radius_m else None
+    return short_name(best[1]) if best and best[0] <= radius_m else None
 
 
 def _base_hut(days: list[dict]) -> str | None:
