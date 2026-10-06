@@ -18,11 +18,11 @@ def read() -> list[dict]:
     plans = []
     for block in re.split(r"^## ", text, flags=re.M)[1:]:
         title, _, body = block.partition("\n")
-        plans.append({"title": title.strip(), "html": _to_html(body)})
+        plans.append({"title": title.strip(), "html": to_html(body)})
     return plans
 
 
-def _to_html(text: str) -> str:
+def to_html(text: str) -> str:
     parts, items = [], []
     for line in text.strip().splitlines() + [""]:
         line = line.strip()

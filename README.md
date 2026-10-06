@@ -100,6 +100,17 @@ also hikes without a summit) can be seen there. It only contains activities that
 Strava's API terms say apps may only show your data to you, so a public summit book is
 against those terms; Strava could switch off your API application.
 
+## Your words about tours
+
+Write a few words about any tour in **`notes.md`**: start with `## ` and the tour's date
+(e.g. `## 2025-03-14 Habicht` or `## 14.3.2025`; anything after the date is just for you), then
+your text below. On a multi-day trip, any of its dates works; for two tours on the same day,
+use the tour's number from its web address instead. The words appear on the tour's page and as
+a short line in the logbook, only for the tours you wrote about.
+
+You can also edit `notes.md` and `plans.md` directly on github.com, even on your phone: open the
+file, tap the pencil, write, then "Commit changes". The website updates a few minutes later.
+
 ## Plans for future tours
 
 Write your ideas into **`plans.md`**: start each plan with `## ` and its name, then anything
@@ -149,6 +160,7 @@ uv run summitbook build    # rebuild the website without downloading anything
 | Path | What it is |
 |---|---|
 | `summitbook.toml` | your settings |
+| `notes.md`, `plans.md` | your words about tours, and your plans |
 | `private.toml` | your homes (never uploaded) |
 | `site/` | the website (`index.html`, `style.css`, `app.js`) |
 | `site/data/` | the data the website shows (made by `update`/`build`) |

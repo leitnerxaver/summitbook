@@ -201,6 +201,25 @@ strong, b { font-weight: 700; }
   .entry-title { font-size: 1.6rem; }
 }
 
+/* Your notes: a handwritten page with ruled lines */
+.journal {
+  margin: 4px 0 24px; padding: 10px 22px 12px 52px; max-width: 760px;
+  font: 500 1.65rem/36px var(--hand); color: #24324f;
+  background:
+    linear-gradient(90deg, transparent 38px, rgba(210, 80, 80, 0.45) 38px, rgba(210, 80, 80, 0.45) 40px, transparent 40px),
+    repeating-linear-gradient(transparent 0 35px, rgba(70, 110, 170, 0.28) 35px 36px),
+    var(--card);
+  box-shadow: 0 3px 10px rgba(40, 30, 10, 0.15);
+}
+.journal p, .journal ul { margin: 0; }
+.journal ul { padding-left: 1.1em; }
+.entry-note {
+  margin: 4px 0 0; font: 500 1.35rem/1.2 var(--hand); color: #24324f;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.entry-note::before { content: "“"; }
+.entry-note::after { content: "”"; }
+
 /* Peaks table */
 .peak-order { margin-top: 22px; }
 .table-wrap { overflow-x: auto; margin-top: 12px; }

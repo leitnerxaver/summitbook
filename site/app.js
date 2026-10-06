@@ -208,8 +208,16 @@ function entryCard(e) {
       ${metaLine(e)}
       <h3 class="entry-title">${headline(e)}</h3>
       ${subline(e)}
+      ${e.note ? `<p class="entry-note">${esc(noteText(e.note))}</p>` : ''}
       <p class="entry-stats">${statsLine(e)}</p>
     </div></a></li>`;
+}
+
+// Your note as plain text (for the short line in the logbook).
+function noteText(html) {
+  const div = document.createElement('div');
+  div.innerHTML = html; // (made safe by summitbook)
+  return [...div.querySelectorAll('p, li')].map((n) => n.textContent.trim()).filter(Boolean).join(' · ');
 }
 
 // A photo, cropped around its best part (the "focus" found when downloading it).
@@ -287,6 +295,7 @@ function renderTour(id) {
       ${subline(e)}
       ${e.multi ? '' : stravaLink(e.days[0])}
     </header>
+    ${e.note ? `<section class="journal" aria-label="Your notes">${e.note}</section>` : ''}
     <section class="stats" aria-label="Tour stats">
       ${e.multi ? tile('Days', e.days_total) : ''}
       ${tile('Distance', fmtKm(e.distance))}

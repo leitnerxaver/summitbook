@@ -5,7 +5,7 @@ import re
 import shutil
 from datetime import UTC, date, datetime
 
-from . import geo, plans, trips
+from . import geo, notes, plans, trips
 from .config import DATA_DIR, SITE_DIR, Config
 from .peaks import short_name
 from .sync import TRACKS_DIR, load_track, trip_days
@@ -48,6 +48,7 @@ def build(cfg: Config, store: dict) -> list[dict]:
                 if d["type"] in cfg.always or (d["type"] in cfg.summit_only and d["summits"]):
                     entries.append(_entry([d], cfg, multi=False))
     entries.sort(key=lambda e: (e["date"], e["id"]), reverse=True)
+    notes.attach(entries)
 
     out = SITE_DIR / "data"
     tracks_out = out / "tracks"
