@@ -24,7 +24,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5eac0e8400ca6879e895811f.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 26864548,
+    "name": "Schafberg",
+    "ele": 1783.0,
+    "lat": 47.7765811,
+    "lon": 13.4334854
+   }
+  ],
+  "high_point": [
+   47.77663,
+   13.433032,
+   1765.2
+  ]
  },
  "f98e69d34a366": {
   "source": "file",
@@ -51,7 +65,13 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5eaf0cab96f1c16fd76476f1.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [],
+  "high_point": [
+   47.828826,
+   13.605003,
+   1574.2
+  ]
  },
  "f78832dc36169": {
   "source": "file",
@@ -78,7 +98,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5ec4460617dea503db3bdb45.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 1721898709,
+    "name": "Drachenstein",
+    "ele": 1060.0,
+    "lat": 47.8133936,
+    "lon": 13.3548148
+   }
+  ],
+  "high_point": [
+   47.813555,
+   13.352253,
+   1068.6
+  ]
  },
  "f4da6bf1e386e": {
   "source": "file",
@@ -105,7 +139,28 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5ed4da7cf409674aa9a712a9.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 2638807304,
+    "name": "Adlerspitz Hauptgipfel",
+    "ele": 1241.0,
+    "lat": 47.8323088,
+    "lon": 13.5943003
+   },
+   {
+    "id": 1749756766,
+    "name": "Kugelzipf",
+    "ele": 1517.0,
+    "lat": 47.830777,
+    "lon": 13.6004591
+   }
+  ],
+  "high_point": [
+   47.828896,
+   13.604917,
+   1573.8
+  ]
  },
  "f8d072f82d3a3": {
   "source": "file",
@@ -132,7 +187,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5ed80253af05ab49d12a898e.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 26864548,
+    "name": "Schafberg",
+    "ele": 1783.0,
+    "lat": 47.7765811,
+    "lon": 13.4334854
+   }
+  ],
+  "high_point": [
+   47.776234,
+   13.43435,
+   1772.2
+  ]
  },
  "fdd07ea7dce2b": {
   "source": "file",
@@ -159,7 +228,35 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5eeb49cf0060d44674c2a738.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 26864953,
+    "name": "Traunstein",
+    "ele": 1691.0,
+    "lat": 47.8731972,
+    "lon": 13.8398047
+   },
+   {
+    "id": 7178656039,
+    "name": "Stangenkogel",
+    "ele": 1661.0,
+    "lat": 47.8739233,
+    "lon": 13.8374184
+   },
+   {
+    "id": 6293589320,
+    "name": "Fahnenkogel",
+    "ele": 1659.0,
+    "lat": 47.873201,
+    "lon": 13.8338887
+   }
+  ],
+  "high_point": [
+   47.87313,
+   13.839709,
+   1689.2
+  ]
  },
  "ffc69a7c57a19": {
   "source": "file",
@@ -186,7 +283,28 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5eeb49ecaa6df479b910381d.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 440172280,
+    "name": "Mahdlgupf",
+    "ele": 1261.0,
+    "lat": 47.8050804,
+    "lon": 13.5592319
+   },
+   {
+    "id": 293623086,
+    "name": "Großer Schoberstein",
+    "ele": 1037.0,
+    "lat": 47.8002217,
+    "lon": 13.5519312
+   }
+  ],
+  "high_point": [
+   47.80505,
+   13.558898,
+   1249.2
+  ]
  },
  "f4ed7b516fa1b": {
   "source": "file",
@@ -213,7 +331,42 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5ef254f6a5e4c6542a0c22ef.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 293623086,
+    "name": "Großer Schoberstein",
+    "ele": 1037.0,
+    "lat": 47.8002217,
+    "lon": 13.5519312
+   },
+   {
+    "id": 440172280,
+    "name": "Mahdlgupf",
+    "ele": 1261.0,
+    "lat": 47.8050804,
+    "lon": 13.5592319
+   },
+   {
+    "id": 440172408,
+    "name": "Dachsteinblick",
+    "ele": 1559.0,
+    "lat": 47.8117596,
+    "lon": 13.5717919
+   },
+   {
+    "id": 7038575300,
+    "name": "Brennerin",
+    "ele": 1605.0,
+    "lat": 47.816593,
+    "lon": 13.5786603
+   }
+  ],
+  "high_point": [
+   47.816384,
+   13.578805,
+   1601.8
+  ]
  },
  "fe34b2e3f3c85": {
   "source": "file",
@@ -240,7 +393,49 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5ef25525cf1d44385345a7ed.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 3565415366,
+    "name": "Pfaffengrabenhöhe",
+    "ele": 1691.0,
+    "lat": 47.8112034,
+    "lon": 13.6293768
+   },
+   {
+    "id": 6340538518,
+    "name": "Grünalmkogel",
+    "ele": 1822.0,
+    "lat": 47.8143794,
+    "lon": 13.6400025
+   },
+   {
+    "id": 6116242713,
+    "name": "Hinterer Kesselgupf",
+    "ele": 1787.0,
+    "lat": 47.8035225,
+    "lon": 13.6781367
+   },
+   {
+    "id": 4300277781,
+    "name": "Totengrabengupf",
+    "ele": 1782.0,
+    "lat": 47.804438,
+    "lon": 13.6880367
+   },
+   {
+    "id": 6116147312,
+    "name": "Kleiner Totengrabengupf",
+    "ele": 1666.0,
+    "lat": 47.8091322,
+    "lon": 13.6950668
+   }
+  ],
+  "high_point": [
+   47.814682,
+   13.640104,
+   1821.6
+  ]
  },
  "f151469e65de2": {
   "source": "file",
@@ -267,7 +462,35 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5ef462c81f5ed303b691ad42.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 457102727,
+    "name": "Brunnkogel",
+    "ele": 1708.0,
+    "lat": 47.8276131,
+    "lon": 13.6301176
+   },
+   {
+    "id": 6088373906,
+    "name": "Mathias Kogl",
+    "ele": 1668.0,
+    "lat": 47.8246884,
+    "lon": 13.6243531
+   },
+   {
+    "id": 696786316,
+    "name": "Hochleckenkogel",
+    "ele": 1691.0,
+    "lat": 47.8269488,
+    "lon": 13.6208358
+   }
+  ],
+  "high_point": [
+   47.827322,
+   13.628843,
+   1691.8
+  ]
  },
  "fb11997dbb128": {
   "source": "file",
@@ -294,7 +517,35 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5ef462fb2b0f56226db42d6e.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 1417880095,
+    "name": "Bischofsmütze",
+    "ele": 1446.0,
+    "lat": 47.8303622,
+    "lon": 13.6256322
+   },
+   {
+    "id": 7619557771,
+    "name": "Bischofsmütze Vorgipfel",
+    "ele": 1415.0,
+    "lat": 47.8308964,
+    "lon": 13.6257586
+   },
+   {
+    "id": 457102727,
+    "name": "Brunnkogel",
+    "ele": 1708.0,
+    "lat": 47.8276131,
+    "lon": 13.6301176
+   }
+  ],
+  "high_point": [
+   47.82767,
+   13.629931,
+   1698.4
+  ]
  },
  "fa30abbf14a5f": {
   "source": "file",
@@ -321,7 +572,28 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5ef76aa0bd181e4e7a2194ab.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 1398189359,
+    "name": "Blosskogel",
+    "ele": 1530.0,
+    "lat": 47.7069887,
+    "lon": 14.080583
+   },
+   {
+    "id": 26863056,
+    "name": "Großer Priel",
+    "ele": 2515.0,
+    "lat": 47.7169424,
+    "lon": 14.0632524
+   }
+  ],
+  "high_point": [
+   47.716976,
+   14.063307,
+   2515.4
+  ]
  },
  "f9ca5c9daff0d": {
   "source": "file",
@@ -348,7 +620,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5ef867185ede424ba9df6082.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 1721898709,
+    "name": "Drachenstein",
+    "ele": 1060.0,
+    "lat": 47.8133936,
+    "lon": 13.3548148
+   }
+  ],
+  "high_point": [
+   47.812992,
+   13.351645,
+   1077.4
+  ]
  },
  "f4daee21c3246": {
   "source": "file",
@@ -375,7 +661,49 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5efb5c696968576795e62b44.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 1417880095,
+    "name": "Bischofsmütze",
+    "ele": 1446.0,
+    "lat": 47.8303622,
+    "lon": 13.6256322
+   },
+   {
+    "id": 7619557771,
+    "name": "Bischofsmütze Vorgipfel",
+    "ele": 1415.0,
+    "lat": 47.8308964,
+    "lon": 13.6257586
+   },
+   {
+    "id": 457102727,
+    "name": "Brunnkogel",
+    "ele": 1708.0,
+    "lat": 47.8276131,
+    "lon": 13.6301176
+   },
+   {
+    "id": 6088373906,
+    "name": "Mathias Kogl",
+    "ele": 1668.0,
+    "lat": 47.8246884,
+    "lon": 13.6243531
+   },
+   {
+    "id": 696786316,
+    "name": "Hochleckenkogel",
+    "ele": 1691.0,
+    "lat": 47.8269488,
+    "lon": 13.6208358
+   }
+  ],
+  "high_point": [
+   47.827613,
+   13.630096,
+   1714.0
+  ]
  },
  "f225b43e8fd5a": {
   "source": "file",
@@ -402,7 +730,35 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5f0c497b29457b78380a44a7.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 359515121,
+    "name": "Dachsteinwarte",
+    "ele": 2741.0,
+    "lat": 47.4733781,
+    "lon": 13.6125205
+   },
+   {
+    "id": 26862760,
+    "name": "Hoher Dachstein",
+    "ele": 2995.0,
+    "lat": 47.4751892,
+    "lon": 13.6056695
+   },
+   {
+    "id": 364040621,
+    "name": "Hunerkogel",
+    "ele": 2687.0,
+    "lat": 47.4680898,
+    "lon": 13.626113
+   }
+  ],
+  "high_point": [
+   47.475181,
+   13.605998,
+   2997.6
+  ]
  },
  "f7e0afe4ebca5": {
   "source": "file",
@@ -429,7 +785,13 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5f0e024b019f0e4dc414b453.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [],
+  "high_point": [
+   47.777661,
+   13.817523,
+   1079.0
+  ]
  },
  "f37683fab6b91": {
   "source": "file",
@@ -456,7 +818,28 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5f15a1e919dd39202da57508.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 91313899,
+    "name": "Kleinglockner",
+    "ele": 3770.0,
+    "lat": 47.0741836,
+    "lon": 12.6946761
+   },
+   {
+    "id": 26863041,
+    "name": "Großglockner",
+    "ele": 3798.0,
+    "lat": 47.0745464,
+    "lon": 12.6938826
+   }
+  ],
+  "high_point": [
+   47.074477,
+   12.69392,
+   3798.0
+  ]
  },
  "fd87dd23a2764": {
   "source": "file",
@@ -483,7 +866,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5f15a1f6c8dc4a391ad3e627.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 2667085061,
+    "name": "Adlersruhe",
+    "ele": null,
+    "lat": 47.07042,
+    "lon": 12.701365
+   }
+  ],
+  "high_point": [
+   47.069821,
+   12.701383,
+   3435.4
+  ]
  },
  "f9f86f3a77451": {
   "source": "file",
@@ -510,7 +907,77 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5f54a9fa9a8e85163d7a0a5c.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 293623086,
+    "name": "Großer Schoberstein",
+    "ele": 1037.0,
+    "lat": 47.8002217,
+    "lon": 13.5519312
+   },
+   {
+    "id": 440172280,
+    "name": "Mahdlgupf",
+    "ele": 1261.0,
+    "lat": 47.8050804,
+    "lon": 13.5592319
+   },
+   {
+    "id": 440172408,
+    "name": "Dachsteinblick",
+    "ele": 1559.0,
+    "lat": 47.8117596,
+    "lon": 13.5717919
+   },
+   {
+    "id": 7038575300,
+    "name": "Brennerin",
+    "ele": 1605.0,
+    "lat": 47.816593,
+    "lon": 13.5786603
+   },
+   {
+    "id": 3565415366,
+    "name": "Pfaffengrabenhöhe",
+    "ele": 1691.0,
+    "lat": 47.8112034,
+    "lon": 13.6293768
+   },
+   {
+    "id": 6340538518,
+    "name": "Grünalmkogel",
+    "ele": 1822.0,
+    "lat": 47.8143794,
+    "lon": 13.6400025
+   },
+   {
+    "id": 6116242713,
+    "name": "Hinterer Kesselgupf",
+    "ele": 1787.0,
+    "lat": 47.8035225,
+    "lon": 13.6781367
+   },
+   {
+    "id": 4300277781,
+    "name": "Totengrabengupf",
+    "ele": 1782.0,
+    "lat": 47.804438,
+    "lon": 13.6880367
+   },
+   {
+    "id": 6116147312,
+    "name": "Kleiner Totengrabengupf",
+    "ele": 1666.0,
+    "lat": 47.8091322,
+    "lon": 13.6950668
+   }
+  ],
+  "high_point": [
+   47.814301,
+   13.640069,
+   1817.8
+  ]
  },
  "f84f300152dbc": {
   "source": "file",
@@ -537,7 +1004,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5f54aa0d047864196a999462.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 440172408,
+    "name": "Dachsteinblick",
+    "ele": 1559.0,
+    "lat": 47.8117596,
+    "lon": 13.5717919
+   }
+  ],
+  "high_point": [
+   47.811798,
+   13.57188,
+   1559.0
+  ]
  },
  "ff82c3bd22024": {
   "source": "file",
@@ -564,7 +1045,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5f54aa2cbee5aa704ee88000.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 256041732,
+    "name": "Glödis",
+    "ele": 3206.0,
+    "lat": 46.9612577,
+    "lon": 12.7256949
+   }
+  ],
+  "high_point": [
+   46.96129,
+   12.725985,
+   3187.2
+  ]
  },
  "fea8c5716dddc": {
   "source": "file",
@@ -591,7 +1086,42 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5f54aa4410c65a376dd6cfe5.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 3356503601,
+    "name": "Traunkirchner Kogel",
+    "ele": 1575.0,
+    "lat": 47.8696029,
+    "lon": 13.8279666
+   },
+   {
+    "id": 6293589320,
+    "name": "Fahnenkogel",
+    "ele": 1659.0,
+    "lat": 47.873201,
+    "lon": 13.8338887
+   },
+   {
+    "id": 7178656039,
+    "name": "Stangenkogel",
+    "ele": 1661.0,
+    "lat": 47.8739233,
+    "lon": 13.8374184
+   },
+   {
+    "id": 26864953,
+    "name": "Traunstein",
+    "ele": 1691.0,
+    "lat": 47.8731972,
+    "lon": 13.8398047
+   }
+  ],
+  "high_point": [
+   47.873149,
+   13.839742,
+   1687.8
+  ]
  },
  "f431d80a555fd": {
   "source": "file",
@@ -618,7 +1148,28 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5f54aa7192f5455fbcc2b19b.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 2929611108,
+    "name": "Remsköpfl",
+    "ele": 2639.0,
+    "lat": 47.124668,
+    "lon": 12.7543343
+   },
+   {
+    "id": 2929609588,
+    "name": "Hohe Dock",
+    "ele": 3348.0,
+    "lat": 47.1310344,
+    "lon": 12.7406891
+   }
+  ],
+  "high_point": [
+   47.130947,
+   12.740862,
+   3349.2
+  ]
  },
  "f77e763d703b8": {
   "source": "file",
@@ -645,7 +1196,42 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5f54aa8c9d00e02c27b734a0.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 2928776808,
+    "name": "Unterer Fochezkopf",
+    "ele": 3022.0,
+    "lat": 47.163523,
+    "lon": 12.7431385
+   },
+   {
+    "id": 2928770908,
+    "name": "Oberer Fochezkopf",
+    "ele": 3165.0,
+    "lat": 47.1614135,
+    "lon": 12.7465522
+   },
+   {
+    "id": 494054611,
+    "name": "Großes Wiesbachhorn",
+    "ele": 3564.0,
+    "lat": 47.1567037,
+    "lon": 12.7549465
+   },
+   {
+    "id": 4350654117,
+    "name": "Hinterer Bratschenkopf",
+    "ele": 3413.0,
+    "lat": 47.1512627,
+    "lon": 12.7431039
+   }
+  ],
+  "high_point": [
+   47.156666,
+   12.754557,
+   3563.6
+  ]
  },
  "fe07b8b7c6d5d": {
   "source": "file",
@@ -672,7 +1258,42 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5f54aab792f5455fbcc2b3af.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 6212632160,
+    "name": "Falzkopf",
+    "ele": 1930.0,
+    "lat": 47.5713472,
+    "lon": 12.933967
+   },
+   {
+    "id": 307562003,
+    "name": "Hocheck",
+    "ele": 2651.0,
+    "lat": 47.558423,
+    "lon": 12.9237899
+   },
+   {
+    "id": 364134323,
+    "name": "Watzmann-Mittelspitze",
+    "ele": 2713.0,
+    "lat": 47.5543889,
+    "lon": 12.9220342
+   },
+   {
+    "id": 475537031,
+    "name": "Watzmann-Südspitze",
+    "ele": 2712.0,
+    "lat": 47.5480306,
+    "lon": 12.9169564
+   }
+  ],
+  "high_point": [
+   47.548038,
+   12.917025,
+   2713.2
+  ]
  },
  "fe55b9255c3b1": {
   "source": "file",
@@ -699,7 +1320,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5f57798cd8da3008f7dc2125.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 920559776,
+    "name": "Erlakogel",
+    "ele": 1575.0,
+    "lat": 47.819371,
+    "lon": 13.8256614
+   }
+  ],
+  "high_point": [
+   47.819472,
+   13.825517,
+   1572.8
+  ]
  },
  "fb796e344accb": {
   "source": "file",
@@ -726,7 +1361,28 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5f5ba63c3bf1171bc62294df.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 440172280,
+    "name": "Mahdlgupf",
+    "ele": 1261.0,
+    "lat": 47.8050804,
+    "lon": 13.5592319
+   },
+   {
+    "id": 293623086,
+    "name": "Großer Schoberstein",
+    "ele": 1037.0,
+    "lat": 47.8002217,
+    "lon": 13.5519312
+   }
+  ],
+  "high_point": [
+   47.805107,
+   13.55927,
+   1255.8
+  ]
  },
  "fa43b6598b531": {
   "source": "file",
@@ -753,7 +1409,49 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5f637d978e79422a4bbdfb19.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 274271311,
+    "name": "Neunerkogel",
+    "ele": 1904.0,
+    "lat": 47.700046,
+    "lon": 13.9703737
+   },
+   {
+    "id": 336998864,
+    "name": "Zehnerkogel",
+    "ele": 1929.0,
+    "lat": 47.703958,
+    "lon": 13.967685
+   },
+   {
+    "id": 359898977,
+    "name": "Elferkogel",
+    "ele": 2038.0,
+    "lat": 47.7057303,
+    "lon": 13.9631089
+   },
+   {
+    "id": 361373094,
+    "name": "Großer Rabenstein",
+    "ele": 2068.0,
+    "lat": 47.7060931,
+    "lon": 13.9500197
+   },
+   {
+    "id": 371387219,
+    "name": "Zwölferkogel",
+    "ele": 2099.0,
+    "lat": 47.7096701,
+    "lon": 13.9516718
+   }
+  ],
+  "high_point": [
+   47.709763,
+   13.951702,
+   2098.6
+  ]
  },
  "f215884d57548": {
   "source": "file",
@@ -780,7 +1478,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5fa85321d8977b713e39984c.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 256042844,
+    "name": "Hohe Warte",
+    "ele": 2596.0,
+    "lat": 47.3015941,
+    "lon": 11.3334901
+   }
+  ],
+  "high_point": [
+   47.3016,
+   11.333462,
+   2582.6
+  ]
  },
  "fa58590d81e3b": {
   "source": "file",
@@ -807,7 +1519,42 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5fb16f47b93df75d0459e876.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 1417880095,
+    "name": "Bischofsmütze",
+    "ele": 1446.0,
+    "lat": 47.8303622,
+    "lon": 13.6256322
+   },
+   {
+    "id": 7619557771,
+    "name": "Bischofsmütze Vorgipfel",
+    "ele": 1415.0,
+    "lat": 47.8308964,
+    "lon": 13.6257586
+   },
+   {
+    "id": 6088373906,
+    "name": "Mathias Kogl",
+    "ele": 1668.0,
+    "lat": 47.8246884,
+    "lon": 13.6243531
+   },
+   {
+    "id": 457102727,
+    "name": "Brunnkogel",
+    "ele": 1708.0,
+    "lat": 47.8276131,
+    "lon": 13.6301176
+   }
+  ],
+  "high_point": [
+   47.827405,
+   13.629552,
+   1701.4
+  ]
  },
  "f571ba6b32830": {
   "source": "file",
@@ -834,7 +1581,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5fb16f63ab8d087e03ad735a.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 26864548,
+    "name": "Schafberg",
+    "ele": 1783.0,
+    "lat": 47.7765811,
+    "lon": 13.4334854
+   }
+  ],
+  "high_point": [
+   47.776048,
+   13.434499,
+   1771.8
+  ]
  },
  "f508946111a4d": {
   "source": "file",
@@ -861,7 +1622,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5fc1146b2d36676398438187.fit",
-  "name": "Ski tour"
+  "name": "Ski tour",
+  "summits": [
+   {
+    "id": 36688518,
+    "name": "Kitzsteinhorn",
+    "ele": 3203.0,
+    "lat": 47.1880444,
+    "lon": 12.6874982
+   }
+  ],
+  "high_point": [
+   47.188048,
+   12.687402,
+   3202.2
+  ]
  },
  "f5786c0433d3a": {
   "source": "file",
@@ -888,7 +1663,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5fef707a6917f071c8befebf.fit",
-  "name": "Ski tour"
+  "name": "Ski tour",
+  "summits": [
+   {
+    "id": 2268591928,
+    "name": "Kleine Kesselspitze",
+    "ele": 2321.0,
+    "lat": 47.2374823,
+    "lon": 13.5514341
+   }
+  ],
+  "high_point": [
+   47.237405,
+   13.551592,
+   2320.8
+  ]
  },
  "f71f1c5e31dd7": {
   "source": "file",
@@ -915,7 +1704,35 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5fef7081a807632278808508.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 440172408,
+    "name": "Dachsteinblick",
+    "ele": 1559.0,
+    "lat": 47.8117596,
+    "lon": 13.5717919
+   },
+   {
+    "id": 440172280,
+    "name": "Mahdlgupf",
+    "ele": 1261.0,
+    "lat": 47.8050804,
+    "lon": 13.5592319
+   },
+   {
+    "id": 293623086,
+    "name": "Großer Schoberstein",
+    "ele": 1037.0,
+    "lat": 47.8002217,
+    "lon": 13.5519312
+   }
+  ],
+  "high_point": [
+   47.811718,
+   13.57181,
+   1559.4
+  ]
  },
  "f63eaafa55439": {
   "source": "file",
@@ -942,7 +1759,35 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5fef70887ddd0318d2bd20d7.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 440172408,
+    "name": "Dachsteinblick",
+    "ele": 1559.0,
+    "lat": 47.8117596,
+    "lon": 13.5717919
+   },
+   {
+    "id": 440172280,
+    "name": "Mahdlgupf",
+    "ele": 1261.0,
+    "lat": 47.8050804,
+    "lon": 13.5592319
+   },
+   {
+    "id": 293623086,
+    "name": "Großer Schoberstein",
+    "ele": 1037.0,
+    "lat": 47.8002217,
+    "lon": 13.5519312
+   }
+  ],
+  "high_point": [
+   47.811725,
+   13.571608,
+   1555.6
+  ]
  },
  "fffd5b53dd6d0": {
   "source": "file",
@@ -969,7 +1814,28 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "5fef7092960fb927f5787e52.fit",
-  "name": "Ski tour"
+  "name": "Ski tour",
+  "summits": [
+   {
+    "id": 3979376466,
+    "name": "Felskarspitze",
+    "ele": 2506.0,
+    "lat": 47.1576815,
+    "lon": 13.3996956
+   },
+   {
+    "id": 964697099,
+    "name": "Weißeck",
+    "ele": 2711.0,
+    "lat": 47.1624791,
+    "lon": 13.3936411
+   }
+  ],
+  "high_point": [
+   47.162794,
+   13.393581,
+   2714.0
+  ]
  },
  "fc7a3fbbfb452": {
   "source": "file",
@@ -996,7 +1862,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "6070930984121659d185341a.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 26864548,
+    "name": "Schafberg",
+    "ele": 1783.0,
+    "lat": 47.7765811,
+    "lon": 13.4334854
+   }
+  ],
+  "high_point": [
+   47.776259,
+   13.433683,
+   1759.2
+  ]
  },
  "f057b54be12ab": {
   "source": "file",
@@ -1023,7 +1903,70 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "614f22e36f875460e935588e.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 293623086,
+    "name": "Großer Schoberstein",
+    "ele": 1037.0,
+    "lat": 47.8002217,
+    "lon": 13.5519312
+   },
+   {
+    "id": 440172280,
+    "name": "Mahdlgupf",
+    "ele": 1261.0,
+    "lat": 47.8050804,
+    "lon": 13.5592319
+   },
+   {
+    "id": 440172408,
+    "name": "Dachsteinblick",
+    "ele": 1559.0,
+    "lat": 47.8117596,
+    "lon": 13.5717919
+   },
+   {
+    "id": 3565415366,
+    "name": "Pfaffengrabenhöhe",
+    "ele": 1691.0,
+    "lat": 47.8112034,
+    "lon": 13.6293768
+   },
+   {
+    "id": 6340538518,
+    "name": "Grünalmkogel",
+    "ele": 1822.0,
+    "lat": 47.8143794,
+    "lon": 13.6400025
+   },
+   {
+    "id": 6116242713,
+    "name": "Hinterer Kesselgupf",
+    "ele": 1787.0,
+    "lat": 47.8035225,
+    "lon": 13.6781367
+   },
+   {
+    "id": 4300277781,
+    "name": "Totengrabengupf",
+    "ele": 1782.0,
+    "lat": 47.804438,
+    "lon": 13.6880367
+   },
+   {
+    "id": 6116147312,
+    "name": "Kleiner Totengrabengupf",
+    "ele": 1666.0,
+    "lat": 47.8091322,
+    "lon": 13.6950668
+   }
+  ],
+  "high_point": [
+   47.814662,
+   13.638416,
+   1800.0
+  ]
  },
  "f28601f4cb832": {
   "source": "file",
@@ -1050,7 +1993,13 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "6155cd3ec4612156e2bf5905.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [],
+  "high_point": [
+   47.066938,
+   11.709191,
+   2516.6
+  ]
  },
  "ff4d1ed8e72c2": {
   "source": "file",
@@ -1077,7 +2026,13 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "6155cdd719dc89228b85b226.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [],
+  "high_point": [
+   47.066013,
+   11.695129,
+   2627.0
+  ]
  },
  "f38223b39420f": {
   "source": "file",
@@ -1104,7 +2059,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "6155ce5970427c2e858cdf6c.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 256042766,
+    "name": "Schönbichler Horn",
+    "ele": 3133.0,
+    "lat": 47.0086652,
+    "lon": 11.7730357
+   }
+  ],
+  "high_point": [
+   47.008691,
+   11.773077,
+   3136.4
+  ]
  },
  "f9b53992d87d4": {
   "source": "file",
@@ -1131,7 +2100,13 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "61580b0661cb1b6d733d1a15.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [],
+  "high_point": [
+   47.04321,
+   11.850305,
+   2871.2
+  ]
  },
  "f9e947a7bdbdd": {
   "source": "file",
@@ -1158,7 +2133,13 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "61583f4222af7167af74bb31.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [],
+  "high_point": [
+   47.054893,
+   11.895168,
+   2708.2
+  ]
  },
  "f9df8bee2b5f6": {
   "source": "file",
@@ -1185,7 +2166,42 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "61629acb570a6e7bd35ed412.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 507070469,
+    "name": "Sommerstein",
+    "ele": 2306.0,
+    "lat": 47.4566374,
+    "lon": 12.9137939
+   },
+   {
+    "id": 507120425,
+    "name": "Wurmkopf",
+    "ele": 2451.0,
+    "lat": 47.4566884,
+    "lon": 12.927776
+   },
+   {
+    "id": 510130764,
+    "name": "Streichenbeil",
+    "ele": 2410.0,
+    "lat": 47.4534979,
+    "lon": 12.9226356
+   },
+   {
+    "id": 496324724,
+    "name": "Schönegg",
+    "ele": 2389.0,
+    "lat": 47.4533786,
+    "lon": 12.9193928
+   }
+  ],
+  "high_point": [
+   47.456643,
+   12.928003,
+   2447.0
+  ]
  },
  "f44905f446143": {
   "source": "file",
@@ -1245,7 +2261,35 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "61cb5d65458af2382474cbde.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 457102727,
+    "name": "Brunnkogel",
+    "ele": 1708.0,
+    "lat": 47.8276131,
+    "lon": 13.6301176
+   },
+   {
+    "id": 6088373906,
+    "name": "Mathias Kogl",
+    "ele": 1668.0,
+    "lat": 47.8246884,
+    "lon": 13.6243531
+   },
+   {
+    "id": 696786316,
+    "name": "Hochleckenkogel",
+    "ele": 1691.0,
+    "lat": 47.8269488,
+    "lon": 13.6208358
+   }
+  ],
+  "high_point": [
+   47.82761,
+   13.629982,
+   1710.8
+  ]
  },
  "ff8f3f5b9dbed": {
   "source": "file",
@@ -1272,7 +2316,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "61cb5f1889f82b00766cb202.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 696786316,
+    "name": "Hochleckenkogel",
+    "ele": 1691.0,
+    "lat": 47.8269488,
+    "lon": 13.6208358
+   }
+  ],
+  "high_point": [
+   47.826973,
+   13.620936,
+   1685.6
+  ]
  },
  "f4cd4d5bb7ac4": {
   "source": "file",
@@ -1299,7 +2357,13 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "623dee13e95778795bb4f987.fit",
-  "name": "Ski tour"
+  "name": "Ski tour",
+  "summits": [],
+  "high_point": [
+   47.336982,
+   13.469445,
+   1812.2
+  ]
  },
  "f8db17f25437e": {
   "source": "file",
@@ -1326,7 +2390,28 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "623f11edf9f64d5dcffb0324.fit",
-  "name": "Ski tour"
+  "name": "Ski tour",
+  "summits": [
+   {
+    "id": 2503228303,
+    "name": "Hoher First",
+    "ele": 1718.0,
+    "lat": 47.6615683,
+    "lon": 13.2959086
+   },
+   {
+    "id": 2503228299,
+    "name": "Dürlstein",
+    "ele": 1697.0,
+    "lat": 47.6658352,
+    "lon": 13.2988735
+   }
+  ],
+  "high_point": [
+   47.661923,
+   13.296363,
+   1717.0
+  ]
  },
  "fd9e47c557990": {
   "source": "file",
@@ -1353,7 +2438,28 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "627a5cc39e4a1d485385435d.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 440172280,
+    "name": "Mahdlgupf",
+    "ele": 1261.0,
+    "lat": 47.8050804,
+    "lon": 13.5592319
+   },
+   {
+    "id": 293623086,
+    "name": "Großer Schoberstein",
+    "ele": 1037.0,
+    "lat": 47.8002217,
+    "lon": 13.5519312
+   }
+  ],
+  "high_point": [
+   47.805082,
+   13.559192,
+   1262.4
+  ]
  },
  "ff18d223b91b8": {
   "source": "file",
@@ -1380,7 +2486,35 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "62cffea54800740030135769.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 457102727,
+    "name": "Brunnkogel",
+    "ele": 1708.0,
+    "lat": 47.8276131,
+    "lon": 13.6301176
+   },
+   {
+    "id": 6088373906,
+    "name": "Mathias Kogl",
+    "ele": 1668.0,
+    "lat": 47.8246884,
+    "lon": 13.6243531
+   },
+   {
+    "id": 696786316,
+    "name": "Hochleckenkogel",
+    "ele": 1691.0,
+    "lat": 47.8269488,
+    "lon": 13.6208358
+   }
+  ],
+  "high_point": [
+   47.827373,
+   13.629462,
+   1706.6
+  ]
  },
  "fa65a265eaf85": {
   "source": "file",
@@ -1407,7 +2541,28 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "630387e83f36b356e98aa76f.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 440172280,
+    "name": "Mahdlgupf",
+    "ele": 1261.0,
+    "lat": 47.8050804,
+    "lon": 13.5592319
+   },
+   {
+    "id": 293623086,
+    "name": "Großer Schoberstein",
+    "ele": 1037.0,
+    "lat": 47.8002217,
+    "lon": 13.5519312
+   }
+  ],
+  "high_point": [
+   47.80519,
+   13.558773,
+   1249.0
+  ]
  },
  "f61d82e203700": {
   "source": "file",
@@ -1434,7 +2589,35 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "63038833a92b231b3c15272e.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 440172280,
+    "name": "Mahdlgupf",
+    "ele": 1261.0,
+    "lat": 47.8050804,
+    "lon": 13.5592319
+   },
+   {
+    "id": 293623086,
+    "name": "Großer Schoberstein",
+    "ele": 1037.0,
+    "lat": 47.8002217,
+    "lon": 13.5519312
+   },
+   {
+    "id": 976567650,
+    "name": "Kleiner Schoberstein",
+    "ele": 985.0,
+    "lat": 47.7999552,
+    "lon": 13.5490635
+   }
+  ],
+  "high_point": [
+   47.804618,
+   13.559221,
+   1247.4
+  ]
  },
  "fe2d8157d0126": {
   "source": "file",
@@ -1461,7 +2644,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "635506efd1e41414d5f3b8de.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 256042801,
+    "name": "Serles",
+    "ele": 2717.0,
+    "lat": 47.1239628,
+    "lon": 11.3813481
+   }
+  ],
+  "high_point": [
+   47.123971,
+   11.381335,
+   2721.8
+  ]
  },
  "f68879f7262b4": {
   "source": "file",
@@ -1488,7 +2685,28 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "636ec1e083d787547e3c8492.fit",
-  "name": "Hike"
+  "name": "Hike",
+  "summits": [
+   {
+    "id": 256042844,
+    "name": "Hohe Warte",
+    "ele": 2596.0,
+    "lat": 47.3015941,
+    "lon": 11.3334901
+   },
+   {
+    "id": 4294888409,
+    "name": "Achselkopf",
+    "ele": 1560.0,
+    "lat": 47.2848197,
+    "lon": 11.3558881
+   }
+  ],
+  "high_point": [
+   47.301715,
+   11.333312,
+   2585.6
+  ]
  },
  "f1bee61b5e0e1": {
   "source": "file",
@@ -1515,7 +2733,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "6384d7f53e6d33113efe8575.fit",
-  "name": "Ski tour"
+  "name": "Ski tour",
+  "summits": [
+   {
+    "id": 256042855,
+    "name": "Weißseespitze",
+    "ele": 3498.0,
+    "lat": 46.8462323,
+    "lon": 10.7168691
+   }
+  ],
+  "high_point": [
+   46.845712,
+   10.716508,
+   3494.2
+  ]
  },
  "f415a8df71cd5": {
   "source": "file",
@@ -1542,7 +2774,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "63ced94810699b242e2a53b6.fit",
-  "name": "Ski tour"
+  "name": "Ski tour",
+  "summits": [
+   {
+    "id": 1078436649,
+    "name": "Mitterzeigerkogel",
+    "ele": 2628.0,
+    "lat": 47.2419041,
+    "lon": 11.0356552
+   }
+  ],
+  "high_point": [
+   47.242144,
+   11.035822,
+   2602.6
+  ]
  },
  "f122d32d259cb": {
   "source": "file",
@@ -1569,7 +2815,13 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "63ceda035cfe9c3e75ff2e02.fit",
-  "name": "Ski tour"
+  "name": "Ski tour",
+  "summits": [],
+  "high_point": [
+   47.240768,
+   13.476994,
+   2072.4
+  ]
  },
  "f88f41233e9ff": {
   "source": "file",
@@ -1596,7 +2848,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "63ed3014f000dc6dcedb15e2.fit",
-  "name": "Ski tour"
+  "name": "Ski tour",
+  "summits": [
+   {
+    "id": 1059284892,
+    "name": "Lampsenspitze",
+    "ele": 2875.0,
+    "lat": 47.1560862,
+    "lon": 11.0956515
+   }
+  ],
+  "high_point": [
+   47.155933,
+   11.095737,
+   2865.0
+  ]
  },
  "fd3472912c0cb": {
   "source": "file",
@@ -1623,7 +2889,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "63f9cdeab5652d6825f852b9.fit",
-  "name": "Ski tour"
+  "name": "Ski tour",
+  "summits": [
+   {
+    "id": 1059284892,
+    "name": "Lampsenspitze",
+    "ele": 2875.0,
+    "lat": 47.1560862,
+    "lon": 11.0956515
+   }
+  ],
+  "high_point": [
+   47.155955,
+   11.095772,
+   2871.4
+  ]
  },
  "f47b38d771f35": {
   "source": "file",
@@ -1650,7 +2930,13 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "6402eeec07fb7624f8c43875.fit",
-  "name": "Ski tour"
+  "name": "Ski tour",
+  "summits": [],
+  "high_point": [
+   47.665526,
+   14.205981,
+   1897.4
+  ]
  },
  "f0554cd68fcee": {
   "source": "file",
@@ -1677,7 +2963,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "6402ef518fc40c2fed7ce877.fit",
-  "name": "Ski tour"
+  "name": "Ski tour",
+  "summits": [
+   {
+    "id": 13922852173,
+    "name": "Marmorspitzl",
+    "ele": null,
+    "lat": 47.1244964,
+    "lon": 11.3773559
+   }
+  ],
+  "high_point": [
+   47.122653,
+   11.378246,
+   2565.0
+  ]
  },
  "f3a00036cdea7": {
   "source": "file",
@@ -1704,7 +3004,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "6402efd6f68d35137438e789.fit",
-  "name": "Ski tour"
+  "name": "Ski tour",
+  "summits": [
+   {
+    "id": 514428103,
+    "name": "Mittlere Guslarspitze",
+    "ele": 3128.0,
+    "lat": 46.8371047,
+    "lon": 10.8243607
+   }
+  ],
+  "high_point": [
+   46.837053,
+   10.824157,
+   3130.0
+  ]
  },
  "f00b1ede5a96d": {
   "source": "file",
@@ -1731,7 +3045,21 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "6402f337f68d351374390c71.fit",
-  "name": "Ski tour"
+  "name": "Ski tour",
+  "summits": [
+   {
+    "id": 26865132,
+    "name": "Weißkugel",
+    "ele": 3738.0,
+    "lat": 46.7978283,
+    "lon": 10.7260747
+   }
+  ],
+  "high_point": [
+   46.797814,
+   10.726045,
+   3734.2
+  ]
  },
  "fcb03b0aee1f7": {
   "source": "file",
@@ -1758,7 +3086,28 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "640500e0335b331b39ed4ea6.fit",
-  "name": "Ski tour"
+  "name": "Ski tour",
+  "summits": [
+   {
+    "id": 880157447,
+    "name": "Birgitzköpfl",
+    "ele": 1980.0,
+    "lat": 47.1988771,
+    "lon": 11.3147242
+   },
+   {
+    "id": 275552924,
+    "name": "Saile (Nockspitze)",
+    "ele": 2404.0,
+    "lat": 47.1920709,
+    "lon": 11.3247164
+   }
+  ],
+  "high_point": [
+   47.192154,
+   11.324418,
+   2385.2
+  ]
  },
  "fe3a9f662f904": {
   "source": "file",
@@ -1785,6 +3134,12 @@
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "645363b37e9264389b8c82f0.fit",
-  "name": "Ski tour"
+  "name": "Ski tour",
+  "summits": [],
+  "high_point": [
+   46.800915,
+   10.887137,
+   2508.6
+  ]
  }
 }
