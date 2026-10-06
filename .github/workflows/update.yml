@@ -42,10 +42,13 @@ jobs:
           STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
           STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
           STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
+          SUMMITBOOK_HOMES: ${{ secrets.SUMMITBOOK_HOMES }}
         run: uv run summitbook update
 
       - name: Make 3D pictures for tours without photos
         continue-on-error: true # without pictures the website still works
+        env:
+          SUMMITBOOK_HOMES: ${{ secrets.SUMMITBOOK_HOMES }}
         run: uv run --extra previews summitbook previews
 
       - name: Save the downloaded data

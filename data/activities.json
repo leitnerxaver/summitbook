@@ -2725,7 +2725,7 @@
    "moving_time": 3561,
    "elev_high": 861.6,
    "total_photo_count": 0,
-   "has_track": true,
+   "has_track": false,
    "start_latlng": [
     47.27,
     11.4

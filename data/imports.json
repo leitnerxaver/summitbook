@@ -2219,8 +2219,8 @@
   "photos_for_count": 0,
   "has_track": true,
   "start_latlng": [
-   48.03634878247976,
-   13.557049613445997
+   48.04,
+   13.56
   ],
   "end_latlng": [
    48.180924793705344,
@@ -2680,8 +2680,8 @@
    11.347719999030232
   ],
   "end_latlng": [
-   47.27071037515998,
-   11.385643165558577
+   47.27,
+   11.39
   ],
   "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
   "file": "636ec1e083d787547e3c8492.fit",

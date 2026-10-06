@@ -116,7 +116,7 @@ function filtered() {
 
 function renderStats(entries) {
   const peaks = collectPeaks(entries);
-  const visits = entries.reduce((n, e) => n + e.days.reduce((m, d) => m + d.summits.length, 0), 0);
+  const visits = [...peaks.values()].reduce((n, p) => n + p.visits.length, 0);
   const highest = [...peaks.values()].filter((p) => p.ele).sort((a, b) => b.ele - a.ele)[0];
   const favorite = [...peaks.values()].sort((a, b) => b.visits.length - a.visits.length)[0];
   const gain = entries.reduce((n, e) => n + e.gain, 0);
@@ -750,13 +750,22 @@ function showPhoto(index) {
 
 // ---------- Helpers ----------
 
-// Every peak with its visits: { entry, date } for each day it was reached.
+// Every peak with its visits: { entry, date }. Within a trip, reaching a summit on back-to-back
+// days (you slept up there, e.g. at a hut) is one visit; a later day with a gap is another.
 function collectPeaks(entries) {
   const peaks = new Map();
-  entries.forEach((e) => [...e.days].reverse().forEach((d) => d.summits.forEach((s) => {
-    if (!peaks.has(s.id)) peaks.set(s.id, { ...s, visits: [] });
-    peaks.get(s.id).visits.push({ entry: e, date: d.date });
-  })));
+  entries.forEach((e) => {
+    const days = new Map(); // summit id -> day numbers it was reached on
+    e.days.forEach((d) => d.summits.forEach((s) => {
+      if (!peaks.has(s.id)) peaks.set(s.id, { ...s, visits: [] });
+      days.set(s.id, [...(days.get(s.id) || []), d]);
+    }));
+    days.forEach((reached, id) => {
+      reached.sort((a, b) => b.day - a.day); // newest first, like the entries
+      const visits = reached.filter((d, i) => i === reached.length - 1 || reached[i + 1].day < d.day - 1);
+      visits.forEach((d) => peaks.get(id).visits.push({ entry: e, date: d.date }));
+    });
+  });
   return peaks; // entries are newest first, so visits[0] is the latest visit
 }
 

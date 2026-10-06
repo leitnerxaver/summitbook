@@ -17,6 +17,7 @@ import fitdecode
 
 from . import geo, trips
 from .config import Config
+from .privacy import hide_home
 from .sync import TRACKS_DIR
 
 FOLDER_TYPES = {
@@ -41,7 +42,6 @@ DEFAULT_NAMES = {
     "EBikeRide": "E-bike ride",
     "EMountainBikeRide": "E-MTB ride",
 }
-HIDE_NEAR_HOME_M = 500  # files have no Strava privacy zones: hide this much of a track around home
 SEMICIRCLES = 180 / 2**31  # FIT stores positions in "semicircles"
 
 
@@ -127,7 +127,7 @@ def _key(folder: Path) -> str:
 
 def _record(activity_id: str, tour: dict, kind: str, cfg: Config) -> dict | None:
     points = tour["points"]
-    track = _hide_home([[lat, lon, ele] for lat, lon, ele, _ in points], cfg)
+    track = hide_home([[lat, lon, ele] for lat, lon, ele, _ in points], cfg)
     if len(track) < 2:
         return None
     TRACKS_DIR.mkdir(parents=True, exist_ok=True)
@@ -156,18 +156,6 @@ def _record(activity_id: str, tour: dict, kind: str, cfg: Config) -> dict | None
         "start_latlng": track[0][:2],
         "end_latlng": track[-1][:2],
     }
-
-
-def _hide_home(track: list[list], cfg: Config) -> list[list]:
-    """Cuts the first/last HIDE_NEAR_HOME_M of a track that starts/ends near home."""
-
-    def cut_start(points: list[list]) -> list[list]:
-        if not points or not cfg.near_home(points[0]):
-            return points
-        first_away = next((i for i, p in enumerate(points) if trips.distance_m(p, points[0]) > HIDE_NEAR_HOME_M), len(points))
-        return points[first_away:]
-
-    return cut_start(cut_start(track)[::-1])[::-1]
 
 
 # --- Reading files ----------------------------------------------------------

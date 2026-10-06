@@ -9,8 +9,9 @@ wheels/
 # Virtual environments
 .venv
 
-# Your Strava login: never commit this
+# Your Strava login and homes: never commit these
 .strava.json
+private.toml
 
 # Your GPX/FIT files stay on this computer (the tours are saved in data/imports.json)
 imports/

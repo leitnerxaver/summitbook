@@ -40,13 +40,8 @@ folders = [
 # one multi-day entry. More than 100 km from home, a day may also start up to 150 km from where
 # the day before ended (a transfer by train or bus).
 link_radius_m = 500
-# Places near your homes (latitude, longitude) never link days: tours from home stay day trips.
-# A trip can still start or end at home (e.g. a bike tour from your front door).
-homes = [
-  [47.2655, 11.3925],  # Innsbruck
-  [48.04, 13.56],      # second home in Upper Austria
-  [22.34, 114.27],     # Hong Kong (HKUST)
-]
+# Places near one of your homes never link days: tours from home stay day trips, but a trip can
+# still start or end at home. Your homes are private: they're in private.toml (never uploaded).
 home_radius_km = 7
 
 [fixes]

@@ -101,7 +101,9 @@ def _day(activity_id: str, rec: dict, start, end, cfg: Config) -> dict:
     has_track = bool(rec.get("has_track")) and (TRACKS_DIR / f"{activity_id}.json").exists()
     summits = rec.get("summits") or []
     if has_track and cfg.extra_summits:
-        summits = geo.find_summits(load_track(activity_id), summits + _extra_summits(cfg), cfg.radius_m, cfg.altitude_tolerance_m)
+        known = {s["id"] for s in summits}
+        extra = geo.find_summits(load_track(activity_id), _extra_summits(cfg), cfg.radius_m, cfg.altitude_tolerance_m)
+        summits = summits + [s for s in extra if s["id"] not in known]
     summits = [{**s, "name": short_name(s["name"])} for s in summits]
     return {
         "id": activity_id,

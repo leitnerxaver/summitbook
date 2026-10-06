@@ -1,5 +1,7 @@
 """Where files live, and the settings from summitbook.toml."""
 
+import json
+import os
 import tomllib
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -15,6 +17,7 @@ def _find_root() -> Path:
 
 ROOT = _find_root()
 CONFIG_FILE = ROOT / "summitbook.toml"
+PRIVATE_FILE = ROOT / "private.toml"  # your homes, never published
 SECRETS_FILE = ROOT / ".strava.json"  # your Strava login, never published
 CACHE_DIR = ROOT / ".cache"  # OpenStreetMap peaks, safe to delete
 DATA_DIR = ROOT / "data"  # everything downloaded from Strava
@@ -39,7 +42,7 @@ class Config:
     single_day: list[str] = field(default_factory=list)
     titles: dict[str, str] = field(default_factory=dict)
     link_radius_m: float = 500
-    homes: list[list[float]] = field(default_factory=lambda: [[47.2655, 11.3925]])
+    homes: list[list[float]] = field(default_factory=list)  # from private.toml, see _homes()
     home_radius_km: float = 7
     # Places that count as summits although they aren't peaks: name -> [lat, lon, height]
     extra_summits: dict[str, list[float]] = field(default_factory=dict)
@@ -54,6 +57,16 @@ class Config:
     @property
     def types(self) -> list[str]:
         return list(dict.fromkeys(self.always + self.summit_only + self.multi_day_only))
+
+
+def _homes() -> list[list[float]]:
+    """Your homes are private: on GitHub they come from the SUMMITBOOK_HOMES secret,
+    on your computer from private.toml (which is never uploaded)."""
+    if secret := os.environ.get("SUMMITBOOK_HOMES"):
+        return json.loads(secret)
+    if PRIVATE_FILE.exists():
+        return tomllib.loads(PRIVATE_FILE.read_text()).get("homes", [])
+    return []
 
 
 def load_config() -> Config:
@@ -78,7 +91,7 @@ def load_config() -> Config:
         single_day=[str(i) for i in fixes.get("single_day", [])],
         titles={str(k): v for k, v in raw.get("titles", {}).items()},
         link_radius_m=multi.get("link_radius_m", default.link_radius_m),
-        homes=multi.get("homes", [multi["home"]] if "home" in multi else default.homes),
+        homes=_homes(),
         home_radius_km=multi.get("home_radius_km", default.home_radius_km),
         extra_summits=summits.get("extra", {}),
         import_folders=[ROOT / Path(f).expanduser() for f in imports.get("folders", ["imports"])],

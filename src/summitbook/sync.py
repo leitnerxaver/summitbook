@@ -7,6 +7,7 @@ import time
 from . import geo, peaks, trips
 from .config import DATA_DIR, Config
 from .peaks import PeakLookupError, needs_translation, peaks_in
+from .privacy import blur, hide_home
 from .strava import RateLimited, Strava
 
 STORE_FILE = DATA_DIR / "activities.json"  # from Strava
@@ -86,6 +87,7 @@ def download(cfg: Config, store: dict, wait: bool) -> None:
     for a in wanted:
         rec = records.setdefault(str(a["id"]), {})
         rec.update({k: a.get(k) for k in SUMMARY_FIELDS})
+        rec["start_latlng"], rec["end_latlng"] = blur(rec["start_latlng"], cfg), blur(rec["end_latlng"], cfg)
         if a.get("manual") or not (a.get("map") or {}).get("summary_polyline"):
             rec["has_track"] = False  # no GPS recorded, nothing to download
 
@@ -101,7 +103,7 @@ def download(cfg: Config, store: dict, wait: bool) -> None:
         print(f"[{n}/{len(todo)}] {a['start_date_local'][:10]}  {a['name']}")
         while True:
             try:
-                _download_one(client, a["id"], rec)
+                _download_one(client, a["id"], rec, cfg)
                 save_store(store)
                 break
             except RateLimited as limit:
@@ -116,13 +118,14 @@ def _needs_download(rec: dict) -> bool:
     return "has_track" not in rec or rec.get("photos_for_count", 0) != (rec.get("total_photo_count") or 0)
 
 
-def _download_one(client: Strava, activity_id: int, rec: dict) -> None:
+def _download_one(client: Strava, activity_id: int, rec: dict, cfg: Config) -> None:
     if "has_track" not in rec:
         raw = client.track(activity_id)
-        if raw:
+        track = hide_home(geo.simplify(raw), cfg) if raw else []
+        if len(track) >= 2:
             TRACKS_DIR.mkdir(parents=True, exist_ok=True)
-            (TRACKS_DIR / f"{activity_id}.json").write_text(json.dumps(geo.simplify(raw), separators=(",", ":")))
-        rec["has_track"] = bool(raw)
+            (TRACKS_DIR / f"{activity_id}.json").write_text(json.dumps(track, separators=(",", ":")))
+        rec["has_track"] = len(track) >= 2
         rec.pop("summits", None)
     count = rec.get("total_photo_count") or 0
     if rec.get("photos_for_count", 0) != count:

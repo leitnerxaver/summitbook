@@ -83,7 +83,15 @@ It gets the newest data from GitHub first, rebuilds, and uploads your changes.
 
 GitHub logs in to Strava with three repository secrets (Settings → Secrets and variables →
 Actions): `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET` and `STRAVA_REFRESH_TOKEN`, copied from
-`.strava.json`.
+`.strava.json`. Your homes are the fourth secret, `SUMMITBOOK_HOMES` (the list from
+`private.toml`, e.g. `[[47.27, 11.39], [48.0, 13.6]]`).
+
+## Your homes stay private
+
+Your homes (where tours from home stay day trips) are in **`private.toml`**, which is never
+uploaded. Tracks that start or end near a home lose their first and last kilometer, and start
+points near a home are blurred to about 1 km, both on the website and in the published data.
+If you change `private.toml`, also update the `SUMMITBOOK_HOMES` secret on GitHub.
 
 Note: the repository is public, so `data/` (everything downloaded from Strava and imported,
 also hikes without a summit) can be seen there. It only contains activities that are public on Strava anyway.
@@ -127,6 +135,7 @@ uv run summitbook build    # rebuild the website without downloading anything
 | Path | What it is |
 |---|---|
 | `summitbook.toml` | your settings |
+| `private.toml` | your homes (never uploaded) |
 | `site/` | the website (`index.html`, `style.css`, `app.js`) |
 | `site/data/` | the data the website shows (made by `update`/`build`) |
 | `data/` | everything downloaded from Strava (`activities.json`) and imported (`imports.json`), with the GPS tracks |
