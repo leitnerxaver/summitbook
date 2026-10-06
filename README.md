@@ -3,9 +3,9 @@
 A website of your ski tours and summits, built from your Strava activities.
 
 - **Ski tours** always appear, even without a summit (a couloir, a powder run).
-- **Hikes, snowshoe tours and climbs** only appear when you reached a summit.
+- **Hikes, trail runs, snowshoe tours and climbs** only appear when you reached a summit.
 - **Bike rides** (road, mountain bike, gravel, e-bike) only appear as part of a multi-day trip, in their own section: **Bike adventures**.
-- **Runs, trail runs and everything else** never appear.
+- **Runs on the road and everything else** never appear.
 - **Summits are found automatically** by comparing your GPS track with the mountain peaks in OpenStreetMap.
 - **Back-to-back days from the same base** (a hut, a hotel), or each starting where the day before ended, become one multi-day entry, with each day in its own color on the map. Tours from home stay day trips.
 - Every tour has a **3D map** with your route, your **Strava photos**, and a link back to Strava.
@@ -52,6 +52,7 @@ After that, each update only downloads what's new.
    |---|---|
    | `imports/ski-tour/` | ski tour |
    | `imports/hike/` | hike or mountaineering |
+   | `imports/trail-run/` | trail run |
    | `imports/snowshoe/` | snowshoe tour |
    | `imports/climb/` | climb |
    | `imports/bike/`, `imports/mtb/`, `imports/gravel/`, `imports/e-bike/` | bike rides |

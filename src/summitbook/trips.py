@@ -13,6 +13,7 @@ TRIP_WORDS = {
     "Hike": "mountain tour",
     "Snowshoe": "snowshoe tour",
     "RockClimbing": "climbing trip",
+    "TrailRun": "trail running tour",
     "Ride": "bike tour",
     "MountainBikeRide": "mountain bike tour",
     "GravelRide": "gravel tour",
@@ -30,6 +31,7 @@ _ENDS_WITH_SPORT = re.compile(
     r"(backcountry ski(ing)?|ski tour(ing)?|skitour(en)?|hik(e|ing)|wander(n|ung)|walk(ing)?|spaziergang"
     r"|snowshoe(ing)?|schneeschuh\w*|mountaineering|bergsteigen|bergtour|hochtour|rock climbing|climb(ing)?"
     r"|klettern|ski(ing)?|skifahren|ride|cycling|biking|radfahrt|radfahren|radtour|mountainbike\w*|mtb"
+    r"|run(ning)?|\w*lauf|laufen"
     r"|gravel\w*|e-?bike\w*)$",
     re.IGNORECASE,
 )

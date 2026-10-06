@@ -30,7 +30,7 @@ TYPE_LABELS = {
 # Map colors: on skis (blue), on foot (orange), by bike (aqua); anything else gray.
 COLOR_GROUPS = [
     {"BackcountrySki", "AlpineSki", "NordicSki", "Snowboard"},
-    {"Hike", "Walk", "Snowshoe", "RockClimbing"},
+    {"Hike", "Walk", "Snowshoe", "RockClimbing", "TrailRun"},
     {"Ride", "MountainBikeRide", "GravelRide", "EBikeRide", "EMountainBikeRide"},
 ]
 

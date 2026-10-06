@@ -23,6 +23,7 @@ from .sync import TRACKS_DIR
 FOLDER_TYPES = {
     "ski-tour": "BackcountrySki",
     "hike": "Hike",
+    "trail-run": "TrailRun",
     "snowshoe": "Snowshoe",
     "climb": "RockClimbing",
     "bike": "Ride",
@@ -41,6 +42,7 @@ DEFAULT_NAMES = {
     "GravelRide": "Gravel ride",
     "EBikeRide": "E-bike ride",
     "EMountainBikeRide": "E-MTB ride",
+    "TrailRun": "Trail run",
 }
 SEMICIRCLES = 180 / 2**31  # FIT stores positions in "semicircles"
 
@@ -216,8 +218,10 @@ def _type_from_fit(sport: str, sub_sport: str) -> str | None:
         bikes = {"mountain": "MountainBikeRide", "gravel_cycling": "GravelRide", "e_bike_fitness": "EBikeRide",
                  "e_bike_mountain": "EMountainBikeRide"}
         return bikes.get(sub_sport, "Ride")
+    if sport == "running":
+        return "TrailRun" if sub_sport == "trail" else "Run"
     return {"hiking": "Hike", "mountaineering": "Hike", "snowshoeing": "Snowshoe", "rock_climbing": "RockClimbing",
-            "e_biking": "EBikeRide", "walking": "Walk", "running": "Run"}.get(sport)
+            "e_biking": "EBikeRide", "walking": "Walk"}.get(sport)
 
 
 def _type_from_text(text: str) -> str | None:
@@ -230,6 +234,7 @@ def _type_from_text(text: str) -> str | None:
         (("gravel",), "GravelRide"),
         (("cycl", "bik", "rad", "ride"), "Ride"),
         (("hik", "wander", "mountaineer", "bergsteig", "trek"), "Hike"),
+        (("trail", "berglauf"), "TrailRun"),
         (("run", "lauf"), "Run"),
     ]:
         if any(w in text for w in words):

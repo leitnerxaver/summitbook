@@ -3141,5 +3141,274 @@
    10.887137,
    2508.6
   ]
+ },
+ "ff157d34e72e5": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "TrailRun",
+  "sport_type": "TrailRun",
+  "start_date": "2022-05-31T08:05:16Z",
+  "start_date_local": "2022-05-31T10:05:16Z",
+  "distance": 22967.0,
+  "total_elevation_gain": 1675,
+  "moving_time": 21098,
+  "elev_high": 1681.1999999999998,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.79045760631561,
+   13.551281606778502
+  ],
+  "end_latlng": [
+   47.790902433916926,
+   13.553398372605443
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "62963d9ae9f29f51e845b067.fit",
+  "name": "Trail run",
+  "summits": [
+   {
+    "id": 293623086,
+    "name": "Großer Schoberstein",
+    "ele": 1037.0,
+    "lat": 47.8002217,
+    "lon": 13.5519312
+   },
+   {
+    "id": 440172280,
+    "name": "Mahdlgupf",
+    "ele": 1261.0,
+    "lat": 47.8050804,
+    "lon": 13.5592319
+   },
+   {
+    "id": 440172408,
+    "name": "Dachsteinblick",
+    "ele": 1559.0,
+    "lat": 47.8117596,
+    "lon": 13.5717919
+   },
+   {
+    "id": 3565415366,
+    "name": "Pfaffengrabenhöhe",
+    "ele": 1691.0,
+    "lat": 47.8112034,
+    "lon": 13.6293768
+   }
+  ],
+  "high_point": [
+   47.811286,
+   13.630314,
+   1681.2
+  ]
+ },
+ "f8e7a935a0e46": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "TrailRun",
+  "sport_type": "TrailRun",
+  "start_date": "2022-06-14T14:41:18Z",
+  "start_date_local": "2022-06-14T16:41:18Z",
+  "distance": 9305.0,
+  "total_elevation_gain": 1048,
+  "moving_time": 7911,
+  "elev_high": 1560.8000000000002,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.81223362311721,
+   13.547182437032461
+  ],
+  "end_latlng": [
+   47.811759961768985,
+   13.54704799130559
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "62aacefbad49221595aa291e.fit",
+  "name": "Trail run",
+  "summits": [
+   {
+    "id": 440172408,
+    "name": "Dachsteinblick",
+    "ele": 1559.0,
+    "lat": 47.8117596,
+    "lon": 13.5717919
+   },
+   {
+    "id": 440172280,
+    "name": "Mahdlgupf",
+    "ele": 1261.0,
+    "lat": 47.8050804,
+    "lon": 13.5592319
+   },
+   {
+    "id": 293623086,
+    "name": "Großer Schoberstein",
+    "ele": 1037.0,
+    "lat": 47.8002217,
+    "lon": 13.5519312
+   }
+  ],
+  "high_point": [
+   47.811728,
+   13.571618,
+   1560.8
+  ]
+ },
+ "f7189486435e2": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "TrailRun",
+  "sport_type": "TrailRun",
+  "start_date": "2022-06-18T05:26:06Z",
+  "start_date_local": "2022-06-18T07:26:06Z",
+  "distance": 26485.0,
+  "total_elevation_gain": 2175,
+  "moving_time": 27139,
+  "elev_high": 1803.6,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.79741441830993,
+   13.54152800515294
+  ],
+  "end_latlng": [
+   47.81236798502505,
+   13.756355177611113
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "62ade4ec24f2863d0b55be21.fit",
+  "name": "Trail run",
+  "summits": [
+   {
+    "id": 293623086,
+    "name": "Großer Schoberstein",
+    "ele": 1037.0,
+    "lat": 47.8002217,
+    "lon": 13.5519312
+   },
+   {
+    "id": 440172280,
+    "name": "Mahdlgupf",
+    "ele": 1261.0,
+    "lat": 47.8050804,
+    "lon": 13.5592319
+   },
+   {
+    "id": 440172408,
+    "name": "Dachsteinblick",
+    "ele": 1559.0,
+    "lat": 47.8117596,
+    "lon": 13.5717919
+   },
+   {
+    "id": 3565415366,
+    "name": "Pfaffengrabenhöhe",
+    "ele": 1691.0,
+    "lat": 47.8112034,
+    "lon": 13.6293768
+   },
+   {
+    "id": 6116242713,
+    "name": "Hinterer Kesselgupf",
+    "ele": 1787.0,
+    "lat": 47.8035225,
+    "lon": 13.6781367
+   },
+   {
+    "id": 4300277781,
+    "name": "Totengrabengupf",
+    "ele": 1782.0,
+    "lat": 47.804438,
+    "lon": 13.6880367
+   },
+   {
+    "id": 6116147312,
+    "name": "Kleiner Totengrabengupf",
+    "ele": 1666.0,
+    "lat": 47.8091322,
+    "lon": 13.6950668
+   },
+   {
+    "id": 6300722544,
+    "name": "Graskogel",
+    "ele": 1447.0,
+    "lat": 47.8105985,
+    "lon": 13.728675
+   }
+  ],
+  "high_point": [
+   47.815174,
+   13.642094,
+   1803.4
+  ]
+ },
+ "f5c7e6941e0af": {
+  "source": "file",
+  "name_in_file": null,
+  "type_in_file": "TrailRun",
+  "sport_type": "TrailRun",
+  "start_date": "2022-07-02T02:59:58Z",
+  "start_date_local": "2022-07-02T04:59:58Z",
+  "distance": 29766.0,
+  "total_elevation_gain": 2532,
+  "moving_time": 22407,
+  "elev_high": 1575.6,
+  "total_photo_count": 0,
+  "photos": [],
+  "photos_for_count": 0,
+  "has_track": true,
+  "start_latlng": [
+   47.91792640462518,
+   13.799868822097778
+  ],
+  "end_latlng": [
+   47.81281599774957,
+   13.77800957299769
+  ],
+  "folder": "~/Library/Mobile Documents/com~apple~CloudDocs/Sonstiges/Suunto Export",
+  "file": "62c157be3af28008f0220c3c.fit",
+  "name": "Trail run",
+  "summits": [
+   {
+    "id": 1804243862,
+    "name": "Grünberg",
+    "ele": 986.0,
+    "lat": 47.8983989,
+    "lon": 13.8195778
+   },
+   {
+    "id": 4250178239,
+    "name": "Dürrenberg",
+    "ele": 687.0,
+    "lat": 47.8893456,
+    "lon": 13.8189124
+   },
+   {
+    "id": 3356503600,
+    "name": "Kleiner Sulzkogel",
+    "ele": 852.0,
+    "lat": 47.8603239,
+    "lon": 13.8206365
+   },
+   {
+    "id": 3356503601,
+    "name": "Traunkirchner Kogel",
+    "ele": 1575.0,
+    "lat": 47.8696029,
+    "lon": 13.8279666
+   }
+  ],
+  "high_point": [
+   47.86953,
+   13.828357,
+   1575.6
+  ]
  }
 }

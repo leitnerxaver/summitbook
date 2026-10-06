@@ -10,7 +10,7 @@ adventures_title = "Bike adventures"
 # Strava sport types that always appear, even without a summit (e.g. skiing a couloir).
 always = ["BackcountrySki"]
 # Strava sport types that only appear when you reached at least one summit.
-summit_only = ["Hike", "Snowshoe", "RockClimbing"]
+summit_only = ["Hike", "Snowshoe", "RockClimbing", "TrailRun"]
 # Strava sport types that only appear as part of a multi-day trip (e.g. a bike tour).
 multi_day_only = ["Ride", "MountainBikeRide", "GravelRide", "EBikeRide", "EMountainBikeRide"]
 # Only activities visible to "Everyone" on Strava are used.
