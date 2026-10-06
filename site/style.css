@@ -124,7 +124,7 @@ strong, b { font-weight: 700; }
 }
 
 /* Push pins: maps and post-its are pinned into the book */
-.map-frame::before, .map-frame::after,
+.map-frame::before, .map-frame::after, .journal::before,
 .maplibregl-popup.postit .maplibregl-popup-content::before, .postit:not(.maplibregl-popup)::before {
   content: ""; position: absolute; top: -7px; width: 18px; height: 18px; border-radius: 50%; z-index: 2;
   background: radial-gradient(circle at 34% 30%, rgba(255, 255, 255, 0.85) 0 9%, var(--pin, #d8352f) 38%, color-mix(in srgb, var(--pin, #d8352f) 45%, #000) 100%);
@@ -226,7 +226,9 @@ strong, b { font-weight: 700; }
 }
 
 /* Your notes: a handwritten page with ruled lines */
+.journal::before { left: calc(50% - 9px); --pin: #2f67c9; }
 .journal {
+  position: relative;
   margin: 4px 0 24px; padding: 10px 22px 12px 52px; max-width: 760px;
   font: 500 1.65rem/36px var(--hand); color: #24324f;
   background:

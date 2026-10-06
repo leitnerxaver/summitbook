@@ -62,6 +62,11 @@ jobs:
             git push
           fi
 
+      - name: Make browsers load the newest style and script
+        run: |
+          v=${GITHUB_SHA::8}
+          sed -i -e "s/\"style\.css\"/\"style.css?v=$v\"/" -e "s/\"app\.js\"/\"app.js?v=$v\"/" site/index.html
+
       - uses: actions/configure-pages@v6
 
       - uses: actions/upload-pages-artifact@v5
