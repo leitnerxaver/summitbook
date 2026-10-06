@@ -439,13 +439,11 @@ function tourMap(container, e, { preview = false } = {}) {
     const view = camera(bounds);
     if (view) reduceMotion ? map.jumpTo(view) : map.flyTo({ ...view, duration: 2000 });
   };
-  // Where you slept: shown for the selected day only (the night before and the night after it).
+  // Where the selected day ended (if another day followed): a pin.
   let nightMarkers = [];
   const showNights = (day) => {
     nightMarkers.forEach((m) => m.remove());
-    const before = [...e.nights].reverse().find((n) => n.after_day < day);
-    const after = e.nights.find((n) => n.after_day === day);
-    nightMarkers = [before, after].filter(Boolean).map((n) => nightMarker(n, true).addTo(map));
+    nightMarkers = e.nights.filter((n) => n.after_day === day).map((n) => endPin(n).addTo(map));
   };
   const selectDay = (n) => {
     if (!dayBounds[n]) return;
@@ -659,12 +657,12 @@ function overviewMap(container) {
 
   const openTrack = (i, lngLat) => {
     const e = tracks[i];
-    const nights = e.nights?.length ? `<p>🌙 ${e.nights.reduce((k, n) => k + n.count, 0)} nights · moons on the map</p>` : '';
+    const nights = e.nights?.length ? `<p>${e.nights.reduce((k, n) => k + n.count, 0)} nights · the pins show where each day ended</p>` : '';
     popup.setLngLat(lngLat)
       .setHTML(`<strong>${esc(titleText(e))}</strong><p>${fmtRange(e.date, e.end_date)} · ${esc(e.category === 'adventure' ? state.data.adventures_title : typeOf(e.type).label)}</p>
         <p>${statsLine(e)}</p>${nights}<ul><li><a href="#/tour/${e.id}">Open the tour →</a></li></ul>`)
       .addTo(map); // (closes an open post-it first, which removes its moons)
-    nightMarkers = (e.nights || []).map((n) => nightMarker(n, false).addTo(map));
+    nightMarkers = (e.nights || []).map((n) => endPin(n).addTo(map));
   };
 
   map.on('load', () => {
@@ -749,14 +747,13 @@ function homeRegion(points) {
   return near.length >= points.length / 2 ? near : points;
 }
 
-// A moon where you slept. With a label (on the tour page): which night, and the hut or town.
-function nightMarker(night, labelled) {
+// A push pin where a day of a multi-day trip ended (where you slept).
+function endPin(night) {
   const el = document.createElement('div');
-  el.className = 'night-marker';
-  const what = `${night.count > 1 ? `${night.count} nights` : 'Night'} after day ${night.after_day}`;
-  el.title = night.name ? `${what}: ${night.name}` : what;
-  el.innerHTML = `${labelled ? `<span class="label">${esc(night.name || what)}${night.name ? `<small>${esc(what)}</small>` : ''}</span>` : ''}
-    <span class="moon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></span>`;
+  el.className = 'end-pin';
+  el.title = `End of day ${night.after_day}`;
+  el.setAttribute('role', 'img');
+  el.setAttribute('aria-label', el.title);
   return new maplibregl.Marker({ element: el, anchor: 'bottom' }).setLngLat([night.lon, night.lat]);
 }
 
