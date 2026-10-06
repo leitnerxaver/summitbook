@@ -5,6 +5,10 @@ const TOPO_TILES = ['a', 'b', 'c'].map((s) => `https://${s}.tile.opentopomap.org
 const SATELLITE_TILES = ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'];
 const TERRAIN_TILEJSON = 'https://tiles.mapterhorn.com/tilejson.json';
 const GRAY_TILES = (layer) => [`https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/${layer}/MapServer/tile/{z}/{y}/{x}`];
+// Hand-painted maps (Stamen Watercolor, hosted by Stadia Maps; free, the website's address is
+// registered in a Stadia account). Without that, the maps fall back to the quiet gray ones.
+const STADIA = (style, ext) => [`https://tiles.stadiamaps.com/tiles/${style}/{z}/{x}/{y}.${ext}`];
+const STADIA_CREDIT = '© <a href="https://stadiamaps.com/">Stadia Maps</a> © <a href="https://stamen.com/">Stamen Design</a> © <a href="https://openmaptiles.org/">OpenMapTiles</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>';
 const DAY_COLORS = 8; // --day-1 … --day-8 in style.css
 
 const app = document.getElementById('app');
@@ -513,6 +517,7 @@ function renderTour(id) {
           <div class="seg" role="group" aria-label="Map style">
             <button type="button" data-base="satellite" aria-pressed="true">Satellite</button>
             <button type="button" data-base="topo" aria-pressed="false">Topo map</button>
+            <button type="button" data-base="paint" aria-pressed="false">Painted</button>
           </div>
           <button class="btn" type="button" id="spin" aria-pressed="false">Fly around</button>
         </div>
@@ -745,9 +750,13 @@ function tourMap(container, e, { preview = false, tracks = loadTracks(e) } = {})
   app.querySelectorAll('[data-base]').forEach((btn) =>
     btn.addEventListener('click', () => {
       const base = btn.dataset.base;
-      ['satellite', 'topo'].forEach((b) => map.setLayoutProperty(b, 'visibility', b === base ? 'visible' : 'none'));
+      ['satellite', 'topo', 'paint'].forEach((b) => map.setLayoutProperty(b, 'visibility', b === base ? 'visible' : 'none'));
       app.querySelectorAll('[data-base]').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
     }));
+  paintedOrGray(map, ['paint'], ['satellite'], () => {
+    app.querySelector('[data-base="paint"]')?.remove();
+    app.querySelector('[data-base="satellite"]')?.setAttribute('aria-pressed', 'true');
+  });
 
   // A point on the map that follows your finger/mouse on the elevation profile.
   const pointEl = document.createElement('div');
@@ -804,6 +813,7 @@ function overviewMap(container) {
   let hovered = null;
   // Clicking a peak or a track opens a post-it note.
   const popup = new maplibregl.Popup({ offset: 12, maxWidth: '260px', className: 'postit' });
+  paintedOrGray(map, ['paint', 'paint-labels'], ['base', 'labels']);
 
   const fitTo = (points, animate, everything = false) => {
     // Start on the area with most of the tours; far-away ones (other continents) are a zoom-out away.
@@ -918,11 +928,14 @@ function overviewMap(container) {
   };
 }
 
-// Overview: a quiet gray map with shaded mountains, so the colored tracks and dots stand out.
+// Overview: a hand-painted watercolor map with shaded mountains (or, if that isn't available,
+// a quiet gray one), toned down a little so the colored tracks and dots stand out.
 function overviewStyle() {
   return {
     version: 8,
     sources: {
+      paint: { type: 'raster', tiles: STADIA('stamen_watercolor', 'jpg'), tileSize: 256, maxzoom: 16, attribution: STADIA_CREDIT },
+      'paint-labels': { type: 'raster', tiles: STADIA('stamen_terrain_labels', 'png'), tileSize: 256, maxzoom: 18 },
       base: { type: 'raster', tiles: GRAY_TILES('World_Light_Gray_Base'), tileSize: 256, maxzoom: 16 },
       labels: {
         type: 'raster', tiles: GRAY_TILES('World_Light_Gray_Reference'), tileSize: 256, maxzoom: 16,
@@ -931,7 +944,8 @@ function overviewStyle() {
       relief: { type: 'raster-dem', url: TERRAIN_TILEJSON, tileSize: 512, encoding: 'terrarium' },
     },
     layers: [
-      { id: 'base', type: 'raster', source: 'base' },
+      { id: 'paint', type: 'raster', source: 'paint', paint: { 'raster-saturation': -0.25, 'raster-contrast': -0.05 } },
+      { id: 'base', type: 'raster', source: 'base', layout: { visibility: 'none' } },
       {
         id: 'relief', type: 'hillshade', source: 'relief',
         paint: {
@@ -941,9 +955,23 @@ function overviewStyle() {
           'hillshade-accent-color': '#5b5546',
         },
       },
-      { id: 'labels', type: 'raster', source: 'labels' },
+      { id: 'paint-labels', type: 'raster', source: 'paint-labels', paint: { 'raster-opacity': 0.85 } },
+      { id: 'labels', type: 'raster', source: 'labels', layout: { visibility: 'none' } },
     ],
   };
+}
+
+// If the painted tiles aren't allowed (the address isn't registered at Stadia yet), switch the
+// map to the gray layers once. onFallback: e.g. hide the "Painted" button.
+function paintedOrGray(map, painted, gray, onFallback = () => {}) {
+  let done = false;
+  map.on('error', (ev) => {
+    if (done || !painted.includes(ev.sourceId)) return;
+    done = true;
+    painted.forEach((id) => map.getLayer(id) && map.setLayoutProperty(id, 'visibility', 'none'));
+    gray.forEach((id) => map.getLayer(id) && map.setLayoutProperty(id, 'visibility', 'visible'));
+    onFallback();
+  });
 }
 
 // The points within 800 km of the middle of all points (if that's most of them).
@@ -967,8 +995,9 @@ function baseStyle(base) {
         type: 'raster', tiles: SATELLITE_TILES, tileSize: 256, maxzoom: 19,
         attribution: 'Imagery © Esri, Maxar, Earthstar Geographics',
       },
+      paint: { type: 'raster', tiles: STADIA('stamen_watercolor', 'jpg'), tileSize: 256, maxzoom: 16, attribution: STADIA_CREDIT },
     },
-    layers: ['topo', 'satellite'].map((id) => ({
+    layers: ['topo', 'satellite', 'paint'].map((id) => ({
       id, type: 'raster', source: id, layout: { visibility: id === base ? 'visible' : 'none' },
     })),
   };
