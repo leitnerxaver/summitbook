@@ -5,7 +5,7 @@ import re
 import shutil
 from datetime import UTC, date, datetime
 
-from . import geo, trips
+from . import geo, plans, trips
 from .config import DATA_DIR, SITE_DIR, Config
 from .peaks import short_name
 from .sync import TRACKS_DIR, load_track, trip_days
@@ -27,11 +27,12 @@ TYPE_LABELS = {
     "EBikeRide": "E-bike ride",
     "EMountainBikeRide": "E-MTB ride",
 }
-# Map colors: on skis (blue), on foot (orange), by bike (aqua); anything else gray.
+# Map colors: on skis (blue), on foot (orange), by bike (aqua), running (violet); anything else gray.
 COLOR_GROUPS = [
     {"BackcountrySki", "AlpineSki", "NordicSki", "Snowboard"},
-    {"Hike", "Walk", "Snowshoe", "RockClimbing", "TrailRun"},
+    {"Hike", "Walk", "Snowshoe", "RockClimbing"},
     {"Ride", "MountainBikeRide", "GravelRide", "EBikeRide", "EMountainBikeRide"},
+    {"TrailRun"},
 ]
 
 
@@ -83,18 +84,17 @@ def build(cfg: Config, store: dict) -> list[dict]:
     }
     (out / "summitbook.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")))
 
-    # A light version of every adventure's route for the overview map (the full tracks are big).
-    routes = {
-        e["id"]: [_preview(load_track(d["id"])) for d in e["days"] if d["track"]]
-        for e in entries if e["category"] == "adventure"
-    }
-    (out / "adventures.json").write_text(json.dumps(routes, separators=(",", ":")))
+    # A light version of every tour's track for the overview map (the full tracks are big).
+    routes = {e["id"]: [_preview(load_track(d["id"])) for d in e["days"] if d["track"]] for e in entries}
+    (out / "routes.json").write_text(json.dumps(routes, separators=(",", ":")))
+    (out / "adventures.json").unlink(missing_ok=True)  # (older versions)
+    (out / "plans.json").write_text(json.dumps(plans.read(), ensure_ascii=False, separators=(",", ":")))
     return entries
 
 
 def _preview(track: list[list]) -> list[list]:
     flat = [[lat, lon, None] for lat, lon, _ in track]
-    return [[round(lon, 4), round(lat, 4)] for lat, lon, _ in geo.simplify(flat, tolerance_m=60)]
+    return [[round(lon, 4), round(lat, 4)] for lat, lon, _ in geo.simplify(flat, tolerance_m=40)]
 
 
 def _day(activity_id: str, rec: dict, start, end, cfg: Config) -> dict:

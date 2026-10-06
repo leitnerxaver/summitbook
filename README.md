@@ -10,6 +10,7 @@ A website of your ski tours and summits, built from your Strava activities.
 - **Back-to-back days from the same base** (a hut, a hotel), or each starting where the day before ended, become one multi-day entry, with each day in its own color on the map. Tours from home stay day trips.
 - Every tour has a **3D map** with your route, your **Strava photos**, and a link back to Strava.
 - **Tours that aren't on Strava** (e.g. from Suunto) can be added as GPX or FIT files.
+- **Plans:** your notes for future tours, written in `plans.md`, show up as post-its on the Plans page.
 
 ## One-time setup
 
@@ -98,6 +99,18 @@ Note: the repository is public, so `data/` (everything downloaded from Strava an
 also hikes without a summit) can be seen there. It only contains activities that are public on Strava anyway.
 Strava's API terms say apps may only show your data to you, so a public summit book is
 against those terms; Strava could switch off your API application.
+
+## Plans for future tours
+
+Write your ideas into **`plans.md`**: start each plan with `## ` and its name, then anything
+below it (lines starting with `- ` become a list). Run `uv run summitbook publish` and they
+appear as post-it notes on the Plans page. Note: like the rest of the site, they're public.
+
+## The look
+
+The style is in `site/style.css` (colors, fonts, paper). The background photo is
+`site/background.jpg`: replace it with another photo (same name) to change it; how dark it
+is set at the top of `style.css` (`rgba(8, 14, 26, 0.55)`: the last number is the darkness).
 
 ## Settings
 

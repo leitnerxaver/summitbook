@@ -8,7 +8,7 @@ import webbrowser
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
-from . import imports, site, strava, sync
+from . import imports, photos, site, strava, sync
 from .config import ROOT, SITE_DIR, load_config
 
 
@@ -61,6 +61,8 @@ def run_update(download: bool, wait: bool) -> None:
     store = sync.load_store()
     if download:
         sync.download(cfg, store, wait)
+        photos.add_focus(store)
+        sync.save_store(store)
     imports.import_files(cfg, store)
     sync.detect_summits(cfg, store)
     entries = site.build(cfg, store)

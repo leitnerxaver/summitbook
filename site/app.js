@@ -47,26 +47,27 @@ function route() {
     state.view = 'tour';
     renderTour(tour[1]);
     scrollTo(0, 0);
-  } else {
-    const wasTour = state.view === 'tour';
-    const view = { '#/peaks': 'peaks', '#/adventures': 'adventures' }[location.hash] || 'log';
-    state.view = view;
-    view === 'adventures' ? renderAdventures() : renderHome(view);
-    scrollTo(0, wasTour ? state.scroll[view] || 0 : 0);
+    return;
   }
+  if (location.hash === '#/adventures') { // (links from older versions)
+    state.filter = 'adventure';
+    history.replaceState(null, '', '#/');
+  }
+  const wasTour = state.view === 'tour';
+  const view = { '#/peaks': 'peaks', '#/plans': 'plans' }[location.hash] || 'log';
+  state.view = view;
+  view === 'plans' ? renderPlans() : renderHome(view);
+  scrollTo(0, wasTour ? state.scroll[view] || 0 : 0);
 }
 
-// Summit book (ski tours, hikes, …) and bike adventures are separate sections.
+// Summit tours (ski tours, hikes, …) and bike adventures.
 function inCategory(category) {
   return state.data.entries.filter((e) => e.category === category);
 }
 
 function tabsHtml(view) {
-  const tab = (hash, name, label) => `<a href="${hash}" ${view === name ? 'aria-current="page"' : ''}>${esc(label)}</a>`;
-  return `<nav class="tabs" aria-label="View">
-    ${tab('#/', 'log', 'Logbook')}${tab('#/peaks', 'peaks', 'Peaks')}
-    ${inCategory('adventure').length ? tab('#/adventures', 'adventures', state.data.adventures_title) : ''}
-  </nav>`;
+  const tab = (hash, name, label) => `<a href="${hash}" ${view === name ? 'aria-current="page"' : ''}>${label}</a>`;
+  return `<nav class="tabs" aria-label="View">${tab('#/', 'log', 'Logbook')}${tab('#/peaks', 'peaks', 'Peaks')}${tab('#/plans', 'plans', 'Plans')}</nav>`;
 }
 
 // ---------- Home: stats, overview map, logbook / peaks ----------
@@ -74,27 +75,28 @@ function tabsHtml(view) {
 function renderHome(view) {
   document.title = state.data.title;
   app.innerHTML = `
-    <section class="stats" id="stats" aria-label="Totals"></section>
-    <section aria-label="Map of all summits">
-      <div id="overview-map" class="map map-overview"></div>
-      <p class="map-legend" id="legend"></p>
-    </section>
     <div class="toolbar">
-      <div class="chips" id="chips" role="group" aria-label="Show activity type"></div>
       ${tabsHtml(view)}
+      <div class="chips" id="chips" role="group" aria-label="Show"></div>
     </div>
+    <section class="stats" id="stats" aria-label="Totals"></section>
+    <section class="map-frame" aria-label="${view === 'peaks' ? 'Map of all summits' : 'Map of all tracks'}">
+      <div id="overview-map" class="map map-overview"></div>
+    </section>
+    <p class="map-legend" id="legend"></p>
     <section id="list"></section>`;
 
   const map = overviewMap(document.getElementById('overview-map'));
+  const list = document.getElementById('list');
   const update = (animate) => {
     const entries = filtered();
     renderStats(entries);
     renderChips(update);
-    renderLegend(entries);
-    document.getElementById('list').innerHTML = view === 'peaks' ? peaksHtml(entries) : logbookHtml(entries);
-    map.show(entries, animate);
+    renderLegend(entries, view);
+    list.innerHTML = view === 'peaks' ? peaksHtml(entries) : logbookHtml(entries);
+    map.show(entries, animate, view);
   };
-  document.getElementById('list').addEventListener('click', (ev) => {
+  list.addEventListener('click', (ev) => {
     const sort = ev.target.closest('[data-order]');
     if (sort) {
       state.peakOrder = sort.dataset.order;
@@ -110,60 +112,81 @@ function renderHome(view) {
 }
 
 function filtered() {
-  const all = inCategory('summits');
-  return state.filter === 'all' ? all : all.filter((e) => e.type === state.filter);
+  if (state.filter === 'all') return state.data.entries;
+  if (state.filter === 'adventure') return inCategory('adventure');
+  return inCategory('summits').filter((e) => e.type === state.filter);
+}
+
+function statTile(label, value, note = '') {
+  return `<div class="stat"><span class="stat-value">${value}</span><span class="stat-label">${label}</span>${note ? `<span class="stat-note" title="${esc(note)}">${esc(note)}</span>` : ''}</div>`;
 }
 
 function renderStats(entries) {
+  const el = document.getElementById('stats');
+  if (state.filter === 'adventure') {
+    const sum = (key) => entries.reduce((n, e) => n + e[key], 0);
+    const longest = [...entries].sort((a, b) => b.days_total - a.days_total)[0];
+    el.innerHTML = [
+      statTile(esc(state.data.adventures_title), fmtInt(entries.length)),
+      statTile('Days on the road', fmtInt(sum('days_total'))),
+      statTile('Distance', `${fmtInt(Math.round(sum('distance') / 1000))} km`),
+      statTile('Elevation gain', fmtM(sum('gain'))),
+      longest ? statTile('Longest', `${longest.days_total} days`, titleText(longest)) : '',
+    ].join('');
+    return;
+  }
   const peaks = collectPeaks(entries);
   const visits = [...peaks.values()].reduce((n, p) => n + p.visits.length, 0);
   const highest = [...peaks.values()].filter((p) => p.ele).sort((a, b) => b.ele - a.ele)[0];
   const favorite = [...peaks.values()].sort((a, b) => b.visits.length - a.visits.length)[0];
-  const gain = entries.reduce((n, e) => n + e.gain, 0);
-  const tile = (label, value, note = '') =>
-    `<div class="stat"><span class="stat-label">${label}</span><span class="stat-value">${value}</span>${note ? `<span class="stat-note" title="${esc(note)}">${esc(note)}</span>` : ''}</div>`;
-  document.getElementById('stats').innerHTML = [
-    tile('Tours', fmtInt(entries.length)),
-    tile('Summits', fmtInt(visits)),
-    tile('Different peaks', fmtInt(peaks.size)),
-    tile('Highest summit', highest ? fmtM(highest.ele) : '–', highest?.name),
-    tile('Most visited', favorite ? `${favorite.visits.length}×` : '–', favorite?.name),
-    tile('Elevation gain', fmtM(gain)),
+  el.innerHTML = [
+    statTile('Tours', fmtInt(entries.length)),
+    statTile('Summits', fmtInt(visits)),
+    statTile('Different peaks', fmtInt(peaks.size)),
+    statTile('Highest summit', highest ? fmtM(highest.ele) : '–', highest?.name),
+    statTile('Most visited', favorite ? `${favorite.visits.length}×` : '–', favorite?.name),
+    statTile('Elevation gain', fmtM(entries.reduce((n, e) => n + e.gain, 0))),
   ].join('');
 }
 
 function renderChips(update) {
   const present = new Set(inCategory('summits').map((e) => e.type));
-  const types = [...state.types.values()].filter((t) => present.has(t.id));
-  const chip = (id, label, dot) =>
-    `<button class="chip" type="button" data-type="${id}" aria-pressed="${state.filter === id}">${dot}${esc(label)}</button>`;
+  const dot = (color) => `<span class="dot" style="--c:${color}"></span>`;
+  const chips = [['all', 'All', '']];
+  [...state.types.values()].filter((t) => present.has(t.id)).forEach((t) => chips.push([t.id, plural(t.label), dot(colorVar(t.id))]));
+  if (inCategory('adventure').length) chips.push(['adventure', state.data.adventures_title, dot('var(--series-3)')]);
   const el = document.getElementById('chips');
-  el.innerHTML = (types.length > 1 ? chip('all', 'All', '') : '') +
-    types.map((t) => chip(t.id, plural(t.label), `<span class="dot" style="--c:${colorVar(t.id)}"></span>`)).join('');
+  el.innerHTML = chips.map(([id, label, mark]) =>
+    `<button class="chip" type="button" data-type="${id}" aria-pressed="${state.filter === id}">${mark}${esc(label)}</button>`).join('');
   el.onclick = (ev) => {
     const btn = ev.target.closest('[data-type]');
-    if (!btn || types.length < 2) return;
-    state.filter = btn.dataset.type === state.filter ? 'all' : btn.dataset.type;
+    if (!btn) return;
+    state.filter = btn.dataset.type;
     update(true);
   };
 }
 
-function renderLegend(entries) {
+function renderLegend(entries, view) {
   // One item per color: types sharing a color (e.g. hikes and climbs) are listed together.
   const byColor = new Map();
-  new Set(entries.map((e) => e.type)).forEach((t) => {
-    const color = colorVar(t);
-    byColor.set(color, [...(byColor.get(color) || []), typeOf(t).label]);
+  entries.forEach((e) => {
+    const label = e.category === 'adventure' ? state.data.adventures_title : typeOf(e.type).label;
+    const color = colorVar(e.type);
+    byColor.set(color, new Set([...(byColor.get(color) || []), label]));
   });
-  const items = [...byColor].map(([color, labels]) => `<span><span class="dot" style="--c:${color}"></span>${esc(labels.join(' / '))}</span>`);
-  if (entries.some((e) => !e.summits.length && e.high_point)) {
-    items.push('<span><span class="dot hollow" style="--c:var(--ink-2)"></span>No summit (highest point of the tour)</span>');
+  const items = [...byColor].map(([color, labels]) => `<span><span class="dot" style="--c:${color}"></span>${esc([...labels].join(' / '))}</span>`);
+  if (view === 'peaks') {
+    if (entries.some((e) => !e.summits.length && e.high_point)) {
+      items.push('<span><span class="dot hollow" style="--c:var(--ink-2)"></span>No summit (highest point of the tour)</span>');
+    }
+    items.push('<span>Bigger dot = visited more often</span>');
+  } else {
+    items.push('<span>Click a track to open the tour</span>');
   }
-  items.push('<span>Bigger dot = visited more often</span>');
   document.getElementById('legend').innerHTML = items.join('');
 }
 
-function logbookHtml(entries, noun = 'tour') {
+function logbookHtml(entries) {
   if (!entries.length) return '<p class="empty">Nothing here yet.</p>';
   const years = new Map();
   entries.forEach((e) => {
@@ -172,17 +195,15 @@ function logbookHtml(entries, noun = 'tour') {
     years.get(y).push(e);
   });
   return [...years].map(([year, list]) => `
-    <h2 class="year">${year}<span>${list.length} ${list.length === 1 ? noun : `${noun}s`}</span></h2>
+    <h2 class="year">${year}<span>${list.length} ${list.length === 1 ? 'tour' : 'tours'}</span></h2>
     <ol class="entries">${list.map(entryCard).join('')}</ol>`).join('');
 }
 
 function entryCard(e) {
   const photo = e.photos[0];
-  const picture = photo
-    ? `<img src="${esc(photo.thumb)}" alt="" loading="lazy" referrerpolicy="no-referrer">`
-    : e.preview ? `<img src="${esc(e.preview)}" alt="" loading="lazy">` : mountainIcon();
+  const picture = photo ? photoImg(photo.thumb, photo.focus) : e.preview ? photoImg(e.preview) : mountainIcon();
   return `<li><a class="entry" href="#/tour/${e.id}">
-    <div class="entry-photo" style="--c:${colorVar(e.type)}">${picture}</div>
+    <figure class="polaroid" style="--tilt:${tilt(e.id)}deg; --c:${colorVar(e.type)}">${picture}</figure>
     <div class="entry-body">
       ${metaLine(e)}
       <h3 class="entry-title">${headline(e)}</h3>
@@ -191,11 +212,24 @@ function entryCard(e) {
     </div></a></li>`;
 }
 
+// A photo, cropped around its best part (the "focus" found when downloading it).
+function photoImg(src, focus, alt = '') {
+  const position = focus ? ` style="object-position:${focus[0]}% ${focus[1]}%"` : '';
+  return `<img src="${esc(src)}" alt="${esc(alt)}" loading="lazy" referrerpolicy="no-referrer"${position}>`;
+}
+
+// A small tilt that stays the same for each tour, like prints stuck into a book.
+function tilt(key) {
+  let hash = 0;
+  for (const c of String(key)) hash = (hash * 31 + c.charCodeAt(0)) % 997;
+  return ((hash % 7) - 3) * 0.6;
+}
+
 function peaksHtml(entries) {
   const byHeight = (a, b) => (b.ele ?? -1) - (a.ele ?? -1) || a.name.localeCompare(b.name);
   const byVisits = (a, b) => b.visits.length - a.visits.length || byHeight(a, b);
   const peaks = [...collectPeaks(entries).values()].sort(state.peakOrder === 'visits' ? byVisits : byHeight);
-  if (!peaks.length) return '<p class="empty">No summits yet.</p>';
+  if (!peaks.length) return '<p class="empty">No summits here.</p>';
   const order = (key, label) => `<button type="button" data-order="${key}" aria-pressed="${state.peakOrder === key}">${label}</button>`;
   const rows = peaks.map((p) => `<tr>
       <td><button class="peak-link" type="button" data-peak="${p.id}">${esc(p.name)}</button></td>
@@ -209,81 +243,22 @@ function peaksHtml(entries) {
     <tbody>${rows}</tbody></table></div>`;
 }
 
-// ---------- Bike adventures: totals, a map of all routes, the list ----------
+// ---------- Plans: your notes for future tours (from plans.md) ----------
 
-function renderAdventures() {
-  const entries = inCategory('adventure');
-  const title = state.data.adventures_title;
-  document.title = `${title} · ${state.data.title}`;
-  const sum = (key) => entries.reduce((n, e) => n + e[key], 0);
-  const longest = [...entries].sort((a, b) => b.days_total - a.days_total)[0];
-  const tile = (label, value, note = '') =>
-    `<div class="stat"><span class="stat-label">${label}</span><span class="stat-value">${value}</span>${note ? `<span class="stat-note" title="${esc(note)}">${esc(note)}</span>` : ''}</div>`;
-  app.innerHTML = `
-    <section class="stats" aria-label="Totals">
-      ${tile(title, fmtInt(entries.length))}
-      ${tile('Days on the road', fmtInt(sum('days_total')))}
-      ${tile('Distance', `${fmtInt(Math.round(sum('distance') / 1000))} km`)}
-      ${tile('Elevation gain', fmtM(sum('gain')))}
-      ${longest ? tile('Longest', `${longest.days_total} days`, titleText(longest)) : ''}
-    </section>
-    <section aria-label="Map of all ${esc(title.toLowerCase())}">
-      <div id="overview-map" class="map map-overview"></div>
-      <p class="map-legend">Click a route to see the trip.</p>
-    </section>
-    <div class="toolbar"><div></div>${tabsHtml('adventures')}</div>
-    <section id="list">${logbookHtml(entries, 'adventure')}</section>`;
-  routesMap(document.getElementById('overview-map'), entries);
-}
-
-function routesMap(container, entries) {
-  const map = new maplibregl.Map({
-    container, style: overviewStyle(), center: [11.4, 47.1], zoom: 4,
-    cooperativeGestures: true, attributionControl: { compact: true },
-  });
-  state.maps.push(map);
-  map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
-  map.addControl(new maplibregl.FullscreenControl(), 'top-right');
-  const popup = new maplibregl.Popup({ maxWidth: '280px' });
-  const routes = fetch('data/adventures.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => ({}));
-
-  map.on('load', async () => {
-    const lines = await routes;
-    const shown = entries.filter((e) => lines[e.id]?.length);
-    const features = shown.map((e, i) => ({
-      type: 'Feature', id: i, properties: { i },
-      geometry: { type: 'MultiLineString', coordinates: lines[e.id] },
-    }));
-    map.addSource('routes', { type: 'geojson', data: { type: 'FeatureCollection', features } });
-    const round = { 'line-join': 'round', 'line-cap': 'round' };
-    const hover = (a, b) => ['case', ['boolean', ['feature-state', 'hover'], false], a, b];
-    map.addLayer({ id: 'routes-casing', type: 'line', source: 'routes', layout: round, paint: { 'line-color': cssVar('--surface'), 'line-width': hover(8, 5.5) } });
-    map.addLayer({ id: 'routes', type: 'line', source: 'routes', layout: round, paint: { 'line-color': cssVar('--series-3'), 'line-width': hover(5, 3) } });
-    map.addLayer({ id: 'routes-hit', type: 'line', source: 'routes', paint: { 'line-color': '#000', 'line-opacity': 0, 'line-width': 16 } });
-
-    let hovered = null;
-    const setHover = (id) => {
-      if (hovered !== null) map.setFeatureState({ source: 'routes', id: hovered }, { hover: false });
-      hovered = id;
-      if (id !== null) map.setFeatureState({ source: 'routes', id }, { hover: true });
-      map.getCanvas().style.cursor = id === null ? '' : 'pointer';
-    };
-    map.on('mousemove', 'routes-hit', (ev) => setHover(ev.features[0].id));
-    map.on('mouseleave', 'routes-hit', () => setHover(null));
-    map.on('click', 'routes-hit', (ev) => {
-      const e = shown[ev.features[0].properties.i];
-      popup.setLngLat(ev.lngLat)
-        .setHTML(`<strong>${esc(titleText(e))}</strong><br>${fmtRange(e.date, e.end_date)} · ${e.days_total} days<br>
-          ${fmtInt(Math.round(e.distance / 1000))} km · ↑ ${fmtM(e.gain)}<ul><li><a href="#/tour/${e.id}">Open the trip →</a></li></ul>`)
-        .addTo(map);
-    });
-
-    const coords = features.flatMap((f) => f.geometry.coordinates.flat());
-    if (coords.length) {
-      const bounds = coords.reduce((b, c) => b.extend(c), new maplibregl.LngLatBounds(coords[0], coords[0]));
-      map.fitBounds(bounds, { padding: 40, duration: 0 });
-    }
-  });
+async function renderPlans() {
+  document.title = `Plans · ${state.data.title}`;
+  app.innerHTML = `<div class="toolbar">${tabsHtml('plans')}</div><section class="plans" id="plans"></section>`;
+  let plans = [];
+  try {
+    plans = await (await fetch('data/plans.json', { cache: 'no-cache' })).json();
+  } catch { /* no plans yet */ }
+  const el = document.getElementById('plans');
+  if (!el) return; // already on another page
+  el.innerHTML = plans.length
+    ? plans.map((p, i) => `<article class="postit" style="--tilt:${tilt(p.title)}deg; --paper:var(--postit-${(i % 4) + 1})">
+        <h2>${esc(p.title)}</h2>${p.html}</article>`).join('') // (p.html is made safe by summitbook)
+    : `<div class="empty"><h2>No plans yet</h2><p>Write your ideas for future tours into <code>plans.md</code>,
+        then run <code>uv run summitbook publish</code>.</p></div>`;
 }
 
 // ---------- Tour page: 3D map, days, summits, photos ----------
@@ -291,12 +266,11 @@ function routesMap(container, entries) {
 function renderTour(id) {
   const found = state.data.entries.find((e) => String(e.id) === id);
   if (!found) {
-    app.innerHTML = '<a class="back" href="#/">← All tours</a><p class="empty">This tour isn\'t in the summit book.</p>';
+    app.innerHTML = '<a class="back" href="#/">← Back to the logbook</a><p class="empty">This tour isn\'t in the summit book.</p>';
     return;
   }
   const e = found;
-  const adventure = e.category === 'adventure';
-  const list = inCategory(e.category);
+  const list = state.data.entries;
   const i = list.indexOf(e);
   const newer = list[i - 1];
   const older = list[i + 1];
@@ -306,7 +280,7 @@ function renderTour(id) {
     `<div class="stat"><span class="stat-label">${label}</span><span class="stat-value">${value}</span></div>`;
 
   app.innerHTML = `
-    <a class="back" href="${adventure ? '#/adventures' : '#/'}">← ${adventure ? `All ${esc(state.data.adventures_title.toLowerCase())}` : 'All tours'}</a>
+    <a class="back" href="#/">← Back to the logbook</a>
     <header class="tour-head">
       ${metaLine(e)}
       <h1>${headline(e)}</h1>
@@ -344,9 +318,8 @@ function renderTour(id) {
     ${e.photos.length ? `
       <h2 class="section-title">Photos</h2>
       <div class="photos">${e.photos.map((p, n) => `
-        <button class="photo" type="button" data-photo="${n}" aria-label="Open photo ${n + 1}${p.caption ? `: ${esc(p.caption)}` : ''}">
-          <img src="${esc(p.thumb)}" alt="${esc(p.caption)}" loading="lazy" referrerpolicy="no-referrer">
-        </button>`).join('')}
+        <button class="photo polaroid" type="button" data-photo="${n}" style="--tilt:${tilt(p.thumb)}deg"
+          aria-label="Open photo ${n + 1}${p.caption ? `: ${esc(p.caption)}` : ''}">${photoImg(p.thumb, p.focus, p.caption)}</button>`).join('')}
       </div>` : ''}
     <nav class="pager" aria-label="More tours">
       ${older ? `<a class="older" href="#/tour/${older.id}"><small>← Older</small>${esc(titleText(older))}</a>` : ''}
@@ -583,45 +556,81 @@ function overviewMap(container) {
   state.maps.push(map);
   map.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right');
   map.addControl(new maplibregl.FullscreenControl(), 'top-right');
+  state.routes ??= fetch('data/routes.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => ({}));
 
   let ready = false;
   let pending = null;
   let places = new Map();
-  const popup = new maplibregl.Popup({ offset: 10, maxWidth: '280px' });
+  let tracks = [];
+  let hovered = null;
+  // Clicking a peak or a track opens a post-it note.
+  const popup = new maplibregl.Popup({ offset: 12, maxWidth: '260px', className: 'postit' });
 
-  const show = (entries, animate) => {
-    if (!ready) {
-      pending = [entries, animate];
-      return;
-    }
+  const fitTo = (points, animate, everything = false) => {
+    // Start on the area with most of the tours; far-away ones (other continents) are a zoom-out away.
+    const home = everything ? points : homeRegion(points);
+    if (!home.length) return;
+    const bounds = home.reduce((b, c) => b.extend(c), new maplibregl.LngLatBounds(home[0], home[0]));
+    map.fitBounds(bounds, { padding: 50, maxZoom: 12, duration: animate && !reduceMotion ? 1200 : 0 });
+  };
+
+  const showPeaks = (entries, animate) => {
     places = new Map();
     collectPeaks(entries).forEach((p) =>
       places.set(`p${p.id}`, { lat: p.lat, lon: p.lon, summit: true, type: p.visits[0].entry.type, title: p.name, ele: p.ele, visits: p.visits }));
     entries.filter((e) => !e.summits.length && e.high_point).forEach((e) =>
       places.set(`e${e.id}`, { lat: e.high_point[0], lon: e.high_point[1], summit: false, type: e.type, title: titleText(e), ele: e.high_point[2], visits: [{ entry: e, date: e.date }] }));
-
     const features = [...places].map(([key, p]) => ({
       type: 'Feature',
       geometry: { type: 'Point', coordinates: [p.lon, p.lat] },
       properties: { key, summit: p.summit, visits: p.visits.length, color: cssVar(colorVar(p.type, true)) },
     }));
     map.getSource('places').setData({ type: 'FeatureCollection', features });
-    popup.remove();
-    // Start on the area with most of the summits; far-away ones (other continents) are a zoom-out away.
-    const home = homeRegion(features.map((f) => f.geometry.coordinates));
-    if (home.length) {
-      const bounds = home.reduce((b, c) => b.extend(c), new maplibregl.LngLatBounds(home[0], home[0]));
-      map.fitBounds(bounds, { padding: 60, maxZoom: 12, duration: animate && !reduceMotion ? 1200 : 0 });
-    }
+    fitTo(features.map((f) => f.geometry.coordinates), animate);
   };
 
-  const openPopup = (key) => {
+  const showTracks = async (entries, animate) => {
+    const lines = await state.routes;
+    tracks = entries.filter((e) => lines[e.id]?.length);
+    const features = tracks.map((e, i) => ({
+      type: 'Feature', id: i,
+      properties: { i, color: cssVar(colorVar(e.type, true)) },
+      geometry: { type: 'MultiLineString', coordinates: lines[e.id] },
+    }));
+    map.getSource('tracks').setData({ type: 'FeatureCollection', features });
+    // Bike adventures: the whole routes. Otherwise: where most tours start (one point per tour).
+    const bikes = state.filter === 'adventure';
+    fitTo(bikes ? features.flatMap((f) => f.geometry.coordinates.flat()) : features.map((f) => f.geometry.coordinates[0][0]), animate, bikes);
+  };
+
+  const show = (entries, animate, mode) => {
+    if (!ready) {
+      pending = [entries, animate, mode];
+      return;
+    }
+    popup.remove();
+    const peaks = mode === 'peaks';
+    map.setLayoutProperty('places', 'visibility', peaks ? 'visible' : 'none');
+    ['tracks-casing', 'tracks', 'tracks-hit'].forEach((id) => map.setLayoutProperty(id, 'visibility', peaks ? 'none' : 'visible'));
+    peaks ? showPeaks(entries, animate) : showTracks(entries, animate);
+  };
+
+  const openPeak = (key) => {
     const p = places.get(key);
     if (!p) return;
     const visits = p.visits.map(({ entry, date }) =>
       `<li><a href="#/tour/${entry.id}">${fmtDate(date)}</a> · ${entry.multi ? esc(entry.title) : esc(typeOf(entry.type).label)}</li>`).join('');
     popup.setLngLat([p.lon, p.lat])
-      .setHTML(`<strong>${esc(p.title)}</strong>${p.ele ? ` ${fmtM(p.ele)}` : ''}${p.summit ? '' : '<br><small>Highest point, no summit</small>'}<ul>${visits}</ul>`)
+      .setHTML(`<strong>${esc(p.title)}</strong>${p.ele ? ` <span class="ele">${fmtM(p.ele)}</span>` : ''}
+        ${p.summit ? `<p>${p.visits.length === 1 ? 'Once' : `${p.visits.length} times`} up here</p>` : '<p>Highest point, no summit</p>'}<ul>${visits}</ul>`)
+      .addTo(map);
+  };
+
+  const openTrack = (i, lngLat) => {
+    const e = tracks[i];
+    popup.setLngLat(lngLat)
+      .setHTML(`<strong>${esc(titleText(e))}</strong><p>${fmtRange(e.date, e.end_date)} · ${esc(e.category === 'adventure' ? state.data.adventures_title : typeOf(e.type).label)}</p>
+        <p>${statsLine(e)}</p><ul><li><a href="#/tour/${e.id}">Open the tour →</a></li></ul>`)
       .addTo(map);
   };
 
@@ -637,7 +646,22 @@ function overviewMap(container) {
         'circle-stroke-width': ['case', ['get', 'summit'], 2, 3],
       },
     });
-    map.on('click', 'places', (ev) => openPopup(ev.features[0].properties.key));
+    map.addSource('tracks', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+    const round = { 'line-join': 'round', 'line-cap': 'round' };
+    const hover = (a, b) => ['case', ['boolean', ['feature-state', 'hover'], false], a, b];
+    map.addLayer({ id: 'tracks-casing', type: 'line', source: 'tracks', layout: round, paint: { 'line-color': '#fffaf0', 'line-width': hover(7, 4.5), 'line-opacity': 0.9 } });
+    map.addLayer({ id: 'tracks', type: 'line', source: 'tracks', layout: round, paint: { 'line-color': ['get', 'color'], 'line-width': hover(4.5, 2.5) } });
+    map.addLayer({ id: 'tracks-hit', type: 'line', source: 'tracks', paint: { 'line-color': '#000', 'line-opacity': 0, 'line-width': 14 } });
+
+    map.on('click', 'places', (ev) => openPeak(ev.features[0].properties.key));
+    map.on('click', 'tracks-hit', (ev) => openTrack(ev.features[0].properties.i, ev.lngLat));
+    const setHover = (id) => {
+      if (hovered !== null) map.setFeatureState({ source: 'tracks', id: hovered }, { hover: false });
+      hovered = id;
+      if (id !== null) map.setFeatureState({ source: 'tracks', id }, { hover: true });
+    };
+    map.on('mousemove', 'tracks-hit', (ev) => { setHover(ev.features[0].id); map.getCanvas().style.cursor = 'pointer'; });
+    map.on('mouseleave', 'tracks-hit', () => { setHover(null); map.getCanvas().style.cursor = ''; });
     map.on('mouseenter', 'places', () => { map.getCanvas().style.cursor = 'pointer'; });
     map.on('mouseleave', 'places', () => { map.getCanvas().style.cursor = ''; });
     ready = true;
@@ -650,21 +674,19 @@ function overviewMap(container) {
       const p = places.get(`p${id}`);
       if (!p) return;
       map.flyTo({ center: [p.lon, p.lat], zoom: Math.max(map.getZoom(), 12), duration: reduceMotion ? 0 : 1500 });
-      openPopup(`p${id}`);
+      openPeak(`p${id}`);
     },
   };
 }
 
-// Overview: a quiet gray map with shaded mountains, so the colored markers stand out.
+// Overview: a quiet gray map with shaded mountains, so the colored tracks and dots stand out.
 function overviewStyle() {
-  const dark = matchMedia('(prefers-color-scheme: dark)').matches;
-  const tone = dark ? 'Dark' : 'Light';
   return {
     version: 8,
     sources: {
-      base: { type: 'raster', tiles: GRAY_TILES(`World_${tone}_Gray_Base`), tileSize: 256, maxzoom: 16 },
+      base: { type: 'raster', tiles: GRAY_TILES('World_Light_Gray_Base'), tileSize: 256, maxzoom: 16 },
       labels: {
-        type: 'raster', tiles: GRAY_TILES(`World_${tone}_Gray_Reference`), tileSize: 256, maxzoom: 16,
+        type: 'raster', tiles: GRAY_TILES('World_Light_Gray_Reference'), tileSize: 256, maxzoom: 16,
         attribution: 'Basemap © Esri, HERE, Garmin, © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       },
       relief: { type: 'raster-dem', url: TERRAIN_TILEJSON, tileSize: 512, encoding: 'terrarium' },
@@ -674,10 +696,10 @@ function overviewStyle() {
       {
         id: 'relief', type: 'hillshade', source: 'relief',
         paint: {
-          'hillshade-exaggeration': dark ? 0.45 : 0.35,
-          'hillshade-shadow-color': dark ? '#000000' : '#5b5546',
-          'hillshade-highlight-color': dark ? '#3a3a37' : '#ffffff',
-          'hillshade-accent-color': dark ? '#000000' : '#5b5546',
+          'hillshade-exaggeration': 0.35,
+          'hillshade-shadow-color': '#5b5546',
+          'hillshade-highlight-color': '#ffffff',
+          'hillshade-accent-color': '#5b5546',
         },
       },
       { id: 'labels', type: 'raster', source: 'labels' },
@@ -817,7 +839,7 @@ function typeOf(id) {
 // name (for reading the actual color), otherwise var(--…) for use in styles.
 function colorVar(type, bare = false) {
   const slot = typeOf(type).slot;
-  const name = slot >= 1 && slot <= 3 ? `--series-${slot}` : '--other';
+  const name = slot >= 1 && slot <= 4 ? `--series-${slot}` : '--other';
   return bare ? name : `var(${name})`;
 }
 
