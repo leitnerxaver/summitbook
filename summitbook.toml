@@ -1,0 +1,51 @@
+# Settings for your summit book.
+# After changing something here, run:  uv run summitbook build
+
+[site]
+title = "Summit Book"
+subtitle = "Ski tours and summits"
+adventures_title = "Bike adventures"
+
+[activities]
+# Strava sport types that always appear, even without a summit (e.g. skiing a couloir).
+always = ["BackcountrySki"]
+# Strava sport types that only appear when you reached at least one summit.
+summit_only = ["Hike", "Snowshoe", "RockClimbing"]
+# Strava sport types that only appear as part of a multi-day trip (e.g. a bike tour).
+multi_day_only = ["Ride", "MountainBikeRide", "GravelRide", "EBikeRide", "EMountainBikeRide"]
+# Only activities visible to "Everyone" on Strava are used.
+# Set this to true to also include activities visible to "Followers".
+include_followers_only = false
+
+[summits]
+# How close (in meters) your track has to come to a peak to count as a summit.
+radius_m = 80
+# Near the peak, your track has to get at least this close (in meters) to the peak's height.
+altitude_tolerance_m = 50
+
+[multi_day]
+# Activities on back-to-back days (a rest day in between is fine) that start within this many
+# meters of where another day of the trip started or ended (e.g. the same hut or hotel) become
+# one multi-day entry. More than 100 km from home, a day may also start up to 150 km from where
+# the day before ended (a transfer by train or bus).
+link_radius_m = 500
+# Places near your homes (latitude, longitude) never link days: tours from home stay day trips.
+# A trip can still start or end at home (e.g. a bike tour from your front door).
+homes = [
+  [47.2655, 11.3925],  # Innsbruck
+  [48.04, 13.56],      # second home in Upper Austria
+  [22.34, 114.27],     # Hong Kong (HKUST)
+]
+home_radius_km = 7
+
+[fixes]
+# Strava activities you never want to show: the number at the end of the activity's
+# Strava link, e.g. hide = [12345678901, 12345678902]
+hide = []
+# Strava activities that should stay day trips, never joined into a multi-day trip.
+single_day = []
+
+[titles]
+# Your own title for an entry. Use the number at the end of the entry's web address
+# (…/#/tour/12345678901), e.g.:
+# 12345678901 = "Skihochtouren Übungsleiter"

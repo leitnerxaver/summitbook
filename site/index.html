@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Summit Book</title>
+  <meta name="description" content="Ski tours and summits">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2 27 12 9l5 8 4-5 9 15z' fill='%232a78d6'/%3E%3Cpath d='m12 9 3.2 5.2-2.2-1.2-2 2-1.5-1.5z' fill='%23fff'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="#/">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M2 27 12 9l5 8 4-5 9 15z" />
+          <path class="snow" d="m12 9 3.2 5.2-2.2-1.2-2 2-1.5-1.5z" />
+        </svg>
+        <span id="site-title">Summit Book</span>
+      </a>
+      <p id="site-subtitle" class="subtitle"></p>
+    </div>
+  </header>
+
+  <main id="app" class="wrap"></main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>
+        <span id="updated"></span>
+        Activities <a href="https://www.strava.com" target="_blank" rel="noopener">powered by Strava</a> ·
+        Peaks © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors ·
+        Terrain <a href="https://mapterhorn.com/attribution" target="_blank" rel="noopener">Mapterhorn</a>
+      </p>
+    </div>
+  </footer>
+
+  <dialog id="lightbox" class="lightbox" aria-label="Photo">
+    <button class="lb-btn lb-close" type="button" aria-label="Close">×</button>
+    <button class="lb-btn lb-prev" type="button" aria-label="Previous photo">‹</button>
+    <figure>
+      <img id="lb-img" alt="" referrerpolicy="no-referrer">
+      <figcaption id="lb-caption"></figcaption>
+    </figure>
+    <button class="lb-btn lb-next" type="button" aria-label="Next photo">›</button>
+  </dialog>
+</body>
+</html>
