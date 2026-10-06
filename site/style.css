@@ -253,3 +253,11 @@ code { font-size: 0.9em; background: var(--surface-2); padding: 2px 6px; border-
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
+
+/* Picture mode (#/preview/…): only the 3D map, used to make pictures for tours without photos */
+body.preview { background: #000; }
+body.preview .site-header, body.preview .site-footer { display: none; }
+body.preview #app { max-width: none; padding: 0; }
+body.preview .summit-marker .label, body.preview .summit-marker .stem, body.preview .day-badge { display: none; }
+.map-preview { height: 100vh; border: 0; border-radius: 0; }
+.preview-credit { position: fixed; right: 6px; bottom: 4px; margin: 0; font: 10px/1.2 var(--font); color: #fff; text-shadow: 0 0 3px #000; }

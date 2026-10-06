@@ -44,6 +44,10 @@ jobs:
           STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
         run: uv run summitbook update
 
+      - name: Make 3D pictures for tours without photos
+        continue-on-error: true # without pictures the website still works
+        run: uv run --extra previews summitbook previews
+
       - name: Save the downloaded data
         run: |
           git config user.name "github-actions[bot]"

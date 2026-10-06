@@ -40,6 +40,8 @@ function route() {
   if (state.view && state.view !== 'tour') state.scroll[state.view] = scrollY;
   state.maps.forEach((m) => m.remove());
   state.maps = [];
+  const preview = location.hash.match(/^#\/preview\/([\w-]+)/);
+  if (preview) return renderPreview(preview[1]);
   const tour = location.hash.match(/^#\/tour\/([\w-]+)/);
   if (tour) {
     state.view = 'tour';
@@ -178,7 +180,7 @@ function entryCard(e) {
   const photo = e.photos[0];
   const picture = photo
     ? `<img src="${esc(photo.thumb)}" alt="" loading="lazy" referrerpolicy="no-referrer">`
-    : mountainIcon();
+    : e.preview ? `<img src="${esc(e.preview)}" alt="" loading="lazy">` : mountainIcon();
   return `<li><a class="entry" href="#/tour/${e.id}">
     <div class="entry-photo" style="--c:${colorVar(e.type)}">${picture}</div>
     <div class="entry-body">
@@ -371,7 +373,17 @@ function dayCard(e, d, n) {
   </li>`;
 }
 
-function tourMap(container, e) {
+// A picture of the 3D map for tours without photos: `summitbook previews` opens this page in a
+// browser without a screen, waits until window.summitbookPreviewReady, and saves a screenshot.
+function renderPreview(id) {
+  const e = state.data.entries.find((x) => String(x.id) === id);
+  document.body.classList.add('preview');
+  app.innerHTML = `<div id="tour-map" class="map map-preview"></div>
+    <p class="preview-credit">Imagery © Esri, Maxar, Earthstar Geographics · Terrain © Mapterhorn</p>`;
+  if (e) tourMap(document.getElementById('tour-map'), e, { preview: true });
+}
+
+function tourMap(container, e, { preview = false } = {}) {
   const style = baseStyle('satellite');
   style.sources.dem = { type: 'raster-dem', url: TERRAIN_TILEJSON, tileSize: 512, encoding: 'terrarium' };
   style.terrain = { source: 'dem', exaggeration: 1 };
@@ -380,11 +392,14 @@ function tourMap(container, e) {
   const map = new maplibregl.Map({
     container, style,
     center: first ? [first.lon, first.lat] : [11.4, 47.2], zoom: 12,
-    maxPitch: 80, cooperativeGestures: true, attributionControl: { compact: true },
+    maxPitch: 80, cooperativeGestures: !preview, interactive: !preview,
+    attributionControl: preview ? false : { compact: true }, fadeDuration: preview ? 0 : 300,
   });
   state.maps.push(map);
-  map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'top-right');
-  map.addControl(new maplibregl.FullscreenControl(), 'top-right');
+  if (!preview) {
+    map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'top-right');
+    map.addControl(new maplibregl.FullscreenControl(), 'top-right');
+  }
   const tracks = Promise.all(e.days.map((d) =>
     d.track ? fetch(`data/tracks/${d.id}.json`).then((r) => r.json()).catch(() => null) : null));
   const dayBounds = [];
@@ -495,6 +510,22 @@ function tourMap(container, e) {
     } else {
       aim(start, [...peaks].sort((a, b) => (b.ele ?? 0) - (a.ele ?? 0))[0]);
     }
+    if (preview) {
+      // Summit tours: close up on the highest summit. Others (couloirs, bike trips): the whole route.
+      const top = [...e.summits].sort((a, b) => (b.ele ?? 0) - (a.ele ?? 0))[0];
+      const view = top && e.category === 'summits'
+        ? { center: [top.lon, top.lat], zoom: 13.4, bearing, pitch: 62 }
+        : total && camera(total);
+      const settled = () => new Promise((resolve) => { map.once('idle', resolve); setTimeout(resolve, 20000); });
+      if (view) {
+        map.jumpTo({ ...view, pitch: 0 }); // flat first, so the terrain under the center loads
+        await settled();
+        map.jumpTo(view);
+        await settled();
+      }
+      window.summitbookPreviewReady = true;
+      return;
+    }
     if (total) intro(total);
   });
 
@@ -516,6 +547,8 @@ function tourMap(container, e) {
       ['satellite', 'topo'].forEach((b) => map.setLayoutProperty(b, 'visibility', b === base ? 'visible' : 'none'));
       app.querySelectorAll('[data-base]').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
     }));
+
+  if (preview) return;
 
   // "Fly around": slowly circle the camera around the tour.
   const spinBtn = document.getElementById('spin');

@@ -6,7 +6,7 @@ import shutil
 from datetime import UTC, date, datetime
 
 from . import geo, trips
-from .config import SITE_DIR, Config
+from .config import DATA_DIR, SITE_DIR, Config
 from .peaks import short_name
 from .sync import TRACKS_DIR, load_track, trip_days
 
@@ -56,6 +56,21 @@ def build(cfg: Config, store: dict) -> list[dict]:
         shutil.copyfile(TRACKS_DIR / name, tracks_out / name)
     for old in tracks_out.glob("*.json"):
         if old.name not in shown:
+            old.unlink()
+
+    # 3D map pictures (from `summitbook previews`) for tours without photos.
+    pictures, pictures_out = DATA_DIR / "previews", out / "previews"
+    pictures_out.mkdir(exist_ok=True)
+    wanted = {f"{e['id']}.jpg" for e in entries if not e["photos"]}
+    for picture in pictures.glob("*.jpg") if pictures.exists() else []:
+        if picture.name not in wanted:
+            picture.unlink()  # the tour got photos, or is gone
+    for e in entries:
+        if (pictures / f"{e['id']}.jpg").exists():
+            shutil.copyfile(pictures / f"{e['id']}.jpg", pictures_out / f"{e['id']}.jpg")
+            e["preview"] = f"data/previews/{e['id']}.jpg"
+    for old in pictures_out.glob("*.jpg"):
+        if old.name not in wanted:
             old.unlink()
 
     data = {

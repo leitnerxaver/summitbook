@@ -27,6 +27,9 @@ def main() -> None:
 
     commands.add_parser("publish", help="put your changes online (imported files, settings)")
 
+    previews = commands.add_parser("previews", help="make 3D map pictures for tours without photos (runs on GitHub)")
+    previews.add_argument("--limit", type=int, help="make at most this many pictures")
+
     serve = commands.add_parser("serve", help="open the website on your computer")
     serve.add_argument("--port", type=int, default=8000)
 
@@ -41,6 +44,8 @@ def main() -> None:
                 run_update(download=False, wait=False)
             case "publish":
                 run_publish()
+            case "previews":
+                run_previews(args.limit)
             case "serve":
                 run_server(args.port)
             case _:
@@ -62,6 +67,16 @@ def run_update(download: bool, wait: bool) -> None:
     summits = sum(len(e["summits"]) for e in entries)
     print(f"\nDone! Your summit book has {_count(len(entries), 'tour')} with {_count(summits, 'summit')}.")
     print("To look at it, run: uv run summitbook serve")
+
+
+def run_previews(limit: int | None) -> None:
+    from .previews import make_previews
+
+    cfg = load_config()
+    store = sync.load_store()
+    entries = site.build(cfg, store)  # the pictures are taken from the current website
+    if make_previews(entries, limit):
+        site.build(cfg, store)  # now with the pictures
 
 
 def run_publish() -> None:
