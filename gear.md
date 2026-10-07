@@ -32,6 +32,7 @@
 - Down Jacket
 - Midlayer Jacket
 - Buff
+- Beanie
 - Socks
 - Baselayer for changing
 - Gloves (thick & thin)
@@ -47,10 +48,74 @@
 - First Aid Kit
 - Bivy Bag
 
+### Other Things
+- Sunscreen
+- Lip Balm
+- Phone
+- Bottle
+- Snacks
+
 ## Mountaineering
+
+### Technical Gear
+- Backpack
+- Mountaineering Boots
+- Poles
+- Trailrunners (if there is a long approach)
+- Harness
+- Ice Axe
+- Crampons
+- Rope
+- Carabiners (at least 3)
+- Ball-lock Carabiner
+- Alpine runners (60 cm and 120 cm)
+- Quickdraws
+- Micro Traxion (2 or one T-Bloc)
+- Cord (1 m, 5 m)
+- Alpine Quickdraw
+- Tuber
+
+### Clothing
+- Baselayer (if cold)
+- Hiking Pants
+- Tech Tee
+- Midlayer
+- Down Jacket
+- Hardshell Jacket
+- Wind/Rain Pants
+- Socks
+- Gloves
+- Buff
+- Beanie
+- Cap
+- Sunglasses
+
+### Other Things
+- Sunscreen
+- Lip Balm
+- Phone
+- Bottle
+- Snacks
+
+### Safety
+- Helmet
+- Bivy
+- First-Aid Kit
 
 ## Climbing
 
-## Multi-day ski tour
+### Technical Gear
+- Backpack
+- Climbing Shoes
+- Rope
+- Harness
+- Quickdraws
+- Sling (120 cm)
+- Carabiners (at least 4)
+- Tuber
+
+## Multi-day, sleeping outdoors
+
+## Multi-day, sleeping in a hut
 
 ## Ski mountaineering
