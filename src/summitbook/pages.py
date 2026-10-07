@@ -10,18 +10,13 @@ import re
 
 from .config import ROOT
 
-GEAR_LISTS = ["Ski tour", "Mountaineering", "Climbing", "Multi-day ski tour", "Ski mountaineering"]
-
-
 def plans() -> list[dict]:
     return _sections(ROOT / "plans.md")
 
 
 def gear() -> list[dict]:
-    """Your gear lists: always the five kinds of trips, in this order, plus any you add."""
-    written = {s["title"]: s for s in _sections(ROOT / "gear.md")}
-    lists = [written.pop(name, {"title": name, "html": ""}) for name in GEAR_LISTS]
-    return lists + list(written.values())
+    """Your gear lists, in the order of gear.md (delete a "## " section to remove a list)."""
+    return _sections(ROOT / "gear.md")
 
 
 def about() -> str:
@@ -53,8 +48,8 @@ def to_html(text: str) -> str:
         if items:
             parts.append(f"<ul>{''.join(items)}</ul>")
             items = []
-        if line.startswith("### "):
-            parts.append(f"<h3>{_inline(line[4:])}</h3>")
+        if line.startswith("### ") or line.startswith("# "):  # (one # is forgiven as a small heading)
+            parts.append(f"<h3>{_inline(line.lstrip('#').strip())}</h3>")
         elif line.startswith("## "):
             parts.append(f"<h2>{_inline(line[3:])}</h2>")
         elif line:
