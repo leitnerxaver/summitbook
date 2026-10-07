@@ -12,8 +12,8 @@ A website of your ski tours, mountaineering and summits, built from your Strava 
 - Every tour has a **3D map** with your route, your **Strava photos**, and a link back to Strava.
 - **Tours that aren't on Strava** (e.g. from Suunto) can be added as GPX or FIT files.
 - **Plans:** your notes for future tours, written in `plans.md`, show up as post-its on the Plans page.
-- **Gear:** your packing lists (`gear.md`) for ski tours, mountaineering, climbing, multi-day ski tours
-  and ski mountaineering, with tick boxes.
+- **Gear lists:** your packing lists (`gear.md`) for ski tours, mountaineering, climbing, multi-day
+  trips and ski mountaineering, with tick boxes, in English or German.
 - **About:** a page about you (`about.md`).
 - Every tour page has an **elevation profile**; pointing at it shows the spot on the 3D map.
 
@@ -125,9 +125,10 @@ appear as post-it notes on the Plans page. Note: like the rest of the site, they
 ## Gear lists and About me
 
 **`gear.md`** holds your packing lists, one per kind of trip (`## Ski tour`, `## Mountaineering`,
-`## Climbing`, `## Multi-day ski tour`, `## Ski mountaineering`). Write one item per line starting
-with `- `; `### ` makes a small heading (e.g. `### Safety`). On the Gear page you pick the kind of
-trip and can tick things off while packing (ticks are remembered in that browser).
+`## Climbing`, …). Write one item per line starting with `- `; `### ` makes a small heading
+(e.g. `### Safety`). The German goes after ` | ` on the same line (`- Climbing Skins | Felle`,
+`### Safety | Sicherheit`); a switch on the page shows English or German. On the Gear lists page you
+pick the kind of trip and can tick things off while packing (ticks are remembered in that browser).
 
 **`about.md`** is your About page. `## ` makes a heading; to show a photo, put it into the `site/`
 folder (e.g. `site/me.jpg`) and write `![Me on the Habicht](me.jpg)`.

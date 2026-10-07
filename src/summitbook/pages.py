@@ -15,8 +15,13 @@ def plans() -> list[dict]:
 
 
 def gear() -> list[dict]:
-    """Your gear lists, in the order of gear.md (delete a "## " section to remove a list)."""
-    return _sections(ROOT / "gear.md")
+    """Your gear lists, in the order of gear.md (delete a "## " section to remove a list).
+    German goes after " | " on the same line ("- Climbing Skins | Felle")."""
+    lists = []
+    for section in _sections(ROOT / "gear.md", bilingual=True):
+        english, _, german = section["title"].partition(" | ")
+        lists.append({"title": english.strip(), "title_de": german.strip() or english.strip(), "html": section["html"]})
+    return lists
 
 
 def about() -> str:
@@ -28,17 +33,18 @@ def _text(path) -> str:
     return re.sub(r"<!--.*?-->", "", path.read_text(), flags=re.S)  # comments are for you only
 
 
-def _sections(path) -> list[dict]:
+def _sections(path, bilingual: bool = False) -> list[dict]:
     if not path.exists():
         return []
     sections = []
     for block in re.split(r"^## ", _text(path), flags=re.M)[1:]:
         title, _, body = block.partition("\n")
-        sections.append({"title": title.strip(), "html": to_html(body)})
+        sections.append({"title": title.strip(), "html": to_html(body, bilingual)})
     return sections
 
 
-def to_html(text: str) -> str:
+def to_html(text: str, bilingual: bool = False) -> str:
+    _inline = _both if bilingual else _one
     parts, items = [], []
     for line in text.strip().splitlines() + [""]:
         line = line.strip()
@@ -57,7 +63,15 @@ def to_html(text: str) -> str:
     return "".join(parts)
 
 
-def _inline(text: str) -> str:
+def _both(text: str) -> str:
+    """ "English | Deutsch": both, for the website's language switch."""
+    english, separator, german = text.partition(" | ")
+    if not separator:
+        return _one(text)
+    return f'<span class="en">{_one(english.strip())}</span><span class="de">{_one(german.strip())}</span>'
+
+
+def _one(text: str) -> str:
     text = html.escape(text)
     # Photos: a web address, or a file in the site/ folder (no folders above it)
     text = re.sub(

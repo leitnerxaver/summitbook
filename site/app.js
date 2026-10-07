@@ -440,11 +440,13 @@ function records(all) {
   return items.join('');
 }
 
-// ---------- Gear: your packing lists (from gear.md), with tick boxes ----------
+// ---------- Gear: your packing lists (from gear.md), with tick boxes, in English or German ----------
 
 async function renderGear() {
   document.title = `${state.data.tabs?.gear || 'Gear lists'} · ${state.data.title}`;
-  app.innerHTML = `<div class="toolbar">${tabsHtml('gear')}<div class="chips" id="gear-chips" role="group" aria-label="Kind of trip"></div></div>
+  app.innerHTML = `<div class="toolbar">${tabsHtml('gear')}<div class="chips" id="gear-chips" role="group" aria-label="Kind of trip"></div>
+      <div class="seg lang" id="gear-lang" role="group" aria-label="Language">
+        <button type="button" data-lang="en" lang="en">English</button><button type="button" data-lang="de" lang="de">Deutsch</button></div></div>
     <section class="gear" id="gear"></section>`;
   let lists = [];
   try {
@@ -453,20 +455,30 @@ async function renderGear() {
   const chips = document.getElementById('gear-chips');
   if (!chips) return; // already on another page
   if (!lists.some((l) => l.title === state.gear)) state.gear = lists[0]?.title;
+  let lang = remember('gear:lang') === 'de' ? 'de' : 'en';
+  const langButtons = document.querySelectorAll('#gear-lang [data-lang]');
 
   const show = () => {
+    const de = lang === 'de';
+    langButtons.forEach((b) => b.setAttribute('aria-pressed', b.dataset.lang === lang));
     chips.innerHTML = lists.map((l) =>
-      `<button class="chip" type="button" data-list="${esc(l.title)}" aria-pressed="${state.gear === l.title}">${esc(l.title)}</button>`).join('');
+      `<button class="chip" type="button" data-list="${esc(l.title)}" aria-pressed="${state.gear === l.title}">${esc(de ? l.title_de || l.title : l.title)}</button>`).join('');
     const list = lists.find((l) => l.title === state.gear);
     const el = document.getElementById('gear');
+    el.dataset.lang = lang;
+    el.lang = lang;
     if (!list?.html) {
-      el.innerHTML = `<div class="empty"><h2>Nothing on this list yet</h2>
-        <p>Write your ${esc((list?.title || 'gear').toLowerCase())} list into <code>gear.md</code>${list ? `, under <code>## ${esc(list.title)}</code>` : ''},
-        then run <code>uv run summitbook publish</code>.</p></div>`;
+      el.innerHTML = de
+        ? `<div class="empty"><h2>Diese Liste ist noch leer</h2>
+          <p>Schreib deine Liste in <code>gear.md</code>${list ? `, unter <code>## ${esc(list.title)}</code>` : ''},
+          dann <code>uv run summitbook publish</code>.</p></div>`
+        : `<div class="empty"><h2>Nothing on this list yet</h2>
+          <p>Write your ${esc((list?.title || 'gear').toLowerCase())} list into <code>gear.md</code>${list ? `, under <code>## ${esc(list.title)}</code>` : ''},
+          then run <code>uv run summitbook publish</code>.</p></div>`;
       return;
     }
     el.innerHTML = `<article class="checklist">${list.html}</article>
-      <button class="btn untick" type="button">Untick all</button>`; // (list.html is made safe by summitbook)
+      <button class="btn untick" type="button">${de ? 'Alle Haken entfernen' : 'Untick all'}</button>`; // (list.html is made safe by summitbook)
     // Tick boxes, remembered in this browser (for packing).
     const key = `gear:${list.title}`;
     const ticked = new Set(remember(key) || []);
@@ -488,6 +500,11 @@ async function renderGear() {
     state.gear = btn.dataset.list;
     show();
   });
+  langButtons.forEach((b) => b.addEventListener('click', () => {
+    lang = b.dataset.lang;
+    remember('gear:lang', lang);
+    show();
+  }));
   show();
 }
 
