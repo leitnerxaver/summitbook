@@ -133,7 +133,7 @@ def main_type(days: list[dict], type_order: list[str]) -> str:
     return max(counts, key=lambda t: (counts[t], -type_order.index(t) if t in type_order else -99))
 
 
-def title(days: list[dict], summits: list[dict], kind: str, type_label: str) -> str:
+def title(days: list[dict], summits: list[dict], kind: str, type_label: str, near_home=lambda point: False) -> str:
     n = span_days(days)
     word = TRIP_WORDS.get(kind, type_label.lower())
 
@@ -147,16 +147,19 @@ def title(days: list[dict], summits: list[dict], kind: str, type_label: str) -> 
     if len({t.lower() for t in own}) == 1 and n <= 3:
         return own[0]
 
-    # 2. Bike trips: where they started and ended.
+    # 2. Bike trips: where they started and ended ("home" instead of the town near your homes).
     if kind in BIKE_TYPES:
+        first, last = days[0]["start"], days[-1]["end"]
         try:
-            start, end = _town_near(days[0]["start"]), _town_near(days[-1]["end"])
+            start = "home" if near_home(first) else _town_near(first)
+            end = "home" if near_home(last) else _town_near(last)
         except PeakLookupError:
             return f"{n}-day {word}"  # town names are looked up again on the next update
         if start and end and start != end:
             return f"{n}-day {word} from {start} to {end}"
         if start or end:
-            return f"{n}-day {word} around {start or end}"
+            place = start or end
+            return f"{n}-day {word} from home" if place == "home" else f"{n}-day {word} around {place}"
         return f"{n}-day {word}"
 
     # 3. Mountain trips: the summit, or the hut.

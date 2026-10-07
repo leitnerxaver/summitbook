@@ -10,7 +10,7 @@ from datetime import UTC, date, datetime
 from . import geo, notes, pages, peaks, trips
 from .config import DATA_DIR, SITE_DIR, Config
 from .peaks import short_name
-from .sync import TRACKS_DIR, load_track, trip_days
+from .sync import TRACKS_DIR, load_everything, load_track, trip_days
 
 TYPE_LABELS = {
     "BackcountrySki": "Ski tour",
@@ -29,12 +29,12 @@ TYPE_LABELS = {
     "EBikeRide": "E-bike ride",
     "EMountainBikeRide": "E-MTB ride",
 }
-# Map colors: on skis (blue), on foot (orange), by bike (aqua), running (violet); anything else gray.
+# Map colors: on skis (blue), hiking (red), cycling (green), running (yellow); anything else gray.
 COLOR_GROUPS = [
-    {"BackcountrySki", "AlpineSki", "NordicSki", "Snowboard"},
+    {"BackcountrySki", "AlpineSki", "NordicSki", "Snowboard", "RollerSki"},
     {"Hike", "Walk", "Snowshoe", "RockClimbing"},
-    {"Ride", "MountainBikeRide", "GravelRide", "EBikeRide", "EMountainBikeRide"},
-    {"TrailRun"},
+    {"Ride", "MountainBikeRide", "GravelRide", "EBikeRide", "EMountainBikeRide", "Handcycle", "Velomobile"},
+    {"TrailRun", "Run"},
 ]
 
 
@@ -81,12 +81,16 @@ def build(cfg: Config, store: dict) -> list[dict]:
         if old.name not in wanted:
             old.unlink()
 
+    everything = _everything(cfg, store, entries)
+    (out / "everything.json").write_text(json.dumps(everything, ensure_ascii=False, separators=(",", ":")))
+    types = list(dict.fromkeys(cfg.types + sorted({a["type"] for a in everything})))
+
     data = {
         "title": cfg.title,
         "subtitle": cfg.subtitle,
         "adventures_title": cfg.adventures_title,
         "updated": datetime.now(UTC).isoformat(timespec="minutes"),
-        "types": [{"id": t, "label": _label(t), "color": _color_slot(t)} for t in cfg.types],
+        "types": [{"id": t, "label": _label(t), "color": _color_slot(t)} for t in types],
         "entries": entries,
     }
     (out / "summitbook.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")))
@@ -98,6 +102,25 @@ def build(cfg: Config, store: dict) -> list[dict]:
     for name, content in (("plans", pages.plans()), ("gear", pages.gear()), ("about", pages.about())):
         (out / f"{name}.json").write_text(json.dumps(content, ensure_ascii=False, separators=(",", ":")))
     return entries
+
+
+def _everything(cfg: Config, store: dict, entries: list[dict]) -> list[dict]:
+    """All your activities (for the map and the stats), each marked with its summit book entry."""
+    everything = [a for a in load_everything() if a["id"] not in cfg.hide]
+    known = {a["id"] for a in everything}
+    for activity_id, rec in store["activities"].items():  # imported files aren't on Strava
+        if rec.get("source") == "file" and activity_id not in known and activity_id not in cfg.hide:
+            has_track = rec.get("has_track") and (TRACKS_DIR / f"{activity_id}.json").exists()
+            everything.append({
+                "id": activity_id, "name": rec["name"], "type": rec["sport_type"], "date": rec["start_date_local"][:10],
+                "distance": round(rec.get("distance") or 0), "gain": round(rec.get("total_elevation_gain") or 0),
+                "moving_time": rec.get("moving_time") or 0, "elev_high": rec.get("elev_high"), "source": "file",
+                "line": _preview(load_track(activity_id)) if has_track else [],
+            })
+    entry_of = {d["id"]: e["id"] for e in entries for d in e["days"]}
+    for a in everything:
+        a["entry"] = entry_of.get(a["id"])
+    return sorted(everything, key=lambda a: a["date"], reverse=True)
 
 
 def _preview(track: list[list]) -> list[list]:
@@ -138,7 +161,7 @@ def _entry(days: list[dict], cfg: Config, multi: bool) -> dict:
     summits = list({s["id"]: s for d in days for s in d["summits"]}.values())  # each peak once, in order
     kind = trips.main_type(days, cfg.types)
     if multi:
-        name = trips.title(days, summits, kind, _label(kind))
+        name = trips.title(days, summits, kind, _label(kind), cfg.near_home)
     else:
         name = days[0]["name"]
     highs = [d["high_point"] for d in days if d["high_point"]]

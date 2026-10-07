@@ -47,6 +47,28 @@ def simplify(track: list[list], tolerance_m: float = 5.0) -> list[list]:
             for (lat, lon, ele), k in zip(track, keep) if k]
 
 
+def decode_polyline(text: str) -> list[list]:
+    """Strava's "summary polyline" (Google's encoded polyline) as [lat, lon] points."""
+    points, index, lat, lon = [], 0, 0, 0
+    while index < len(text):
+        for which in (0, 1):
+            shift = result = 0
+            while True:
+                byte = ord(text[index]) - 63
+                index += 1
+                result |= (byte & 0x1F) << shift
+                shift += 5
+                if byte < 0x20:
+                    break
+            delta = ~(result >> 1) if result & 1 else result >> 1
+            if which == 0:
+                lat += delta
+            else:
+                lon += delta
+        points.append([lat / 1e5, lon / 1e5])
+    return points
+
+
 def bounds(track: list[list], pad_m: float = 0) -> tuple[float, float, float, float]:
     lats = [p[0] for p in track]
     lons = [p[1] for p in track]

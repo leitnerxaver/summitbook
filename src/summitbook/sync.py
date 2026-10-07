@@ -10,7 +10,8 @@ from .peaks import PeakLookupError, needs_translation, peaks_in
 from .privacy import blur, hide_home
 from .strava import RateLimited, Strava
 
-STORE_FILE = DATA_DIR / "activities.json"  # from Strava
+STORE_FILE = DATA_DIR / "activities.json"  # from Strava (the summit book's tours)
+EVERYTHING_FILE = DATA_DIR / "everything.json"  # all your activities, for the map and the stats
 IMPORTS_FILE = DATA_DIR / "imports.json"  # from GPX/FIT files in imports/
 TRACKS_DIR = DATA_DIR / "tracks"
 DETECTION_VERSION = 2
@@ -35,6 +36,30 @@ def save_store(store: dict) -> None:
     STORE_FILE.write_text(json.dumps({**store, "activities": strava}, indent=1, ensure_ascii=False))
     if files or IMPORTS_FILE.exists():
         IMPORTS_FILE.write_text(json.dumps(files, indent=1, ensure_ascii=False))
+
+
+def save_everything(cfg: Config, activities: list[dict]) -> None:
+    """All your activities (runs, rides, …): a short summary and a simplified route from
+    Strava's activity list (no extra downloads), with the same privacy rules as the tracks."""
+    everything = []
+    for a in activities:
+        if a["sport_type"].startswith("Virtual"):
+            continue  # indoor
+        line = geo.decode_polyline((a.get("map") or {}).get("summary_polyline") or "")
+        line = hide_home([[lat, lon, None] for lat, lon in line], cfg)
+        line = geo.simplify(line, tolerance_m=25) if len(line) >= 2 else []
+        everything.append({
+            "id": str(a["id"]), "name": a["name"], "type": a["sport_type"], "date": a["start_date_local"][:10],
+            "distance": round(a.get("distance") or 0), "gain": round(a.get("total_elevation_gain") or 0),
+            "moving_time": a.get("moving_time") or 0, "elev_high": a.get("elev_high"),
+            "line": [[round(lon, 4), round(lat, 4)] for lat, lon, _ in line],
+        })
+    DATA_DIR.mkdir(exist_ok=True)
+    EVERYTHING_FILE.write_text(json.dumps(everything, ensure_ascii=False, separators=(",", ":")))
+
+
+def load_everything() -> list[dict]:
+    return json.loads(EVERYTHING_FILE.read_text()) if EVERYTHING_FILE.exists() else []
 
 
 def load_track(activity_id: str) -> list[list]:
@@ -68,6 +93,7 @@ def download(cfg: Config, store: dict, wait: bool) -> None:
     print("Downloading your activity list from Strava…")
     activities = client.activities()
     visibility = {"everyone", "followers_only"} if cfg.include_followers_only else {"everyone"}
+    save_everything(cfg, [a for a in activities if a.get("visibility") in visibility])
     wanted = [
         a for a in activities
         if a.get("sport_type") in cfg.types and a.get("visibility") in visibility

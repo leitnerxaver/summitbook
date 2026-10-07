@@ -11,11 +11,11 @@
   --muted: #8a8172;
   --line: rgba(70, 55, 30, 0.2);
   --highlight: rgba(255, 214, 0, 0.55);
-  /* One color per kind of tour: on skis, on foot, by bike, running */
+  /* One color per kind of activity: skiing, hiking, cycling, running */
   --series-1: #2a78d6;
-  --series-2: #eb6834;
-  --series-3: #1baf7a;
-  --series-4: #4a3aa7;
+  --series-2: #e34948;
+  --series-3: #008300;
+  --series-4: #c98500;
   --other: #8a8172;
   /* One color per day on multi-day trips */
   --day-1: #2a78d6;
@@ -129,6 +129,7 @@ strong, b { font-weight: 700; }
 .map-tour { height: clamp(380px, 68vh, 760px); }
 .map-legend { display: flex; flex-wrap: wrap; gap: 4px 18px; margin: 14px 2px 0; font-size: 0.9rem; color: var(--ink-2); }
 .map-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.line-sample { width: 32px; height: 12px; flex: none; }
 .map-tools { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin-top: 14px; }
 
 /* Post-it notes: map popups and plans */
@@ -280,6 +281,24 @@ strong, b { font-weight: 700; }
   background: var(--postit-1); font: 700 17px/1.2 var(--hand); box-shadow: 1px 4px 10px rgba(0, 0, 0, 0.25);
 }
 .profile-point { width: 14px; height: 14px; border-radius: 50%; background: var(--ink); border: 3px solid #fff; box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4); }
+
+/* Stats page */
+.statpage { padding-bottom: 10px; }
+.totals td:first-child { font: 700 1.35rem/1.2 var(--hand); }
+.totals tfoot td { border-top: 2px solid var(--line); border-bottom: 0; font-weight: 700; }
+.chart-title { margin: 18px 0 4px; font: 700 1.5rem/1.1 var(--hand); color: var(--ink-2); }
+.chart { position: relative; }
+.chart svg { display: block; overflow: visible; }
+.chart .grid { stroke: var(--line); stroke-dasharray: 3 5; }
+.chart .axis { fill: var(--ink-2); font: 300 12px var(--text); }
+.chart .bar { cursor: default; }
+.chart .bar:hover { opacity: 0.8; }
+.records { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px 26px; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); }
+.records li { padding: 10px 0; border-bottom: 1.5px dashed var(--line); }
+.record-value { display: block; font: 700 2.2rem/1.05 var(--hand); }
+.record-label { display: block; font-size: 0.95rem; color: var(--ink-2); }
+.record-what { display: block; font-size: 0.85rem; color: var(--muted); }
+.record-what a { color: var(--ink-2); }
 
 /* Gear: packing lists with tick boxes */
 .gear { padding: 18px 4px; }

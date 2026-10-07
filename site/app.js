@@ -58,9 +58,9 @@ function route() {
     history.replaceState(null, '', '#/');
   }
   const wasTour = state.view === 'tour';
-  const view = { '#/peaks': 'peaks', '#/plans': 'plans', '#/gear': 'gear', '#/about': 'about' }[location.hash] || 'log';
+  const view = { '#/peaks': 'peaks', '#/stats': 'stats', '#/plans': 'plans', '#/gear': 'gear', '#/about': 'about' }[location.hash] || 'log';
   state.view = view;
-  ({ plans: renderPlans, gear: renderGear, about: renderAbout }[view] || renderHome)(view);
+  ({ stats: renderStatsPage, plans: renderPlans, gear: renderGear, about: renderAbout }[view] || renderHome)(view);
   scrollTo(0, wasTour ? state.scroll[view] || 0 : 0);
 }
 
@@ -71,7 +71,7 @@ function inCategory(category) {
 
 function tabsHtml(view) {
   const tab = (hash, name, label) => `<a href="${hash}" ${view === name ? 'aria-current="page"' : ''}>${label}</a>`;
-  return `<nav class="tabs" aria-label="View">${tab('#/', 'log', 'Logbook')}${tab('#/peaks', 'peaks', 'Peaks')}${tab('#/plans', 'plans', 'Plans')}${tab('#/gear', 'gear', 'Gear')}${tab('#/about', 'about', 'About')}</nav>`;
+  return `<nav class="tabs" aria-label="View">${tab('#/', 'log', 'Logbook')}${tab('#/peaks', 'peaks', 'Peaks')}${tab('#/stats', 'stats', 'Stats')}${tab('#/plans', 'plans', 'Plans')}${tab('#/gear', 'gear', 'Gear')}${tab('#/about', 'about', 'About')}</nav>`;
 }
 
 // ---------- Home: stats, overview map, logbook / peaks ----------
@@ -184,10 +184,18 @@ function renderLegend(entries, view) {
       items.push('<span><span class="dot hollow" style="--c:var(--ink-2)"></span>No summit (highest point of the tour)</span>');
     }
     items.push('<span>Bigger dot = visited more often</span>');
-  } else {
-    items.push('<span>Click a track to open the tour</span>');
+    document.getElementById('legend').innerHTML = items.join('');
+    return;
   }
-  document.getElementById('legend').innerHTML = items.join('');
+  // Logbook map: one sample line per family (color and line style), thick = summit book tours.
+  const sample = (f) => {
+    const color = `var(--series-${f})`;
+    const dash = { 2: 'stroke-dasharray="0.1 4" stroke-linecap="round"', 4: 'stroke-dasharray="6 4"' }[f] || '';
+    const stripe = f === 3 ? '<line x1="2" y1="6" x2="30" y2="6" stroke="#fffaf0" stroke-width="1"/>' : '';
+    return `<svg class="line-sample" viewBox="0 0 32 12" aria-hidden="true"><line x1="2" y1="6" x2="30" y2="6" stroke="${color}" stroke-width="${f === 2 ? 3 : 3}" ${dash}/>${stripe}</svg>`;
+  };
+  document.getElementById('legend').innerHTML = [1, 2, 3, 4].map((f) => `<span>${sample(f)}${FAMILIES[f]}</span>`).join('')
+    + '<span>Thick: summit book tours · thin: all other activities · click a line to open it</span>';
 }
 
 function logbookHtml(entries) {
@@ -271,6 +279,162 @@ async function renderPlans() {
         <h2>${esc(p.title)}</h2>${p.html}</article>`).join('') // (p.html is made safe by summitbook)
     : `<div class="empty"><h2>No plans yet</h2><p>Write your ideas for future tours into <code>plans.md</code>,
         then run <code>uv run summitbook publish</code>.</p></div>`;
+}
+
+// ---------- Stats: all your activities, per kind and per year, and your records ----------
+
+async function renderStatsPage() {
+  document.title = `Stats · ${state.data.title}`;
+  app.innerHTML = `<div class="toolbar">${tabsHtml('stats')}</div><section class="statpage" id="statpage"></section>`;
+  const all = await loadEverything();
+  const el = document.getElementById('statpage');
+  if (!el) return; // already on another page
+  if (!all.length) {
+    el.innerHTML = '<p class="empty">No activities yet.</p>';
+    return;
+  }
+  const families = [1, 2, 3, 4, 0].filter((f) => all.some((a) => family(a.type) === f));
+  const totals = (list) => ({
+    count: list.length,
+    km: list.reduce((n, a) => n + a.distance, 0) / 1000,
+    gain: list.reduce((n, a) => n + a.gain, 0),
+    hours: list.reduce((n, a) => n + a.moving_time, 0) / 3600,
+  });
+  const row = (label, t, mark = '') => `<tr><td>${mark}${label}</td><td class="num">${fmtInt(t.count)}</td>
+    <td class="num">${fmtInt(Math.round(t.km))} km</td><td class="num">${fmtM(t.gain)}</td><td class="num">${fmtInt(Math.round(t.hours))} h</td></tr>`;
+  const legend = families.map((f) => `<span><span class="dot" style="--c:var(--${f ? `series-${f}` : 'other'})"></span>${FAMILIES[f]}</span>`).join('');
+
+  el.innerHTML = `
+    <h2 class="section-title">Everything you did</h2>
+    <div class="table-wrap"><table class="peaks totals">
+      <thead><tr><th scope="col">Kind</th><th scope="col" class="num">Activities</th><th scope="col" class="num">Distance</th>
+        <th scope="col" class="num">Elevation gain</th><th scope="col" class="num">Moving time</th></tr></thead>
+      <tbody>${families.map((f) => row(FAMILIES[f], totals(all.filter((a) => family(a.type) === f)),
+        `<span class="dot" style="--c:var(--${f ? `series-${f}` : 'other'})"></span> `)).join('')}</tbody>
+      <tfoot>${row('All together', totals(all))}</tfoot>
+    </table></div>
+    <h2 class="section-title">Per year</h2>
+    <p class="map-legend">${legend}</p>
+    <h3 class="chart-title">Elevation gain</h3><div class="chart" id="chart-gain"></div>
+    <h3 class="chart-title">Distance</h3><div class="chart" id="chart-km"></div>
+    <h2 class="section-title">Records</h2>
+    <ul class="records">${records(all)}</ul>`;
+
+  const draw = () => {
+    yearBars(document.getElementById('chart-gain'), all, families, (a) => a.gain, fmtM);
+    yearBars(document.getElementById('chart-km'), all, families, (a) => a.distance / 1000, (v) => `${fmtInt(Math.round(v))} km`);
+  };
+  draw();
+  const redraw = () => (el.isConnected ? draw() : removeEventListener('resize', redraw));
+  addEventListener('resize', redraw);
+}
+
+// Stacked bars per year, one segment per kind of activity (in the families' colors).
+function yearBars(el, all, families, value, format) {
+  const years = [...new Set(all.map((a) => a.date.slice(0, 4)))].sort();
+  const data = years.map((year) => {
+    const ofYear = all.filter((a) => a.date.startsWith(year));
+    return { year, parts: families.map((f) => ({ f, v: ofYear.filter((a) => family(a.type) === f).reduce((n, a) => n + value(a), 0) })) };
+  });
+  const width = Math.max(el.clientWidth, 280);
+  const height = 230;
+  const pad = { left: 74, right: 8, top: 12, bottom: 26 };
+  const most = Math.max(...data.map((d) => d.parts.reduce((n, p) => n + p.v, 0)), 1);
+  const step = niceStep(most / 4);
+  const top = Math.ceil(most / step) * step;
+  const plotW = width - pad.left - pad.right;
+  const plotH = height - pad.top - pad.bottom;
+  const y = (v) => pad.top + plotH - (v / top) * plotH;
+  const slot = plotW / years.length;
+  const barW = Math.min(52, slot * 0.62);
+
+  const grid = [];
+  for (let v = 0; v <= top + 0.001; v += step) {
+    grid.push(`<line class="grid" x1="${pad.left}" x2="${width - pad.right}" y1="${y(v)}" y2="${y(v)}"/>
+      <text class="axis" x="${pad.left - 8}" y="${y(v) + 4}" text-anchor="end">${format(v)}</text>`);
+  }
+  const bars = data.map((d, i) => {
+    const x = pad.left + slot * i + (slot - barW) / 2;
+    let base = 0;
+    const shown = d.parts.filter((p) => p.v > 0);
+    const segments = shown.map((p, k) => {
+      const [y0, y1] = [y(base), y(base + p.v)];
+      base += p.v;
+      const h = Math.max(y0 - y1 - 2, 0.5); // a 2px gap between segments
+      const color = `var(--${p.f ? `series-${p.f}` : 'other'})`;
+      const tip = `${d.year} · ${FAMILIES[p.f]}: ${format(p.v)}`;
+      const r = k === shown.length - 1 ? Math.min(4, h / 2, barW / 2) : 0; // rounded at the top end only
+      const path = `M${x} ${y0}V${y0 - h + r}${r ? `Q${x} ${y0 - h} ${x + r} ${y0 - h}` : ''}H${x + barW - r}${r ? `Q${x + barW} ${y0 - h} ${x + barW} ${y0 - h + r}` : ''}V${y0}Z`;
+      return `<path class="bar" d="${path}" style="fill:${color}" data-tip="${esc(tip)}"/>`;
+    }).join('');
+    const label = years.length <= 14 || i % 2 === 0 ? `<text class="axis" x="${x + barW / 2}" y="${height - 6}" text-anchor="middle">${d.year}</text>` : '';
+    return segments + label;
+  }).join('');
+
+  el.innerHTML = `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img"
+      aria-label="${esc(format(most))} in the biggest year; the table above has all totals">${grid.join('')}${bars}</svg>
+    <div class="profile-tip" hidden></div>`;
+  const tip = el.querySelector('.profile-tip');
+  el.querySelectorAll('.bar').forEach((bar) => {
+    bar.addEventListener('pointerenter', () => {
+      const box = bar.getBBox();
+      tip.textContent = bar.dataset.tip;
+      tip.style.left = `${Math.min(Math.max(box.x + box.width / 2, 90), width - 90)}px`;
+      tip.style.top = `${box.y - 6}px`;
+      tip.hidden = false;
+    });
+    bar.addEventListener('pointerleave', () => { tip.hidden = true; });
+  });
+}
+
+function records(all) {
+  const best = (list, key) => list.reduce((b, a) => (!b || a[key] > b[key] ? a : b), null);
+  const link = (a) => (a.entry ? `#/tour/${a.entry}` : a.source === 'file' ? null : `https://www.strava.com/activities/${a.id}`);
+  const item = (label, value, a) => {
+    if (!a) return '';
+    const href = link(a);
+    const what = `${esc(a.name)} · ${fmtDate(a.date)}`;
+    return `<li><span class="record-value">${value}</span><span class="record-label">${label}</span>
+      <span class="record-what">${href ? `<a href="${href}"${href.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>${what}</a>` : what}</span></li>`;
+  };
+  const rides = all.filter((a) => family(a.type) === 3);
+  const runs = all.filter((a) => family(a.type) === 4);
+  const climbs = all.filter((a) => !['AlpineSki', 'Snowboard'].includes(a.type));
+  const items = [
+    item('Longest ride', fmtKm(best(rides, 'distance')?.distance || 0), best(rides, 'distance')),
+    item('Longest run', fmtKm(best(runs, 'distance')?.distance || 0), best(runs, 'distance')),
+    // (not counting days on ski lifts: there the climbing isn't yours)
+    item('Most elevation in one go', fmtM(best(climbs, 'gain')?.gain || 0), best(climbs, 'gain')),
+    item('Longest day out', fmtDuration(best(all, 'moving_time')?.moving_time || 0), best(all, 'moving_time')),
+  ];
+  // From the summit book: summits and multi-day trips
+  const entries = state.data.entries;
+  const busiestDay = entries.flatMap((e) => e.days.map((d) => ({ e, d }))).reduce((b, x) => (!b || x.d.summits.length > b.d.summits.length ? x : b), null);
+  if (busiestDay?.d.summits.length) {
+    items.push(`<li><span class="record-value">${busiestDay.d.summits.length}</span><span class="record-label">Most summits in one day</span>
+      <span class="record-what"><a href="#/tour/${busiestDay.e.id}">${esc(busiestDay.d.name)} · ${fmtDate(busiestDay.d.date)}</a></span></li>`);
+  }
+  const longest = entries.reduce((b, e) => (!b || e.days_total > b.days_total ? e : b), null);
+  if (longest?.multi) {
+    items.push(`<li><span class="record-value">${longest.days_total} days</span><span class="record-label">Longest trip</span>
+      <span class="record-what"><a href="#/tour/${longest.id}">${esc(titleText(longest))} · ${fmtRange(longest.date, longest.end_date)}</a></span></li>`);
+  }
+  const peaks = [...collectPeaks(entries).values()];
+  const highest = peaks.filter((p) => p.ele).sort((a, b) => b.ele - a.ele)[0];
+  const favorite = peaks.sort((a, b) => b.visits.length - a.visits.length)[0];
+  if (highest) {
+    items.push(`<li><span class="record-value">${fmtM(highest.ele)}</span><span class="record-label">Highest summit</span>
+      <span class="record-what"><a href="#/tour/${highest.visits.at(-1).entry.id}">${esc(highest.name)} · ${fmtDate(highest.visits.at(-1).date)}</a></span></li>`);
+  }
+  if (favorite) {
+    items.push(`<li><span class="record-value">${favorite.visits.length}×</span><span class="record-label">Most visited</span>
+      <span class="record-what"><a href="#/peaks">${esc(favorite.name)}</a></span></li>`);
+  }
+  const perYear = new Map();
+  all.forEach((a) => perYear.set(a.date.slice(0, 4), (perYear.get(a.date.slice(0, 4)) || 0) + 1));
+  const [year, count] = [...perYear].sort((a, b) => b[1] - a[1])[0] || [];
+  if (year) items.push(`<li><span class="record-value">${count}</span><span class="record-label">Activities in your busiest year</span><span class="record-what">${year}</span></li>`);
+  return items.join('');
 }
 
 // ---------- Gear: your packing lists (from gear.md), with tick boxes ----------
@@ -810,6 +974,7 @@ function overviewMap(container) {
   let pending = null;
   let places = new Map();
   let tracks = [];
+  let others = [];
   let hovered = null;
   // Clicking a peak or a track opens a post-it note.
   const popup = new maplibregl.Popup({ offset: 12, maxWidth: '260px', className: 'postit' });
@@ -839,14 +1004,25 @@ function overviewMap(container) {
   };
 
   const showTracks = async (entries, animate) => {
-    const lines = await state.routes;
+    const [lines, everything] = await Promise.all([state.routes, loadEverything()]);
     tracks = entries.filter((e) => lines[e.id]?.length);
     const features = tracks.map((e, i) => ({
       type: 'Feature', id: i,
-      properties: { i, color: cssVar(colorVar(e.type, true)) },
+      properties: { i, color: cssVar(colorVar(e.type, true)), family: family(e.type) },
       geometry: { type: 'MultiLineString', coordinates: lines[e.id] },
     }));
     map.getSource('tracks').setData({ type: 'FeatureCollection', features });
+    // Everything else you did (runs, rides, hikes without a summit, …), in the families the chip shows.
+    const families = state.filter === 'all' ? null
+      : new Set(state.filter === 'adventure' ? [3] : [family(state.filter)]);
+    others = everything.filter((a) => !a.entry && a.line.length > 1 && (!families || families.has(family(a.type))));
+    map.getSource('others').setData({
+      type: 'FeatureCollection',
+      features: others.map((a, i) => ({
+        type: 'Feature', properties: { i, color: cssVar(colorVar(a.type, true)), family: family(a.type) },
+        geometry: { type: 'LineString', coordinates: a.line },
+      })),
+    });
     // Bike adventures: the whole routes. Otherwise: where most tours start (one point per tour).
     const bikes = state.filter === 'adventure';
     fitTo(bikes ? features.flatMap((f) => f.geometry.coordinates.flat()) : features.map((f) => f.geometry.coordinates[0][0]), animate, bikes);
@@ -860,7 +1036,8 @@ function overviewMap(container) {
     popup.remove();
     const peaks = mode === 'peaks';
     map.setLayoutProperty('places', 'visibility', peaks ? 'visible' : 'none');
-    ['tracks-casing', 'tracks', 'tracks-hit'].forEach((id) => map.setLayoutProperty(id, 'visibility', peaks ? 'none' : 'visible'));
+    ['others', 'others-run', 'others-hike', 'others-hit', 'tracks-casing', 'tracks', 'tracks-run', 'tracks-stripe', 'tracks-hit']
+      .forEach((id) => map.setLayoutProperty(id, 'visibility', peaks ? 'none' : 'visible'));
     peaks ? showPeaks(entries, animate) : showTracks(entries, animate);
   };
 
@@ -883,6 +1060,15 @@ function overviewMap(container) {
       .addTo(map);
   };
 
+  const openOther = (i, lngLat) => {
+    const a = others[i];
+    const link = a.source === 'file' ? '<p>Imported from a GPX/FIT file</p>'
+      : `<ul><li><a href="https://www.strava.com/activities/${a.id}" target="_blank" rel="noopener">View on Strava →</a></li></ul>`;
+    popup.setLngLat(lngLat)
+      .setHTML(`<strong>${esc(a.name)}</strong><p>${fmtDate(a.date)} · ${esc(typeOf(a.type).label)}</p><p>${statsLine(a)}</p>${link}`)
+      .addTo(map);
+  };
+
   map.on('load', () => {
     map.addSource('places', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
     map.addLayer({
@@ -895,15 +1081,33 @@ function overviewMap(container) {
         'circle-stroke-width': ['case', ['get', 'summit'], 2, 3],
       },
     });
-    map.addSource('tracks', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
     const round = { 'line-join': 'round', 'line-cap': 'round' };
     const hover = (a, b) => ['case', ['boolean', ['feature-state', 'hover'], false], a, b];
-    map.addLayer({ id: 'tracks-casing', type: 'line', source: 'tracks', layout: round, paint: { 'line-color': '#fffaf0', 'line-width': hover(7, 4.5), 'line-opacity': 0.9 } });
-    map.addLayer({ id: 'tracks', type: 'line', source: 'tracks', layout: round, paint: { 'line-color': ['get', 'color'], 'line-width': hover(4.5, 2.5) } });
+    const is = (f) => ['==', ['get', 'family'], f];
+    const isnt = (...fs) => ['all', ...fs.map((f) => ['!=', ['get', 'family'], f])];
+    // Thin lines: all your other activities. Hikes dotted like footpaths, runs dashed.
+    map.addSource('others', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+    const thin = { 'line-color': ['get', 'color'], 'line-width': 1.6, 'line-opacity': 0.8 };
+    map.addLayer({ id: 'others', type: 'line', source: 'others', filter: isnt(2, 4), layout: round, paint: thin });
+    map.addLayer({ id: 'others-run', type: 'line', source: 'others', filter: is(4), paint: { ...thin, 'line-dasharray': [3, 2] } });
+    map.addLayer({ id: 'others-hike', type: 'line', source: 'others', filter: is(2), layout: round, paint: { ...thin, 'line-width': 2, 'line-dasharray': [0.1, 2] } });
+    map.addLayer({ id: 'others-hit', type: 'line', source: 'others', paint: { 'line-color': '#000', 'line-opacity': 0, 'line-width': 10 } });
+    // Thick lines: the summit book's tours. Trail runs dashed, bike trips with a stripe like a road.
+    map.addSource('tracks', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+    map.addLayer({ id: 'tracks-casing', type: 'line', source: 'tracks', layout: round, paint: { 'line-color': '#fffaf0', 'line-width': hover(7, 5), 'line-opacity': 0.9 } });
+    map.addLayer({ id: 'tracks', type: 'line', source: 'tracks', filter: isnt(4), layout: round, paint: { 'line-color': ['get', 'color'], 'line-width': hover(4.5, 3) } });
+    map.addLayer({ id: 'tracks-run', type: 'line', source: 'tracks', filter: is(4), paint: { 'line-color': ['get', 'color'], 'line-width': hover(4.5, 3), 'line-dasharray': [2.2, 1.4] } });
+    map.addLayer({ id: 'tracks-stripe', type: 'line', source: 'tracks', filter: is(3), layout: round, paint: { 'line-color': '#fffaf0', 'line-width': hover(1.4, 1) } });
     map.addLayer({ id: 'tracks-hit', type: 'line', source: 'tracks', paint: { 'line-color': '#000', 'line-opacity': 0, 'line-width': 14 } });
 
     map.on('click', 'places', (ev) => openPeak(ev.features[0].properties.key));
     map.on('click', 'tracks-hit', (ev) => openTrack(ev.features[0].properties.i, ev.lngLat));
+    map.on('click', 'others-hit', (ev) => {
+      if (map.queryRenderedFeatures(ev.point, { layers: ['tracks-hit'] }).length) return; // a tour is on top
+      openOther(ev.features[0].properties.i, ev.lngLat);
+    });
+    map.on('mouseenter', 'others-hit', () => { map.getCanvas().style.cursor = 'pointer'; });
+    map.on('mouseleave', 'others-hit', () => { map.getCanvas().style.cursor = ''; });
     const setHover = (id) => {
       if (hovered !== null) map.setFeatureState({ source: 'tracks', id: hovered }, { hover: false });
       hovered = id;
@@ -1097,6 +1301,20 @@ function stravaLink(day) {
 
 function mountainIcon() {
   return '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M2 27 12 9l5 8 4-5 9 15z"/></svg>';
+}
+
+// Which family an activity belongs to (and its color): 1 skiing, 2 hiking, 3 cycling, 4 running, 0 other.
+function family(type) {
+  const slot = typeOf(type).slot;
+  return slot >= 1 && slot <= 4 ? slot : 0;
+}
+
+const FAMILIES = { 1: 'Skiing', 2: 'Hiking & climbing', 3: 'Cycling', 4: 'Running', 0: 'Other' };
+
+// All your activities (runs, rides, …: for the map and the stats), loaded once.
+function loadEverything() {
+  state.everything ??= fetch('data/everything.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => []);
+  return state.everything;
 }
 
 function typeOf(id) {
