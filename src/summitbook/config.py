@@ -28,7 +28,7 @@ SITE_DIR = ROOT / "site"  # the website itself
 class Config:
     title: str = "Summit Book"
     subtitle: str = ""
-    adventures_title: str = "Bike adventures"
+    adventures_title: str = "Bike rides"
     always: list[str] = field(default_factory=lambda: ["BackcountrySki"])
     summit_only: list[str] = field(default_factory=lambda: ["Hike", "Snowshoe", "RockClimbing"])
     multi_day_only: list[str] = field(

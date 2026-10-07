@@ -1023,7 +1023,7 @@ function overviewMap(container) {
         geometry: { type: 'LineString', coordinates: a.line },
       })),
     });
-    // Bike adventures: the whole routes. Otherwise: where most tours start (one point per tour).
+    // Bike rides: the whole routes. Otherwise: where most tours start (one point per tour).
     const bikes = state.filter === 'adventure';
     fitTo(bikes ? features.flatMap((f) => f.geometry.coordinates.flat()) : features.map((f) => f.geometry.coordinates[0][0]), animate, bikes);
   };

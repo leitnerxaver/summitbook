@@ -4,7 +4,7 @@
 [site]
 title = "Xaver's Mountain Collection"
 subtitle = "Ski tours, mountaineering and summits"
-adventures_title = "Bike adventures"
+adventures_title = "Bike rides"
 
 [activities]
 # Strava sport types that always appear, even without a summit (e.g. skiing a couloir).

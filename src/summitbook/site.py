@@ -21,7 +21,7 @@ TYPE_LABELS = {
     "AlpineSki": "Ski",
     "NordicSki": "Nordic ski",
     "Snowboard": "Snowboard",
-    "TrailRun": "Trail run",
+    "TrailRun": "Run",
     "Run": "Run",
     "Ride": "Bike ride",
     "MountainBikeRide": "Mountain bike ride",

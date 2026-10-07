@@ -13,7 +13,7 @@ TRIP_WORDS = {
     "Hike": "mountain tour",
     "Snowshoe": "snowshoe tour",
     "RockClimbing": "climbing trip",
-    "TrailRun": "trail running tour",
+    "TrailRun": "running tour",
     "Ride": "bike tour",
     "MountainBikeRide": "mountain bike tour",
     "GravelRide": "gravel tour",
