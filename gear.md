@@ -20,7 +20,7 @@
 ### Technical Gear
 - Skis
 - Ski Boots
-- Climping Skins
+- Climbing Skins
 - Ski Crampons
 - Poles
 - Backpack (approx. 30 L)
@@ -45,7 +45,7 @@
 - Shovel
 - Avalanche Probe
 - First Aid Kit
-- Biwy Bag
+- Bivy Bag
 
 ## Mountaineering
 
