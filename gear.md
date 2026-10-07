@@ -17,6 +17,35 @@
 -->
 
 ## Ski tour
+### Technical Gear
+- Skis
+- Ski Boots
+- Climping Skins
+- Ski Crampons
+- Poles
+- Backpack (approx. 30 L)
+
+### Clothing
+- Baselayer
+- Hardshell Pants
+- Hardshell Jacket
+- Down Jacket
+- Midlayer Jacket
+- Buff
+- Socks
+- Baselayer for changing
+- Gloves (thick & thin)
+- Cap
+- Sunglasses
+- Ski Goggles
+
+### Safety
+- Helmet
+- Avalanche Receiver
+- Shovel
+- Avalanche Probe
+- First Aid Kit
+- Biwy Bag
 
 ## Mountaineering
 
