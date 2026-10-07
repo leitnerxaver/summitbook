@@ -56,6 +56,8 @@
 - Phone | Handy
 - Bottle | Trinkflasche
 - Snacks | Jause
+- Knife | Messer
+- Headlamp | Stirnlampe
 
 ## Mountaineering | Hochtour
 
@@ -98,6 +100,8 @@
 - Phone | Handy
 - Bottle | Trinkflasche
 - Snacks | Jause
+- Knife | Messer
+- Headlamp | Stirnlampe
 
 ### Safety | Sicherheit
 - Helmet | Helm
@@ -116,8 +120,77 @@
 - Carabiners (at least 4) | Karabiner (mindestens 4)
 - Tuber | Tuber
 
+## Ski mountaineering | Skihochtour
+
+### Technical Gear | Technische Ausrüstung
+
+- Skis | Ski
+- Ski Boots | Skischuhe
+- Climbing Skins | Felle
+- Ski Crampons | Harscheisen
+- Poles | Stöcke
+- Backpack (approx. 40 L) | Rucksack (ca. 40 L)
+- Harness | Klettergurt
+- Ice Axe | Pickel
+- Crampons | Steigeisen
+- Rope | Seil
+- Carabiners (at least 3) | Karabiner (mindestens 3)
+- Ball-lock Carabiner | Ball-Lock-Karabiner
+- Alpine runners (60 cm and 120 cm) | Bandschlingen (60 cm und 120 cm)
+- Quickdraws | Expressen
+- Micro Traxion (2 or one T-Bloc) | Micro Traxion (2 oder ein T-Bloc)
+- Cord (1 m, 5 m) | Reepschnur (1 m, 5 m)
+- Alpine Quickdraw | Alpin-Expressschlinge
+- Tuber | Tuber
+
+### Clothing | Kleidung
+- Baselayer | Funktionsunterwäsche
+- Hardshell Pants | Hardshellhose
+- Hardshell Jacket | Hardshelljacke
+- Down Jacket | Daunenjacke
+- Midlayer Jacket | Midlayer-Jacke
+- Buff | Buff
+- Beanie | Mütze
+- Socks | Socken
+- Baselayer for changing | Funktionsunterwäsche zum Wechseln
+- Gloves (thick & thin) | Handschuhe (dick & dünn)
+- Cap | Kappe
+- Sunglasses | Sonnenbrille
+- Ski Goggles | Skibrille
+
+### Safety | Sicherheit
+- Helmet | Helm
+- Avalanche Receiver | LVS-Gerät
+- Shovel | Schaufel
+- Avalanche Probe | Sonde
+- First Aid Kit | Erste-Hilfe-Set
+- Bivy Bag | Biwaksack
+
+### Other Things | Sonstiges
+- Sunscreen | Sonnencreme
+- Lip Balm | Lippenpflege
+- Phone | Handy
+- Bottle | Trinkflasche
+- Snacks | Jause
+- Knife | Messer
+- Headlamp | Stirnlampe
+
 ## Multi-day, sleeping outdoors | Mehrtägig, draußen schlafen
+- Sleeping Bag | Schlafsack
+- Extra Clothes | Wechselkleidung
+- Toiletries | Waschzeug
+- Mat | Isomatte
+- Stove | Kocher
+- Food | Essen
+- Spoon | Löffel
+- Powerbank | Powerbank
+- Cables | Ladekabel
 
 ## Multi-day, sleeping in a hut | Mehrtägig, Hüttenübernachtung
 
-## Ski mountaineering | Skihochtour
+- Sleeping Bag | Hüttenschlafsack
+- Extra Clothes | Wechselkleidung
+- Toiletries | Waschzeug
+- Cash | Bargeld
+- Alpenverein-ID | Alpenvereinsausweis
+- Slippers | Hüttenschuhe
