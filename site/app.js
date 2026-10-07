@@ -71,7 +71,7 @@ function inCategory(category) {
 
 function tabsHtml(view) {
   const tab = (hash, name, label) => `<a href="${hash}" ${view === name ? 'aria-current="page"' : ''}>${label}</a>`;
-  return `<nav class="tabs" aria-label="View">${tab('#/', 'log', 'Logbook')}${tab('#/peaks', 'peaks', 'Peaks')}${tab('#/stats', 'stats', 'Stats')}${tab('#/plans', 'plans', 'Plans')}${tab('#/gear', 'gear', 'Gear')}${tab('#/about', 'about', 'About')}</nav>`;
+  return `<nav class="tabs" aria-label="View">${tab('#/', 'log', 'Logbook')}${tab('#/peaks', 'peaks', 'Peaks')}${tab('#/stats', 'stats', 'Stats')}${tab('#/plans', 'plans', 'Plans')}${tab('#/gear', 'gear', 'Gear list')}${tab('#/about', 'about', 'About')}</nav>`;
 }
 
 // ---------- Home: stats, overview map, logbook / peaks ----------
@@ -440,7 +440,7 @@ function records(all) {
 // ---------- Gear: your packing lists (from gear.md), with tick boxes ----------
 
 async function renderGear() {
-  document.title = `Gear · ${state.data.title}`;
+  document.title = `Gear list · ${state.data.title}`;
   app.innerHTML = `<div class="toolbar">${tabsHtml('gear')}<div class="chips" id="gear-chips" role="group" aria-label="Kind of trip"></div></div>
     <section class="gear" id="gear"></section>`;
   let lists = [];
