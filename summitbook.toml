@@ -6,6 +6,15 @@ title = "Xaver's Mountain Collection"
 subtitle = "Ski tours, mountaineering and summits"
 adventures_title = "Bike rides"
 
+# The names of the tabs at the top of the website. Change the text between the quotes.
+[site.tabs]
+logbook = "Logbook"
+peaks = "Peaks"
+stats = "Stats"
+plans = "Plans"
+gear = "Gear lists"
+about = "About"
+
 [activities]
 # Strava sport types that always appear, even without a summit (e.g. skiing a couloir).
 always = ["BackcountrySki"]

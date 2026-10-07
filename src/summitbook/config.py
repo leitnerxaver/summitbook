@@ -29,6 +29,7 @@ class Config:
     title: str = "Summit Book"
     subtitle: str = ""
     adventures_title: str = "Bike rides"
+    tabs: dict[str, str] = field(default_factory=dict)  # names of the website's tabs
     always: list[str] = field(default_factory=lambda: ["BackcountrySki"])
     summit_only: list[str] = field(default_factory=lambda: ["Hike", "Snowshoe", "RockClimbing"])
     multi_day_only: list[str] = field(
@@ -81,6 +82,7 @@ def load_config() -> Config:
         title=site.get("title", default.title),
         subtitle=site.get("subtitle", default.subtitle),
         adventures_title=site.get("adventures_title", default.adventures_title),
+        tabs=site.get("tabs", {}),
         always=acts.get("always", default.always),
         summit_only=acts.get("summit_only", default.summit_only),
         multi_day_only=acts.get("multi_day_only", default.multi_day_only),

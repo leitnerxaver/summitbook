@@ -89,6 +89,7 @@ def build(cfg: Config, store: dict) -> list[dict]:
         "title": cfg.title,
         "subtitle": cfg.subtitle,
         "adventures_title": cfg.adventures_title,
+        "tabs": cfg.tabs,
         "updated": datetime.now(UTC).isoformat(timespec="minutes"),
         "types": [{"id": t, "label": _label(t), "color": _color_slot(t)} for t in types],
         "entries": entries,
