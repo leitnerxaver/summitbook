@@ -454,7 +454,9 @@ async function renderGear() {
   } catch { /* no gear lists yet */ }
   const chips = document.getElementById('gear-chips');
   if (!chips) return; // already on another page
-  if (!lists.some((l) => l.title === state.gear)) state.gear = lists[0]?.title;
+  // The lists you picked (several at once, e.g. ski tour + hut trip, are packed as one list).
+  state.gear = (state.gear || []).filter((t) => lists.some((l) => l.title === t));
+  if (!state.gear.length && lists.length) state.gear = [lists[0].title];
   let lang = remember('gear:lang') === 'de' ? 'de' : 'en';
   const langButtons = document.querySelectorAll('#gear-lang [data-lang]');
 
@@ -462,11 +464,17 @@ async function renderGear() {
     const de = lang === 'de';
     langButtons.forEach((b) => b.setAttribute('aria-pressed', b.dataset.lang === lang));
     chips.innerHTML = lists.map((l) =>
-      `<button class="chip" type="button" data-list="${esc(l.title)}" aria-pressed="${state.gear === l.title}">${esc(de ? l.title_de || l.title : l.title)}</button>`).join('');
-    const list = lists.find((l) => l.title === state.gear);
+      `<button class="chip" type="button" data-list="${esc(l.title)}" aria-pressed="${state.gear.includes(l.title)}">${esc(de ? l.title_de || l.title : l.title)}</button>`).join('');
+    const chosen = lists.filter((l) => state.gear.includes(l.title));
+    const filled = chosen.filter((l) => l.html);
+    const list = filled.length > 1 ? combineLists(filled) : filled[0] || chosen[0];
     const el = document.getElementById('gear');
     el.dataset.lang = lang;
     el.lang = lang;
+    if (lists.length && !chosen.length) {
+      el.innerHTML = `<div class="empty"><p>${de ? 'Wähl oben eine oder mehrere Listen aus.' : 'Pick one or more lists above.'}</p></div>`;
+      return;
+    }
     if (!list?.html) {
       el.innerHTML = de
         ? `<div class="empty"><h2>Diese Liste ist noch leer</h2>
@@ -497,7 +505,8 @@ async function renderGear() {
   chips.addEventListener('click', (ev) => {
     const btn = ev.target.closest('[data-list]');
     if (!btn) return;
-    state.gear = btn.dataset.list;
+    const title = btn.dataset.list;
+    state.gear = state.gear.includes(title) ? state.gear.filter((t) => t !== title) : [...state.gear, title];
     show();
   });
   langButtons.forEach((b) => b.addEventListener('click', () => {
@@ -506,6 +515,39 @@ async function renderGear() {
     show();
   }));
   show();
+}
+
+// Several gear lists as one: sections with the same heading are joined, things that are on
+// more than one list show once, and a list without headings gets its own name as heading.
+function combineLists(lists) {
+  const sections = new Map();
+  const seen = new Set();
+  const plain = (node) => node.textContent.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, '');
+  lists.forEach((list) => {
+    const div = document.createElement('div');
+    div.innerHTML = list.html; // (made safe by summitbook)
+    let heading = `<span class="en">${esc(list.title)}</span><span class="de">${esc(list.title_de || list.title)}</span>`;
+    let key = `list:${list.title}`;
+    [...div.children].forEach((node) => {
+      if (/^H\d$/.test(node.tagName)) {
+        heading = node.innerHTML;
+        key = plain(node);
+        return;
+      }
+      if (!sections.has(key)) sections.set(key, { heading, notes: [], items: [] });
+      const section = sections.get(key);
+      const items = node.matches('ul, ol') ? [...node.children] : [];
+      if (!items.length) section.notes.push(node.outerHTML);
+      items.forEach((li) => {
+        if (seen.has(plain(li))) return;
+        seen.add(plain(li));
+        section.items.push(li.outerHTML);
+      });
+    });
+  });
+  const html = [...sections.values()].filter((s) => s.notes.length || s.items.length)
+    .map((s) => `<h3>${s.heading}</h3>${s.notes.join('')}${s.items.length ? `<ul>${s.items.join('')}</ul>` : ''}`).join('');
+  return { title: lists.map((l) => l.title).join(' + '), html };
 }
 
 // Small things this browser remembers (gear ticks). Never essential: it may not be allowed.
