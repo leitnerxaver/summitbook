@@ -16,11 +16,14 @@ def plans() -> list[dict]:
 
 def gear() -> list[dict]:
     """Your gear lists, in the order of gear.md (delete a "## " section to remove a list).
-    German goes after " | " on the same line ("- Climbing Skins | Felle")."""
+    German goes after " | " on the same line ("- Climbing Skins | Felle"). A title starting
+    with "+" is an add-on (e.g. where you sleep), packed together with a trip's list."""
     lists = []
     for section in _sections(ROOT / "gear.md", bilingual=True):
-        english, _, german = section["title"].partition(" | ")
-        lists.append({"title": english.strip(), "title_de": german.strip() or english.strip(), "html": section["html"]})
+        title = section["title"]
+        english, _, german = title.removeprefix("+").partition(" | ")
+        lists.append({"title": english.strip(), "title_de": german.strip() or english.strip(),
+                      "addon": title.startswith("+"), "html": section["html"]})
     return lists
 
 

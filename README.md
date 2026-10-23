@@ -13,7 +13,8 @@ A website of your ski tours, mountaineering and summits, built from your Strava 
 - **Tours that aren't on Strava** (e.g. from Suunto) can be added as GPX or FIT files.
 - **Plans:** your notes for future tours, written in `plans.md`, show up as post-its on the Plans page.
 - **Gear lists:** your packing lists (`gear.md`) for ski tours, mountaineering, climbing, multi-day
-  trips and ski mountaineering, with tick boxes, in English or German.
+  trips and ski mountaineering, with tick boxes, in English or German. Lists starting with `+`
+  (where you sleep) can be added on top of a trip's list.
 - **About:** a page about you (`about.md`).
 - Every tour page has an **elevation profile**; pointing at it shows the spot on the 3D map.
 

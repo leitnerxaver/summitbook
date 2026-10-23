@@ -445,6 +445,7 @@ function records(all) {
 async function renderGear() {
   document.title = `${state.data.tabs?.gear || 'Gear lists'} · ${state.data.title}`;
   app.innerHTML = `<div class="toolbar">${tabsHtml('gear')}<div class="chips" id="gear-chips" role="group" aria-label="Kind of trip"></div>
+      <div class="chips" id="gear-addons" role="group" aria-label="Add"></div>
       <div class="seg lang" id="gear-lang" role="group" aria-label="Language">
         <button type="button" data-lang="en" lang="en">English</button><button type="button" data-lang="de" lang="de">Deutsch</button></div></div>
     <section class="gear" id="gear"></section>`;
@@ -453,28 +454,29 @@ async function renderGear() {
     lists = await (await fetch('data/gear.json', { cache: 'no-cache' })).json();
   } catch { /* no gear lists yet */ }
   const chips = document.getElementById('gear-chips');
+  const addonChips = document.getElementById('gear-addons');
   if (!chips) return; // already on another page
-  // The lists you picked (several at once, e.g. ski tour + hut trip, are packed as one list).
-  state.gear = (state.gear || []).filter((t) => lists.some((l) => l.title === t));
-  if (!state.gear.length && lists.length) state.gear = [lists[0].title];
+  // One kind of trip, plus maybe one add-on ("+" in gear.md, e.g. sleeping in a hut): packed as one list.
+  const trips = lists.filter((l) => !l.addon);
+  const addons = lists.filter((l) => l.addon);
+  if (!trips.some((l) => l.title === state.gear)) state.gear = trips[0]?.title;
+  if (!addons.some((l) => l.title === state.gearAddon)) state.gearAddon = null;
   let lang = remember('gear:lang') === 'de' ? 'de' : 'en';
   const langButtons = document.querySelectorAll('#gear-lang [data-lang]');
 
   const show = () => {
     const de = lang === 'de';
     langButtons.forEach((b) => b.setAttribute('aria-pressed', b.dataset.lang === lang));
-    chips.innerHTML = lists.map((l) =>
-      `<button class="chip" type="button" data-list="${esc(l.title)}" aria-pressed="${state.gear.includes(l.title)}">${esc(de ? l.title_de || l.title : l.title)}</button>`).join('');
-    const chosen = lists.filter((l) => state.gear.includes(l.title));
+    const chip = (l, pressed, mark = '') =>
+      `<button class="chip" type="button" data-list="${esc(l.title)}" aria-pressed="${pressed}">${mark}${esc(de ? l.title_de || l.title : l.title)}</button>`;
+    chips.innerHTML = trips.map((l) => chip(l, l.title === state.gear)).join('');
+    addonChips.innerHTML = addons.map((l) => chip(l, l.title === state.gearAddon, '+ ')).join('');
+    const chosen = lists.filter((l) => l.title === state.gear || l.title === state.gearAddon);
     const filled = chosen.filter((l) => l.html);
     const list = filled.length > 1 ? combineLists(filled) : filled[0] || chosen[0];
     const el = document.getElementById('gear');
     el.dataset.lang = lang;
     el.lang = lang;
-    if (lists.length && !chosen.length) {
-      el.innerHTML = `<div class="empty"><p>${de ? 'Wähl oben eine oder mehrere Listen aus.' : 'Pick one or more lists above.'}</p></div>`;
-      return;
-    }
     if (!list?.html) {
       el.innerHTML = de
         ? `<div class="empty"><h2>Diese Liste ist noch leer</h2>
@@ -505,8 +507,14 @@ async function renderGear() {
   chips.addEventListener('click', (ev) => {
     const btn = ev.target.closest('[data-list]');
     if (!btn) return;
-    const title = btn.dataset.list;
-    state.gear = state.gear.includes(title) ? state.gear.filter((t) => t !== title) : [...state.gear, title];
+    state.gear = btn.dataset.list;
+    show();
+  });
+  addonChips.addEventListener('click', (ev) => {
+    const btn = ev.target.closest('[data-list]');
+    if (!btn) return;
+    // Click it again to take it off.
+    state.gearAddon = state.gearAddon === btn.dataset.list ? null : btn.dataset.list;
     show();
   });
   langButtons.forEach((b) => b.addEventListener('click', () => {

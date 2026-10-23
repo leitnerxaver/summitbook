@@ -13,6 +13,11 @@
   ### Safety | Sicherheit
   - Avalanche transceiver, shovel, probe | LVS-Gerät, Schaufel, Sonde
 
+  A "+" at the start of a list's title makes it an add-on: on the website you pick a trip and
+  can add it on top (e.g. where you sleep), and both are shown as one list:
+
+  ## + Multi-day, sleeping in a hut | Mehrtägig, Hüttenübernachtung
+
   Then run:  uv run summitbook publish
   Or edit this file on github.com (open it, tap the pencil, write, "Commit changes").
   (Text inside these arrows is never shown.)
@@ -175,7 +180,7 @@
 - Knife | Messer
 - Headlamp | Stirnlampe
 
-## Multi-day, sleeping outdoors | Mehrtägig, draußen schlafen
+## + Multi-day, sleeping outdoors | Mehrtägig, draußen schlafen
 - Sleeping Bag | Schlafsack
 - Extra Clothes | Wechselkleidung
 - Toiletries | Waschzeug
@@ -186,7 +191,7 @@
 - Powerbank | Powerbank
 - Cables | Ladekabel
 
-## Multi-day, sleeping in a hut | Mehrtägig, Hüttenübernachtung
+## + Multi-day, sleeping in a hut | Mehrtägig, Hüttenübernachtung
 
 - Sleeping Bag | Hüttenschlafsack
 - Extra Clothes | Wechselkleidung
