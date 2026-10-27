@@ -15100,6 +15100,62 @@
     11.375553,
     1970.2
    ]
+  },
+  "20737932247": {
+   "name": "Geierwand",
+   "sport_type": "RockClimbing",
+   "start_date": "2026-10-26T10:49:08Z",
+   "start_date_local": "2026-10-26T11:49:08Z",
+   "distance": 556.0,
+   "total_elevation_gain": 211.0,
+   "moving_time": 526,
+   "elev_high": 849.6,
+   "total_photo_count": 3,
+   "start_latlng": [
+    47.26,
+    10.88
+   ],
+   "end_latlng": [
+    47.26,
+    10.88
+   ],
+   "has_track": true,
+   "photos": [
+    {
+     "thumb": "https://dgtzuqphqg23d.cloudfront.net/Am9SDuCbl9gxAcQyl0UE-hRvPa_xbNuwllRg98uv0zQ-432x768.jpg",
+     "full": "https://dgtzuqphqg23d.cloudfront.net/Am9SDuCbl9gxAcQyl0UE-hRvPa_xbNuwllRg98uv0zQ-1152x2048.jpg",
+     "caption": "",
+     "focus": [
+      50,
+      43
+     ]
+    },
+    {
+     "thumb": "https://dgtzuqphqg23d.cloudfront.net/nANJtObcTILeEqZz1meE5VSCmi9zSfXK3UbYv0Lp8kg-432x768.jpg",
+     "full": "https://dgtzuqphqg23d.cloudfront.net/nANJtObcTILeEqZz1meE5VSCmi9zSfXK3UbYv0Lp8kg-1152x2048.jpg",
+     "caption": "",
+     "focus": [
+      50,
+      43
+     ]
+    },
+    {
+     "thumb": "https://dgtzuqphqg23d.cloudfront.net/kDY3El_qUvnvgOt4-oR4ShBfq5L31MIZdJiDx5GPzLg-432x768.jpg",
+     "full": "https://dgtzuqphqg23d.cloudfront.net/kDY3El_qUvnvgOt4-oR4ShBfq5L31MIZdJiDx5GPzLg-1152x2048.jpg",
+     "caption": "",
+     "focus": [
+      50,
+      43
+     ]
+    }
+   ],
+   "photos_for_count": 3,
+   "summits": [],
+   "high_point": [
+    47.262568,
+    10.877208,
+    849.6
+   ]
   }
  }
 }
