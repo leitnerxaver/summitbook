@@ -15156,6 +15156,47 @@
     10.877208,
     849.6
    ]
+  },
+  "20790231626": {
+   "name": "Wanderung am Morgen",
+   "sport_type": "Hike",
+   "start_date": "2026-10-30T09:34:05Z",
+   "start_date_local": "2026-10-30T10:34:05Z",
+   "distance": 8791.0,
+   "total_elevation_gain": 994.0,
+   "moving_time": 6827,
+   "elev_high": 1573.8,
+   "total_photo_count": 0,
+   "start_latlng": [
+    47.85,
+    13.59
+   ],
+   "end_latlng": [
+    47.85,
+    13.59
+   ],
+   "has_track": true,
+   "summits": [
+    {
+     "id": 2638807304,
+     "name": "Adlerspitz Hauptgipfel",
+     "ele": 1241.0,
+     "lat": 47.8323088,
+     "lon": 13.5943003
+    },
+    {
+     "id": 1749756766,
+     "name": "Kugelzipf",
+     "ele": 1517.0,
+     "lat": 47.830777,
+     "lon": 13.6004591
+    }
+   ],
+   "high_point": [
+    47.828955,
+    13.605627,
+    1573.6
+   ]
   }
  }
 }
