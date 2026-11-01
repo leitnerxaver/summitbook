@@ -15166,7 +15166,7 @@
    "total_elevation_gain": 994.0,
    "moving_time": 6827,
    "elev_high": 1573.8,
-   "total_photo_count": 0,
+   "total_photo_count": 3,
    "start_latlng": [
     47.85,
     13.59
@@ -15196,7 +15196,37 @@
     47.828955,
     13.605627,
     1573.6
-   ]
+   ],
+   "photos": [
+    {
+     "thumb": "https://dgtzuqphqg23d.cloudfront.net/kFyrHgRCwrX14NKfAcQi44Jx5oKrtFzIZv1GEfIihPw-432x768.jpg",
+     "full": "https://dgtzuqphqg23d.cloudfront.net/kFyrHgRCwrX14NKfAcQi44Jx5oKrtFzIZv1GEfIihPw-1152x2048.jpg",
+     "caption": "",
+     "focus": [
+      50,
+      43
+     ]
+    },
+    {
+     "thumb": "https://dgtzuqphqg23d.cloudfront.net/6F8jaBLEfP9PysESTs4TobxXgmE4wUdkI92cLZCr7qg-432x768.jpg",
+     "full": "https://dgtzuqphqg23d.cloudfront.net/6F8jaBLEfP9PysESTs4TobxXgmE4wUdkI92cLZCr7qg-1152x2048.jpg",
+     "caption": "",
+     "focus": [
+      50,
+      25
+     ]
+    },
+    {
+     "thumb": "https://dgtzuqphqg23d.cloudfront.net/g4hqFrqlyObpRrSchROY5dSZwTUEM-ONNuzPYXXuNR8-432x768.jpg",
+     "full": "https://dgtzuqphqg23d.cloudfront.net/g4hqFrqlyObpRrSchROY5dSZwTUEM-ONNuzPYXXuNR8-1152x2048.jpg",
+     "caption": "",
+     "focus": [
+      50,
+      54
+     ]
+    }
+   ],
+   "photos_for_count": 3
   }
  }
 }
