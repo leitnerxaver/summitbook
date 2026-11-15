@@ -15227,6 +15227,32 @@
     }
    ],
    "photos_for_count": 3
+  },
+  "20982422148": {
+   "name": "Traillauf zur Mittagszeit",
+   "sport_type": "TrailRun",
+   "start_date": "2026-11-14T10:26:03Z",
+   "start_date_local": "2026-11-14T11:26:03Z",
+   "distance": 6552.0,
+   "total_elevation_gain": 233.0,
+   "moving_time": 2381,
+   "elev_high": 789.6,
+   "total_photo_count": 0,
+   "start_latlng": [
+    47.27,
+    11.4
+   ],
+   "end_latlng": [
+    47.27,
+    11.41
+   ],
+   "has_track": true,
+   "summits": [],
+   "high_point": [
+    47.284725,
+    11.399387,
+    788.2
+   ]
   }
  }
 }
