@@ -289,7 +289,8 @@ async function renderPlans() {
 async function renderStatsPage() {
   document.title = `Stats · ${state.data.title}`;
   app.innerHTML = `<div class="toolbar">${tabsHtml('stats')}</div><section class="statpage" id="statpage"></section>`;
-  const all = await loadEverything();
+  // Days on ski lifts don't count here: the climbing wasn't yours (ski tours still do).
+  const all = (await loadEverything()).filter((a) => !LIFT_TYPES.includes(a.type));
   const el = document.getElementById('statpage');
   if (!el) return; // already on another page
   if (!all.length) {
@@ -402,12 +403,10 @@ function records(all) {
   };
   const rides = all.filter((a) => family(a.type) === 3);
   const runs = all.filter((a) => family(a.type) === 4);
-  const climbs = all.filter((a) => !['AlpineSki', 'Snowboard'].includes(a.type));
   const items = [
     item('Longest ride', fmtKm(best(rides, 'distance')?.distance || 0), best(rides, 'distance')),
     item('Longest run', fmtKm(best(runs, 'distance')?.distance || 0), best(runs, 'distance')),
-    // (not counting days on ski lifts: there the climbing isn't yours)
-    item('Most elevation in one go', fmtM(best(climbs, 'gain')?.gain || 0), best(climbs, 'gain')),
+    item('Most elevation in one go', fmtM(best(all, 'gain')?.gain || 0), best(all, 'gain')),
     item('Longest day out', fmtDuration(best(all, 'moving_time')?.moving_time || 0), best(all, 'moving_time')),
   ];
   // From the summit book: summits and multi-day trips
@@ -1380,6 +1379,8 @@ function family(type) {
 }
 
 const FAMILIES = { 1: 'Skiing', 2: 'Hiking & climbing', 3: 'Cycling', 4: 'Running', 0: 'Other' };
+// Skiing with a lift instead of your own legs: left out of the stats.
+const LIFT_TYPES = ['AlpineSki', 'Snowboard'];
 
 // All your activities (runs, rides, …: for the map and the stats), loaded once.
 function loadEverything() {
